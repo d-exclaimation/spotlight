@@ -8,11 +8,11 @@ export default {
         raleway: ["Raleway"],
       },
       colors: {
-        text: "#170e03",
-        background: "#fcf4e8",
-        primary: "#eeb872",
-        secondary: "#fefaf6",
-        accent: "#f0c489",
+        text: "#000000",
+        background: "#ffffff",
+        primary: "#8fb4ff",
+        secondary: "#ebf1ff",
+        accent: "#ff8f94",
       },
       animation: {
         "slide-up":

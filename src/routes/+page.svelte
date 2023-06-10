@@ -21,10 +21,10 @@
 </script>
 
 <svelte:head>
-  <title>undrline</title>
+  <title>Raylet</title>
 </svelte:head>
 
-<div class="flex h-screen w-screen flex-col items-center justify-center">
+<div class="flex flex-col items-center justify-center">
   <div class="mt-5 flex flex-col items-center justify-center md:mt-8">
     <div class="flex items-center justify-center gap-3 md:gap-4">
       <span class="animate-slide-down text-5xl font-bold md:text-8xl">
@@ -51,8 +51,9 @@
       {#each PHRASES as phrase, i}
         <div
           class={tw(`absolute z-10 text-5xl md:text-8xl opacity-0 translate-y-20 transition-all
-          data-[shown=true]:opacity-100 data-[shown=true]:translate-y-0 bg-clip-text
-          text-accent overflow-visible font-bold duration-500`)}
+          data-[shown=true]:opacity-100 data-[shown=true]:translate-y-0 leading-tight
+          text-transparent overflow-visible font-bold duration-500
+          bg-gradient-to-r from-primary via-primary to-accent bg-clip-text pb-3`)}
           data-shown={i === index}
         >
           {phrase}

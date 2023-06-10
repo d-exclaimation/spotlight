@@ -6,6 +6,7 @@ export default {
       fontFamily: {
         handwritten: ["Virgil"],
         raleway: ["Raleway"],
+        inter: ["Inter"],
       },
       colors: {
         text: "#000000",

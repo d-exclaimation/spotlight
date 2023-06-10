@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css?family=Inter:wght@200..900&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -12,6 +13,5 @@
 }
 
 :root {
-  font-weight: 500;
-  font-family: 'Inter', ui-sans-serif;
+  font-family: 'Raleway', serif;
 }

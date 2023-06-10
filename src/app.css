@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Virgil';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/fonts/Virgil.woff2') format('woff2')
+}
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/fonts/Raleway.ttf') format('truetype')
+}
+
+:root {
+  font-family: 'Raleway', sans-serif;
+}

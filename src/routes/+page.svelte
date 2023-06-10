@@ -50,7 +50,7 @@
     >
       {#each PHRASES as phrase, i}
         <div
-          class={tw(`absolute z-10 text-5xl md:text-8xl opacity-0 translate-y-20 transition-all
+          class={tw(`absolute z-10 text-5xl md:text-9xl opacity-0 translate-y-20 transition-all
           data-[shown=true]:opacity-100 data-[shown=true]:translate-y-0 leading-tight
           text-transparent overflow-visible font-bold duration-500
           bg-gradient-to-r from-primary via-primary to-accent bg-clip-text pb-3`)}
@@ -59,7 +59,7 @@
           {phrase}
         </div>
       {/each}
-      <div class="opacity-0 font-bold text-5xl md:text-8xl">Supercharged</div>
+      <div class="opacity-0 font-bold text-5xl md:text-9xl">Supercharged</div>
     </div>
   </div>
   <button

@@ -1,0 +1,38 @@
+<script lang="ts">
+  import { createEventDispatcher } from "svelte";
+  import { fade, scale } from "svelte/transition";
+
+  export let show: boolean;
+
+  const dispatch = createEventDispatcher();
+
+  function close() {
+    show = false;
+    dispatch("close");
+  }
+
+  function escape(e: KeyboardEvent) {
+    if (e.key === "Escape" && show) {
+      close();
+    }
+  }
+</script>
+
+<svelte:window on:keydown={escape} />
+
+{#if show}
+  <button
+    class="fixed inset-0 z-40 bg-black/10 backdrop-blur-sm"
+    in:fade={{ duration: 250 }}
+    out:fade={{ duration: 100 }}
+    on:click={close}
+  />
+
+  <div
+    class="fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 w-max h-max"
+    in:scale={{ duration: 250, opacity: 0, start: 0.9 }}
+    out:fade={{ duration: 100 }}
+  >
+    <slot />
+  </div>
+{/if}

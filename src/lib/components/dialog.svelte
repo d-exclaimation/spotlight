@@ -22,16 +22,16 @@
 
 {#if show}
   <button
-    class="fixed inset-0 z-40 bg-black/10 backdrop-blur-sm"
-    in:fade={{ duration: 250 }}
-    out:fade={{ duration: 100 }}
+    class="fixed inset-0 z-40 bg-black/10 backdrop-blur-sm select-none outline-none"
+    in:fade={{ duration: 300 }}
+    out:fade={{ duration: 150 }}
     on:click={close}
   />
 
   <div
     class="fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 w-max h-max"
-    in:scale={{ duration: 250, opacity: 0, start: 0.9 }}
-    out:fade={{ duration: 100 }}
+    in:scale={{ duration: 300, opacity: 0, start: 0.9 }}
+    out:fade={{ duration: 150 }}
   >
     <slot />
   </div>

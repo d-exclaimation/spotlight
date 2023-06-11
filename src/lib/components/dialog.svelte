@@ -21,11 +21,12 @@
 <svelte:window on:keydown={escape} />
 
 {#if show}
-  <button
+  <div
     class="fixed inset-0 z-40 bg-black/10 backdrop-blur-sm select-none outline-none"
     in:fade={{ duration: 300 }}
     out:fade={{ duration: 150 }}
     on:click={close}
+    on:keydown={escape}
   />
 
   <div

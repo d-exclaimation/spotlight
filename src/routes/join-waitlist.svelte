@@ -44,7 +44,7 @@
       </button>
     </div>
     <div class="flex flex-col items-center justify-center mt-4">
-      <Textfield id="email" value={email} />
+      <Textfield id="email" bind:value={email} />
       <Button
         on:click={() => {
           if (!localStorage.getItem("waitlist")) {

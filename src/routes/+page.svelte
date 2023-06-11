@@ -33,7 +33,7 @@
   <div class="mt-5 flex flex-col items-center justify-center md:mt-8">
     <div class="flex items-center justify-center gap-3 md:gap-4">
       <span class="animate-slide-down text-5xl font-bold md:text-8xl">
-        Tech
+        Browsing
       </span>
       <div
         class={tw(`relative animate-slide-up
@@ -44,7 +44,7 @@
         md:text-8xl md:before:border-b-2 min-w-max text-5xl
         flex items-center justify-center`)}
       >
-        stories
+        news
       </div>
     </div>
     <div

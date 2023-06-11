@@ -25,7 +25,7 @@
 </script>
 
 <svelte:head>
-  <title>Raylet</title>
+  <title>Spotlight</title>
 </svelte:head>
 
 <!-- Main -->

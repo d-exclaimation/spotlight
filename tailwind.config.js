@@ -14,6 +14,11 @@ export default {
         primary: "#8fb4ff",
         secondary: "#ebf1ff",
         accent: "#ff8f94",
+        // 'text': '#f6fefd',
+        // 'background': '#010404',
+        // 'primary-button': '#b2bdf8',
+        // 'secondary-button': '#050824',
+        // 'accent': '#4353e5',
       },
       animation: {
         overlay: "overlay 300ms cubic-bezier(0.16, 1, 0.3, 1)",

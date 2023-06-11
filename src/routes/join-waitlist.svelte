@@ -1,8 +1,11 @@
 <script lang="ts">
+  import Button from "@/lib/components/button.svelte";
   import Dialog from "@/lib/components/dialog.svelte";
+  import Textfield from "@/lib/components/textfield.svelte";
   import { tw } from "@/lib/tailwind";
 
   let show = false;
+  let email = "";
 </script>
 
 <button
@@ -41,33 +44,23 @@
       </button>
     </div>
     <div class="flex flex-col items-center justify-center mt-4">
-      <div class="flex w-full flex-col items-start justify-center gap-2">
-        <label
-          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          for="email"
-        >
-          Email
-        </label>
-        <input
-          id="email"
-          type="email"
-          class={tw(`flex h-10 w-full rounded-md border border-zinc-300
-          bg-transparent px-3 py-2 text-sm ring-offset-zinc-200 
-          file:border-0 file:bg-transparent file:text-sm file:font-medium 
-          placeholder:text-zinc-400/75 focus-visible:outline-none focus-visible:ring-2 
-          focus-visible:ring-zinc-300 focus-visible:ring-offset-2 disabled:cursor-not-allowed 
-          disabled:opacity-50`)}
-          placeholder="Enter your email address"
-        />
-      </div>
-      <button
-        class={tw(`w-full rounded-md bg-primary text-black px-4 py-2
-        mt-4 hover:brightness-105 active:brightness-105 focus-visible:ring-2 
-        focus-visible:ring-zinc-300 focus-visible:ring-offset-2 
-        disabled:cursor-not-allowed disabled:opacity-50`)}
+      <Textfield id="email" value={email} />
+      <Button
+        on:click={() => {
+          if (!localStorage.getItem("waitlist")) {
+            localStorage.setItem(
+              "waitlist",
+              JSON.stringify({
+                email,
+                timestamp: new Date().toISOString(),
+              })
+            );
+          }
+          show = false;
+        }}
       >
         Sign up
-      </button>
+      </Button>
     </div>
   </div>
 </Dialog>

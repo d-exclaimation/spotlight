@@ -2,9 +2,13 @@
   import { createEventDispatcher } from "svelte";
   import { fade, scale } from "svelte/transition";
 
-  export let show: boolean;
+  interface $$Props {
+    show: boolean;
+  }
 
-  const dispatch = createEventDispatcher();
+  export let show: $$Props["show"];
+
+  const dispatch = createEventDispatcher<{ close: void }>();
 
   function close() {
     show = false;

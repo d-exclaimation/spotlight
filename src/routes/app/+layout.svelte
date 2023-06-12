@@ -31,12 +31,12 @@
 <slot />
 
 <nav
-  class="fixed bottom-5 bg-white z-50 rounded-full gap-4 shadow-lg p-[0.375rem] md:p-2 backdrop-blur-[20px] flex items-center justify-center"
+  class="fixed bottom-5 bg-white/60 z-50 rounded-full gap-4 shadow-lg p-2 backdrop-blur-[20px] flex items-center justify-center"
 >
   {#each ROUTES as { name, path } (path)}
     <a
-      class={tw(`hover:bg-secondary active:bg-secondary relative 
-      rounded-full px-3 py-1.5 text-xs md:text-sm font-medium 
+      class={tw(`hover:bg-secondary/60 active:bg-secondary/60 relative 
+      rounded-full px-3 py-1.5 text-sm font-medium 
       transition focus-visible:outline-2 outline-sky-400 
       [-webkit-tap-highlight-color:transparent]`)}
       href={path}
@@ -45,7 +45,7 @@
         <span
           in:receive={{ key: BUBBLE }}
           out:send={{ key: BUBBLE }}
-          class="absolute inset-0 z-[60] bg-primary rounded-full"
+          class="absolute inset-0 z-[60] bg-primary/60 rounded-full"
         />
       {/if}
       <span

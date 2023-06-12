@@ -24,6 +24,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"tailwind-merge": "^1.13.1"
+		"@tanstack/svelte-query": "^4.29.11",
+		"tailwind-merge": "^1.13.1",
+		"zod": "^3.21.4"
 	}
 }

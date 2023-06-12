@@ -45,22 +45,29 @@
     </div>
     <div class="flex flex-col items-center justify-center mt-4">
       <Textfield id="email" bind:value={email} />
-      <Button
-        on:click={() => {
-          if (!localStorage.getItem("waitlist")) {
-            localStorage.setItem(
-              "waitlist",
-              JSON.stringify({
-                email,
-                timestamp: new Date().toISOString(),
-              })
-            );
-          }
-          show = false;
-        }}
-      >
-        Sign up
-      </Button>
+
+      <div class="flex justify-between items-center w-full mt-2">
+        <Button class="bg-accent" on:click={() => (show = false)}>
+          Cancel
+        </Button>
+        <Button
+          class="bg-primary"
+          on:click={() => {
+            if (!localStorage.getItem("waitlist")) {
+              localStorage.setItem(
+                "waitlist",
+                JSON.stringify({
+                  email,
+                  timestamp: new Date().toISOString(),
+                })
+              );
+            }
+            show = false;
+          }}
+        >
+          Sign up
+        </Button>
+      </div>
     </div>
   </div>
 </Dialog>

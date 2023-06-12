@@ -11,8 +11,8 @@
 <button
   {...$$restProps}
   class={tw(
-    `w-full rounded-md bg-primary text-black px-4 py-2
-    mt-4 hover:brightness-105 active:brightness-105 focus-visible:ring-2 
+    `rounded-md px-4 py-2 mt-4 hover:brightness-105 
+    active:brightness-105 focus-visible:ring-2 
     focus-visible:ring-zinc-300 focus-visible:ring-offset-2 
     disabled:cursor-not-allowed disabled:opacity-50`,
     $$restProps.class

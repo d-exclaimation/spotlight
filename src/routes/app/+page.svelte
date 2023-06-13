@@ -48,7 +48,7 @@
 {:else if !item}
   <div class="flex flex-col items-center justify-center w-full py-6 h-4/5" />
 {:else}
-  <div class="relative max-w-lg w-[90vw] h-[75vh] group">
+  <div class="relative max-w-lg w-[90vw] h-[75vh] mt-15">
     {#key item.id}
       <div
         class={tw(`flex flex-col relative justify-between
@@ -68,9 +68,6 @@
               $query.fetchNextPage();
             }
             index = Math.min(index + 1, items.length - 1);
-          }
-          if (event.detail.direction === "bottom") {
-            index = Math.max(index - 1, 0);
           }
         }}
       >

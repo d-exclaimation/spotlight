@@ -94,9 +94,9 @@
           <span>
             {item.time_ago}
           </span>
-          <span>
-            {item.domain}
-          </span>
+          <a href={item.url}>
+            {item.domain || "news.ycombinator.com"}
+          </a>
         </div>
       </div>
     {/key}

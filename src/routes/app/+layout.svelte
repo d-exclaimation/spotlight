@@ -6,7 +6,7 @@
 
   const BUBBLE = "navbar-bubble";
   const ROUTES = [
-    { name: "Explore", path: "/app" },
+    { name: "Discover", path: "/app" },
     { name: "Feeds", path: "/app/feed" },
     { name: "Account", path: "/app/account" },
   ];

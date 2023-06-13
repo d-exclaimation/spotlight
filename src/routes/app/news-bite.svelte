@@ -1,17 +1,20 @@
 <script lang="ts">
+  import { afterNavigate, beforeNavigate } from "$app/navigation";
   import { tw } from "@/lib/tailwind";
   import type { TechFeed } from "@/lib/types";
   import { createEventDispatcher } from "svelte";
   import { swipe } from "svelte-gestures";
-  import { fly } from "svelte/transition";
+  import { fly, type FlyParams } from "svelte/transition";
 
   export let item: TechFeed;
+  export let direction: "top" | "bottom";
 
   const dispatch = createEventDispatcher<{
-    swipe: { direction: "top" | "bottom" };
+    prev: void;
+    next: void;
   }>();
 
-  let direction: "top" | "bottom" = "top";
+  let isNavigating = false;
 
   $: length = item?.title?.split(" ").length ?? 0;
   $: size =
@@ -31,12 +34,28 @@
 
   $: bg =
     item.type === "ask"
-      ? "bg-orange-600"
+      ? "bg-orange-600 saturate-[.75]"
       : item.type === "job"
-      ? "bg-emerald-600"
+      ? "bg-emerald-600 saturate-[.75]"
       : item.title.startsWith("Show HN")
-      ? "bg-purple-600"
+      ? "bg-purple-600 saturate-[.75]"
       : "bg-primary2";
+
+  beforeNavigate(() => {
+    isNavigating = true;
+  });
+
+  afterNavigate(() => {
+    isNavigating = false;
+  });
+
+  function smartfly(node: Element, params: FlyParams) {
+    if (!isNavigating) {
+      return fly(node, params);
+    }
+
+    return {};
+  }
 </script>
 
 <div
@@ -48,12 +67,12 @@
     cursor-grab active:cursor-grabbing select-none`,
     bg
   )}
-  in:fly={{
+  in:smartfly={{
     y: direction === "top" ? "100%" : "-100%",
     duration: 300,
     delay: 275,
   }}
-  out:fly={{ y: direction === "top" ? "-100%" : "100%", duration: 300 }}
+  out:smartfly={{ y: direction === "top" ? "-100%" : "100%", duration: 300 }}
   use:swipe={{
     timeframe: 300,
     minSwipeDistance: 50,
@@ -66,22 +85,25 @@
       return;
     }
     direction = event.detail.direction;
-    dispatch("swipe", { direction });
+    dispatch(direction === "top" ? "next" : "prev");
   }}
 >
   <span class={tw("max-w-full break-words", size)}>{item.title}</span>
 
   <div class="flex flex-col w-full items-center justify-center">
     <div class="flex flex-row w-full items-end justify-between">
-      <span class="text-xs">
+      <span class="text-xs md:text-sm">
         by {item.user ?? "anonymous"}
       </span>
     </div>
     <div class="flex flex-row w-full items-end justify-between">
-      <span class="text-xs font-normal">
+      <span class="text-xs md:text-sm font-normal">
         {item.time_ago}
       </span>
-      <a class="text-xs" href={item.url}>
+      <a
+        class="text-xs md:text-sm hover:underline cursor-pointer"
+        href={item.url}
+      >
         {item.domain || "news.ycombinator.com"}
       </a>
     </div>

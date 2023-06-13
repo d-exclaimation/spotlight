@@ -1,6 +1,7 @@
 <script lang="ts">
   import { news } from "@/lib/api/news";
   import { dedup } from "@/lib/utils";
+  import { enter, exit } from "@/lib/utils/transition";
   import { createInfiniteQuery } from "@tanstack/svelte-query";
   import Feed from "./feed.svelte";
   import LastFeed from "./last-feed.svelte";
@@ -27,6 +28,8 @@
 <div
   class="flex flex-col mt-6 items-start justify-start h-[100vh] overflow-y-scroll w-full px-6 max-w-2xl bg-white md:border-x"
   bind:this={view}
+  in:enter
+  out:exit
 >
   <h1
     class="pt-8 pb-4 p-2 text-2xl font-bold sticky top-0 bg-white/75 backdrop-blur border-b border-black/50 w-full"

@@ -1,6 +1,11 @@
 import { z } from "zod";
 
 /**
+ * A safe int coersion
+ */
+export const int = z.coerce.number();
+
+/**
  * The type of the data returned by the Hacker News API.
  */
 export type TechFeed = z.infer<typeof TechFeed>;

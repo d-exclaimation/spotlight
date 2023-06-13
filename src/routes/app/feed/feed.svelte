@@ -20,7 +20,7 @@
   <div class="flex items-start justify-center mr-4">
     {#if item.type === "ask"}
       <svg
-        class="w-8 aspect-square md:w-10 rounded-full fill-orange-900"
+        class="w-8 aspect-square md:w-10 rounded-full fill-orange-600 saturate-[.75]"
         viewBox="-1 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -30,7 +30,7 @@
       </svg>
     {:else if item.type === "job"}
       <svg
-        class="w-8 aspect-square md:w-10 rounded-full fill-emerald-900"
+        class="w-8 aspect-square md:w-10 rounded-full fill-emerald-600 saturate-[.75]"
         viewBox="-1 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -40,7 +40,7 @@
       </svg>
     {:else if item.title.startsWith("Show HN")}
       <svg
-        class="w-8 aspect-square md:w-10 rounded-full fill-indigo-900"
+        class="w-8 aspect-square md:w-10 rounded-full fill-indigo-600 saturate-[.75"
         viewBox="-1 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -50,7 +50,7 @@
       </svg>
     {:else}
       <svg
-        class="w-8 aspect-square md:w-10 rounded-full fill-blue-900"
+        class="w-8 aspect-square md:w-10 rounded-full fill-primary2"
         viewBox="-1 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -82,10 +82,21 @@
       {item.title}
     </span>
     <div
-      class="flex items-center justify-start text-xs md:text-sm py-1 text-black/75"
+      class="flex items-center justify-start text-xs gap-3 md:text-sm py-1 text-black/75"
     >
-      <img class="w-3 aspect-square md:w-4 mr-2" src="/like.svg" alt="like" />
-      {item.points ?? "N/A"}
+      <div class="flex items-center justify-center">
+        <img class="w-3 aspect-square md:w-4 mr-2" src="/like.svg" alt="like" />
+        {item.points ?? "N/A"}
+      </div>
+
+      <div class="flex items-center justify-center">
+        <img
+          class="w-3 aspect-square md:w-4 mr-2"
+          src="/comment.svg"
+          alt="comment"
+        />
+        {item.comments_count ?? "N/A"}
+      </div>
     </div>
   </div>
 </a>

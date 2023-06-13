@@ -6,11 +6,11 @@
 
   $: bg =
     latest.type === "ask"
-      ? "bg-orange-600"
+      ? "bg-orange-600 saturate-[.75]"
       : latest.type === "job"
-      ? "bg-emerald-600"
+      ? "bg-emerald-600 saturate-[.75]"
       : latest.title.startsWith("Show HN")
-      ? "bg-purple-600"
+      ? "bg-purple-600 saturate-[.75]"
       : "bg-primary2";
 </script>
 

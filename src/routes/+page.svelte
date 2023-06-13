@@ -28,7 +28,9 @@
   <title>Spotlight</title>
 </svelte:head>
 
-<div class="flex flex-col items-start justify-start min-h-screen min-w-[100vw]">
+<div
+  class="flex flex-col items-start justify-start min-h-screen min-w-[100vw] bg-gradient-to-br from-background via-background to-secondary"
+>
   <nav class="flex items-center justify-start min-w-full px-6 md:px-10 py-6">
     <a class="flex items-center justify-center gap-1 md:gap-2" href="/">
       <img class="w-4 h-4 md:w-6 md:h-6" src="/spotlight.svg" alt="brand" />

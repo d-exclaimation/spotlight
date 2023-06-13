@@ -31,11 +31,11 @@
 <slot />
 
 <nav
-  class="fixed bottom-5 bg-white/60 z-50 rounded-full gap-4 shadow-lg p-2 backdrop-blur-[20px] flex items-center justify-center"
+  class="fixed bottom-5 bg-white/50 z-50 rounded-full gap-4 shadow-lg p-2 backdrop-blur-md flex items-center justify-center"
 >
   {#each ROUTES as { name, path } (path)}
     <a
-      class={tw(`hover:bg-secondary/60 active:bg-secondary/60 relative 
+      class={tw(`hover:bg-secondary/75 active:bg-secondary/75 relative 
       rounded-full px-3 py-1.5 text-sm font-medium 
       transition focus-visible:outline-2 outline-sky-400 
       [-webkit-tap-highlight-color:transparent]`)}

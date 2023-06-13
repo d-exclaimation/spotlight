@@ -12,6 +12,7 @@ export default {
         text: "#000000",
         background: "#ffffff",
         primary: "#8fb4ff",
+        primary2: "#4b70bb",
         secondary: "#ebf1ff",
         accent: "#ff8f94",
         // 'text': '#f6fefd',

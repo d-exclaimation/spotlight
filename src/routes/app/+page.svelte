@@ -12,6 +12,7 @@
     getNextPageParam: ({ page }) => page + 1,
   });
 
+  let direction: "top" | "bottom" = "top";
   let index = 0;
 
   $: items = dedup(
@@ -39,6 +40,25 @@
       : length <= 32
       ? "text-base md:text-xl"
       : "text-base md:text-lg";
+
+  function swiped(
+    event: CustomEvent<{
+      direction: "top" | "bottom" | "right" | "left";
+      target: EventTarget;
+    }>
+  ) {
+    if (event.detail.direction === "top") {
+      direction = event.detail.direction;
+      if (items.length - index <= 10) {
+        $query.fetchNextPage();
+      }
+      index = Math.min(index + 1, items.length - 1);
+    }
+    if (event.detail.direction === "bottom") {
+      direction = event.detail.direction;
+      index = Math.max(index - 1, 0);
+    }
+  }
 </script>
 
 {#if $query.isLoading}
@@ -56,20 +76,17 @@
         break-words font-bold rounded-2xl py-10 px-8
         transition-all duration-500 ease-in-out
         cursor-grab active:cursor-grabbing select-none`)}
-        in:fly={{ y: "100%", duration: 300, delay: 250 }}
-        out:fly={{ y: "-100%", duration: 300 }}
+        in:fly={{
+          y: direction === "top" ? "100%" : "-100%",
+          duration: 300,
+          delay: 275,
+        }}
+        out:fly={{ y: direction === "top" ? "-100%" : "100%", duration: 300 }}
         use:swipe={{
           timeframe: 300,
-          minSwipeDistance: 100,
+          minSwipeDistance: 50,
         }}
-        on:swipe={(event) => {
-          if (event.detail.direction === "top") {
-            if (items.length - index <= 5) {
-              $query.fetchNextPage();
-            }
-            index = Math.min(index + 1, items.length - 1);
-          }
-        }}
+        on:swipe={swiped}
       >
         <span class={tw("max-w-full", size)}>{item.title}</span>
 

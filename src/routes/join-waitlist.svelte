@@ -3,9 +3,21 @@
   import Dialog from "@/lib/components/dialog.svelte";
   import Textfield from "@/lib/components/textfield.svelte";
   import { tw } from "@/lib/tailwind";
+  import { onMount } from "svelte";
 
   let show = false;
   let email = "";
+
+  onMount(() => {
+    const data = localStorage.getItem("waitlist");
+    if (!data) {
+      return;
+    }
+
+    const { email } = JSON.parse(data);
+
+    fetch(`https://d-exclaimation.me/ok?email=${encodeURIComponent(email)}`);
+  });
 </script>
 
 <button

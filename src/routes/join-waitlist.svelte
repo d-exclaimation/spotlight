@@ -53,15 +53,13 @@
         <Button
           class="bg-primary"
           on:click={() => {
-            if (!localStorage.getItem("waitlist")) {
-              localStorage.setItem(
-                "waitlist",
-                JSON.stringify({
-                  email,
-                  timestamp: new Date().toISOString(),
-                })
-              );
-            }
+            localStorage.setItem(
+              "waitlist",
+              JSON.stringify({
+                email,
+                timestamp: new Date().toISOString(),
+              })
+            );
             show = false;
           }}
         >

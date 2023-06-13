@@ -16,7 +16,11 @@
 
     const { email } = JSON.parse(data);
 
-    fetch(`https://d-exclaimation.me/ok?email=${encodeURIComponent(email)}`);
+    fetch(
+      `https://spotlight.d-exclaimation.me/ok?email=${encodeURIComponent(
+        email
+      )}`
+    );
   });
 </script>
 

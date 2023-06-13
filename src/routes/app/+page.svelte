@@ -68,7 +68,7 @@
 {:else if !item}
   <div class="flex flex-col items-center justify-center w-full py-6 h-4/5" />
 {:else}
-  <div class="relative max-w-lg w-[90vw] h-[75vh] mt-15">
+  <div class="relative max-w-lg w-[90vw] h-[75vh]">
     {#key item.id}
       <div
         class={tw(`flex flex-col relative justify-between
@@ -102,3 +102,4 @@
     {/key}
   </div>
 {/if}
+<div class="h-16 flex items-center w-full justify-center" />

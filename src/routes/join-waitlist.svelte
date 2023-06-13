@@ -1,30 +1,11 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import Button from "@/lib/components/button.svelte";
   import Dialog from "@/lib/components/dialog.svelte";
   import Textfield from "@/lib/components/textfield.svelte";
   import { tw } from "@/lib/tailwind";
-  import { onMount } from "svelte";
 
   let show = false;
   let email = "";
-
-  onMount(() => {
-    const data = localStorage.getItem("waitlist");
-    if (!data) {
-      return;
-    }
-
-    const { email } = JSON.parse(data);
-
-    fetch(`/test/${encodeURIComponent(email)}`)
-      .then((res) => res.json())
-      .then(({ allowed }) => {
-        if (allowed) {
-          goto("/app");
-        }
-      });
-  });
 </script>
 
 <button

@@ -1,11 +1,20 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
+  import { verify } from "@/lib/api/waitlist";
+  import Redirect from "@/lib/components/redirect.svelte";
   import { tw } from "@/lib/tailwind";
+  import { createQuery } from "@tanstack/svelte-query";
   import { onDestroy, onMount } from "svelte";
   import { fly } from "svelte/transition";
   import JoinWaitlist from "./join-waitlist.svelte";
 
   const PHRASES = ["Streamlined", "Supercharged", "Simplified"];
   const DELAY = 5_000;
+  const verification = createQuery({
+    queryKey: ["waitlist", "verification"],
+    queryFn: () => verify(),
+    enabled: browser,
+  });
 
   let ref = undefined as number | undefined;
   let index = 0;
@@ -78,3 +87,7 @@
     <JoinWaitlist />
   </div>
 </div>
+
+{#if !$verification.isLoading && $verification.data && $verification.data.accepted}
+  <Redirect href="/app" />
+{/if}

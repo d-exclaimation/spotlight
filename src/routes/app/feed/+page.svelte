@@ -8,7 +8,7 @@
 
   const query = createInfiniteQuery({
     queryKey: ["news"],
-    queryFn: ({ pageParam }) => news(fetch, { page: pageParam }),
+    queryFn: ({ pageParam }) => news({ page: pageParam }),
     getNextPageParam: ({ page }) => page + 1,
   });
 

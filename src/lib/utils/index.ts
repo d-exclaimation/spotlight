@@ -11,3 +11,7 @@ export function dedup<T, K extends number | string>(
     return true;
   });
 }
+
+export function clamp(x: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, x));
+}

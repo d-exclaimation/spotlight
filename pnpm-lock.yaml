@@ -4,6 +4,9 @@ dependencies:
   '@tanstack/svelte-query':
     specifier: ^4.29.11
     version: 4.29.11(svelte@3.59.1)
+  svelte-gestures:
+    specifier: ^1.5.2
+    version: 1.5.2
   tailwind-merge:
     specifier: ^1.13.1
     version: 1.13.1
@@ -1164,6 +1167,10 @@ packages:
       - stylus
       - sugarss
     dev: true
+
+  /svelte-gestures@1.5.2:
+    resolution: {integrity: sha512-bXGFqpNAAYCM4XsxjaHMAoPQC3IRjrgGS+Sm/pE1ZftYu9gGRWvDF8g6cwl2b751R2kN1SwNEd6XV7zVh9mcew==}
+    dev: false
 
   /svelte-hmr@0.15.2(svelte@3.59.1):
     resolution: {integrity: sha512-q/bAruCvFLwvNbeE1x3n37TYFb3mTBJ6TrCq6p2CoFbSTNhDE9oAtEfpy+wmc9So8AG0Tja+X0/mJzX9tSfvIg==}

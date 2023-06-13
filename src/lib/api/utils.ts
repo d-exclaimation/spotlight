@@ -7,10 +7,10 @@ export function simple<T>(fn: (args: { fetch: Fetch }) => Promise<T>) {
 }
 
 export function query<In extends z.ZodTypeAny, Out>(
-  input: In,
+  _input: In,
   fn: (input: z.infer<In>, ctx: { fetch: Fetch }) => Promise<Out>
 ) {
-  return async (_fetch: Fetch = fetch, input: z.infer<In>) => {
+  return async (input: z.infer<In>, _fetch: Fetch = fetch) => {
     return await fn(input, { fetch: _fetch });
   };
 }

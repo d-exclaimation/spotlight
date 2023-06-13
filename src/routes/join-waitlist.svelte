@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import Button from "@/lib/components/button.svelte";
   import Dialog from "@/lib/components/dialog.svelte";
   import Textfield from "@/lib/components/textfield.svelte";
@@ -16,7 +17,13 @@
 
     const { email } = JSON.parse(data);
 
-    fetch(`/test/${encodeURIComponent(email)}`);
+    fetch(`/test/${encodeURIComponent(email)}`)
+      .then((res) => res.json())
+      .then(({ allowed }) => {
+        if (allowed) {
+          goto("/app");
+        }
+      });
   });
 </script>
 
@@ -69,7 +76,7 @@
               localStorage.setItem(
                 "waitlist",
                 JSON.stringify({
-                  email,
+                  value: email,
                   timestamp: new Date().toISOString(),
                 })
               );

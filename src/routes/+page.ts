@@ -1,5 +1,1 @@
-export async function load() {
-  return {
-    hello: "world",
-  };
-}
+export async function load() {}

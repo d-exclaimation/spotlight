@@ -57,7 +57,7 @@
               localStorage.setItem(
                 "waitlist",
                 JSON.stringify({
-                  value: email,
+                  email,
                   timestamp: new Date().toISOString(),
                 })
               );

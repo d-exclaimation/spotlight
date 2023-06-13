@@ -1,9 +1,7 @@
-import { browser } from "$app/environment";
 export async function verify() {
-  if (!browser) return;
   const data = localStorage.getItem("waitlist");
   if (!data) {
-    return;
+    return { accepted: false };
   }
   const { email } = JSON.parse(data);
 

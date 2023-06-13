@@ -1,6 +1,10 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import { page } from "$app/stores";
+  import { verify } from "@/lib/api/waitlist";
+  import Redirect from "@/lib/components/redirect.svelte";
   import { tw } from "@/lib/tailwind";
+  import { createQuery } from "@tanstack/svelte-query";
   import { quintOut } from "svelte/easing";
   import { crossfade } from "svelte/transition";
 
@@ -25,6 +29,12 @@
 				`,
       };
     },
+  });
+
+  const verification = createQuery({
+    queryKey: ["waitlist", "verification"],
+    queryFn: () => verify(),
+    enabled: browser,
   });
 </script>
 
@@ -57,3 +67,7 @@
     </a>
   {/each}
 </nav>
+
+{#if !$verification.isLoading && $verification.data && !$verification.data.accepted}
+  <Redirect href="/" reload />
+{/if}

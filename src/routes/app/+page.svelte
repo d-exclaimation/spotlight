@@ -1,10 +1,8 @@
 <script lang="ts">
   import { best } from "@/lib/api/news";
-  import { tw } from "@/lib/tailwind";
   import { dedup } from "@/lib/utils";
   import { createInfiniteQuery } from "@tanstack/svelte-query";
-  import { swipe } from "svelte-gestures";
-  import { fly } from "svelte/transition";
+  import NewsBite from "./news-bite.svelte";
 
   const query = createInfiniteQuery({
     queryKey: ["best"],
@@ -12,7 +10,6 @@
     getNextPageParam: ({ page }) => page + 1,
   });
 
-  let direction: "top" | "bottom" = "top";
   let index = 0;
 
   $: items = dedup(
@@ -21,44 +18,6 @@
   );
 
   $: item = items.at(index);
-  $: length = item?.title?.split(" ").length ?? 0;
-  $: size =
-    length <= 4
-      ? "text-6xl md:text-8xl"
-      : length <= 8
-      ? "text-5xl md:text-7xl"
-      : length <= 12
-      ? "text-4xl md:text-6xl"
-      : length <= 16
-      ? "text-3xl md:text-5xl"
-      : length <= 20
-      ? "text-2xl md:text-4xl"
-      : length <= 24
-      ? "text-xl md:text-3xl"
-      : length <= 28
-      ? "text-lg md:text-2xl"
-      : length <= 32
-      ? "text-base md:text-xl"
-      : "text-base md:text-lg";
-
-  function swiped(
-    event: CustomEvent<{
-      direction: "top" | "bottom" | "right" | "left";
-      target: EventTarget;
-    }>
-  ) {
-    if (event.detail.direction === "top") {
-      direction = event.detail.direction;
-      if (items.length - index <= 10) {
-        $query.fetchNextPage();
-      }
-      index = Math.min(index + 1, items.length - 1);
-    }
-    if (event.detail.direction === "bottom") {
-      direction = event.detail.direction;
-      index = Math.max(index - 1, 0);
-    }
-  }
 </script>
 
 {#if $query.isLoading}
@@ -70,35 +29,20 @@
 {:else}
   <div class="relative max-w-lg w-[90vw] h-[75vh]">
     {#key item.id}
-      <div
-        class={tw(`flex flex-col relative justify-between
-        max-w-lg w-[90vw] h-[75vh] bg-primary2 text-white 
-        break-words font-bold rounded-2xl py-10 px-8
-        transition-all duration-500 ease-in-out
-        cursor-grab active:cursor-grabbing select-none`)}
-        in:fly={{
-          y: direction === "top" ? "100%" : "-100%",
-          duration: 300,
-          delay: 275,
+      <NewsBite
+        {item}
+        on:swipe={(event) => {
+          if (event.detail.direction === "top") {
+            if (items.length - index <= 10) {
+              $query.fetchNextPage();
+            }
+            index = Math.min(index + 1, items.length - 1);
+          }
+          if (event.detail.direction === "bottom") {
+            index = Math.max(index - 1, 0);
+          }
         }}
-        out:fly={{ y: direction === "top" ? "-100%" : "100%", duration: 300 }}
-        use:swipe={{
-          timeframe: 300,
-          minSwipeDistance: 50,
-        }}
-        on:swipe={swiped}
-      >
-        <span class={tw("max-w-full", size)}>{item.title}</span>
-
-        <div class="flex flex-row w-full items-center justify-between">
-          <span>
-            {item.time_ago}
-          </span>
-          <a href={item.url}>
-            {item.domain || "news.ycombinator.com"}
-          </a>
-        </div>
-      </div>
+      />
     {/key}
   </div>
 {/if}

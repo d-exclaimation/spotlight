@@ -16,7 +16,7 @@
 
     const { email } = JSON.parse(data);
 
-    fetch(`/test?email=${encodeURIComponent(email)}`);
+    fetch(`/test/${encodeURIComponent(email)}`);
   });
 </script>
 

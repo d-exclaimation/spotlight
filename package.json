@@ -7,7 +7,9 @@
     "start": "node packages/server/dist/index.js",
     "build": "turbo run build",
     "dev": "FORCE_COLOR=1 dotenv -- turbo run dev",
-    "generate": "FORCE_COLOR=1 dotenv -- turbo run generate"
+    "generate": "FORCE_COLOR=1 dotenv -- turbo run generate",
+    "generate:custom": "FORCE_COLOR=1 dotenv -- turbo run generate",
+    "db:push": "FORCE_COLOR=1 dotenv -- turbo run db:push"
   },
   "devDependencies": {
     "prettier": "^2.7.1",

@@ -2,7 +2,7 @@ FROM node:alpine
 
 RUN npm install -g pnpm
 RUN npm install -g turbo
-RUn npm install -g typescript
+RUN npm install -g tsup
 
 # Root configs
 COPY package.json .
@@ -17,7 +17,7 @@ COPY packages/server/package.json .
 RUN pnpm fetch 
 
 # Install dependencies
-RUN pnpm install --force
+RUN pnpm install
 
 # Get the rest of the files
 COPY . .

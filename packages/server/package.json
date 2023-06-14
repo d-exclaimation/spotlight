@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "build": "tsup --format esm --treeshake --splitting",
     "generate": "drizzle-kit generate:pg",
     "generate:custom": "drizzle-kit generate:pg"
   },
@@ -17,6 +17,7 @@
     "@types/cors": "^2.8.13",
     "@types/node": "^20.3.1",
     "drizzle-kit": "^0.18.1",
+    "tsup": "^6.7.0",
     "tsx": "^3.12.7",
     "typescript": "^5.0.0"
   },
@@ -27,5 +28,14 @@
     "jose": "^4.14.4",
     "postgres": "^3.3.5",
     "zod": "^3.21.4"
+  },
+  "tsup": {
+    "entry": {
+      "index": "src/index.ts"
+    },
+    "outDir": "dist",
+    "clean": true,
+    "treeshake": true,
+    "splitting": true
   }
 }

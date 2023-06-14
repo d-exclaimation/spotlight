@@ -1,22 +1,16 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
-  import { verify } from "@/lib/api/waitlist";
+  import { createMeQuery } from "@/lib/api/me";
   import Redirect from "@/lib/components/redirect.svelte";
   import { tw } from "@/lib/tailwind";
-  import { createQuery } from "@tanstack/svelte-query";
   import { onDestroy, onMount } from "svelte";
   import { fly } from "svelte/transition";
   import JoinWaitlist from "./join-waitlist.svelte";
 
   const PHRASES = ["Streamlined", "Supercharged", "Simplified"];
   const DELAY = 5_000;
-  const verification = createQuery({
-    queryKey: ["waitlist", "verification"],
-    queryFn: () => verify(),
-    enabled: browser,
-  });
+  const me = createMeQuery();
 
-  let ref = undefined as number | undefined;
+  let ref = undefined as number | NodeJS.Timeout | undefined;
   let index = 0;
 
   $: phrase = PHRASES[index];
@@ -88,6 +82,6 @@
   </div>
 </div>
 
-{#if !$verification.isLoading && $verification.data && $verification.data.accepted}
+{#if !$me.isLoading && $me.data && $me.data.user}
   <Redirect href="/app" />
 {/if}

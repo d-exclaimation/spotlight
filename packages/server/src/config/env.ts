@@ -8,6 +8,8 @@ export const Env = z.object({
   JWT_SECRET: z
     .string()
     .transform((secret) => new TextEncoder().encode(secret)),
+  EMAIL_KEY: z.string(),
+  EMAIL_ADDRESS: z.string().email().catch("onboarding@resend.dev"),
 });
 
 export const env = Env.parse(process.env);

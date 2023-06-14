@@ -6,6 +6,14 @@ import { z } from "zod";
 export const int = z.coerce.number();
 
 /**
+ * The local stored auth data.
+ */
+export type Auth = z.infer<typeof Auth>;
+export const Auth = z.object({
+  token: z.string(),
+});
+
+/**
  * The type of the data returned by the Hacker News API.
  */
 export type TechFeed = z.infer<typeof TechFeed>;

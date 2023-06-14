@@ -1,11 +1,24 @@
 <script lang="ts">
+  import { trpc } from "@/lib/api/trpc";
   import Button from "@/lib/components/button.svelte";
   import Dialog from "@/lib/components/dialog.svelte";
   import Textfield from "@/lib/components/textfield.svelte";
   import { tw } from "@/lib/tailwind";
+  import { auth } from "@/lib/utils/storage";
+  import { createMutation } from "@tanstack/svelte-query";
 
   let show = false;
   let email = "";
+
+  const mutation = createMutation({
+    mutationKey: ["waitlist", "join"],
+    mutationFn: trpc.preregister.mutate,
+    onSuccess({ token }) {
+      auth.set({ token });
+      show = false;
+      email = "";
+    },
+  });
 </script>
 
 <button
@@ -53,14 +66,7 @@
         <Button
           class="bg-primary"
           on:click={() => {
-            localStorage.setItem(
-              "waitlist",
-              JSON.stringify({
-                email,
-                timestamp: new Date().toISOString(),
-              })
-            );
-            show = false;
+            $mutation.mutate({ email });
           }}
         >
           Sign up

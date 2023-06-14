@@ -14,5 +14,8 @@
     "dotenv-cli": "latest",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@7.15.0"
+  "packageManager": "pnpm@7.15.0",
+  "workspaces": [
+    "packages/*"
+  ]
 }

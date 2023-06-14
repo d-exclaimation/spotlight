@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "tsx watch src/index.ts",
-    "build": "tsup --format esm --treeshake --splitting --dts",
+    "build": "tsup --format esm --treeshake --splitting",
     "generate": "drizzle-kit generate:pg",
     "generate:custom": "drizzle-kit generate:pg"
   },

@@ -15,6 +15,9 @@ COPY packages/server/package.json .
 # Fetch
 RUN pnpm fetch 
 
+# Install dependencies
+RUN pnpm install --force
+
 # Get the rest of the files
 COPY . .
 

@@ -2,6 +2,7 @@ FROM node:alpine
 
 RUN npm install -g pnpm
 RUN npm install -g turbo
+RUn npm install -g typescript
 
 # Root configs
 COPY package.json .

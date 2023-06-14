@@ -22,9 +22,6 @@ RUN pnpm install
 # Get the rest of the files
 COPY . .
 
-# Install dependencies
-RUN pnpm install
-
 # Build
 RUN turbo run build --filter=server
 

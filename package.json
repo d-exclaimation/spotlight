@@ -2,7 +2,9 @@
   "name": "@spotlight/web",
 	"version": "0.0.1",
   "private": true,
+  "type": "module",
   "scripts": {
+    "start": "node packages/server/dist/index.js",
     "build": "FORCE_COLOR=1 turbo run build",
     "dev": "FORCE_COLOR=1 dotenv -- turbo run dev",
     "generate": "FORCE_COLOR=1 dotenv -- turbo run generate"

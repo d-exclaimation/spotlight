@@ -6,7 +6,7 @@ RUN npm install -g turbo
 
 COPY . .
 
-RUN pnpm i --frozen-lockfile
+RUN pnpm i
 
 RUN turbo run build --filter @spotlight/server
 

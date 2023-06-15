@@ -14,6 +14,7 @@
     next: void;
   }>();
 
+  let ref: HTMLAnchorElement;
   let isNavigating = false;
 
   $: length = item?.title?.split(" ").length ?? 0;
@@ -93,6 +94,7 @@
     timeframe: 300,
     minSwipeDistance: 50,
   }}
+  on:dblclick={() => ref.click()}
   on:swipe={(event) => {
     if (
       event.detail.direction !== "top" &&
@@ -118,6 +120,7 @@
         class="flex flex-col md:flex-row w-full items-start md:items-end justify-end"
       >
         <a
+          bind:this={ref}
           class="font-bold hover:underline cursor-pointer"
           href={item.url}
           target="_blank"

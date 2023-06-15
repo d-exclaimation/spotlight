@@ -10,7 +10,7 @@
       window.location.assign(href);
       return;
     }
-    goto(href);
+    goto(href, { noScroll: true, replaceState: true });
   });
 </script>
 

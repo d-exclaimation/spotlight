@@ -23,6 +23,12 @@
 </script>
 
 <svelte:head>
+  <link rel="preload" as="image" href="/cover/news-1.webp" />
+  <link rel="preload" as="image" href="/cover/news-2.webp" />
+  <link rel="preload" as="image" href="/cover/news-3.webp" />
+  <link rel="preload" as="image" href="/cover/jobs.webp" />
+  <link rel="preload" as="image" href="/cover/ask.webp" />
+  <link rel="preload" as="image" href="/cover/show.webp" />
   <title>Discover</title>
 </svelte:head>
 

@@ -29,7 +29,7 @@
 
 {#if !!$me.data?.user}
   <a
-    class={tw(`relative mt-10 animate-slide-down rounded text-sm font-medium
+    class={tw(`relative mt-10 animate-slide-down rounded font-medium
     text-text [animation-delay:1.5s] before:absolute before:left-0 
     before:top-0 before:h-full before:w-full before:border-b  
     before:border-text before:transition-all before:content-[''] 

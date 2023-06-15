@@ -6,6 +6,10 @@
   const me = createMeQuery();
 </script>
 
+<svelte:head>
+  <title>Account</title>
+</svelte:head>
+
 <div
   class="flex flex-col mt-6 items-start justify-start h-[100vh] overflow-y-scroll w-full px-6 max-w-2xl bg-background md:border-x border-white/40"
   in:enter
@@ -68,7 +72,7 @@
             value={`Hello there! I'm ${$me.data.user.username}`}
           />
 
-          <div class="w-full grid grid-cols-2 gap-4 md:gap-8">
+          <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
             <Info icon="📬" label="Email" value={$me.data.user.email} />
             <Info icon="🏖️" label="Location" value="Earth" />
             <Info icon="🏂" label="Hobby" value="Sleeping" />

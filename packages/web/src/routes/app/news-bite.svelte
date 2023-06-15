@@ -74,8 +74,8 @@
 <div
   class={tw(
     `flex flex-col relative justify-end
-    w-full h-[70vh] md:h-[75vh] text-text
-    break-words font-bold gap-2 bg-cover md:gap-4 
+    w-full h-[85dvh] md:h-[80vh] text-text
+    break-words gap-2 bg-cover md:gap-4 
     rounded-lg transition-all duration-500 ease-in-out
     cursor-grab active:cursor-grabbing select-none
     after:absolute after:inset-0 after:z-10 after:rounded-lg
@@ -111,23 +111,29 @@
   >
     <span class={tw("max-w-full break-words", size)}>{item.title}</span>
 
-    <div class="flex flex-col w-full items-center justify-center">
-      <div class="flex flex-row w-full items-end justify-between">
-        <span class="text-xs md:text-sm">
-          {item.type} by {item.user ?? "anonymous"}
-        </span>
-      </div>
-      <div class="flex flex-row w-full items-end justify-between">
-        <span class="text-xs md:text-sm font-normal">
-          {item.time_ago}
-        </span>
+    <div
+      class="flex flex-col md:flex-row-reverse w-full items-end justify-center"
+    >
+      <div
+        class="flex flex-col md:flex-row w-full items-start md:items-end justify-end"
+      >
         <a
-          class="text-xs md:text-sm hover:underline cursor-pointer"
+          class="font-bold hover:underline cursor-pointer"
           href={item.url}
           target="_blank"
         >
           {item.domain || "news.ycombinator.com"}
         </a>
+      </div>
+      <div
+        class="flex flex-row md:flex-col w-full gap-2 md:gap-0 items-start md:justify-end"
+      >
+        <span class="text-xs md:text-sm font-medium md:font-bold">
+          {item.type} by {item.user ?? "anonymous"}
+        </span>
+        <span class="text-xs md:text-sm font-normal">
+          {item.time_ago}
+        </span>
       </div>
     </div>
   </div>

@@ -15,7 +15,7 @@ const server = createHTTPServer({
     ],
   }),
   createContext: ({ req }) => {
-    console.log(`📬 ${req.method} :: ${req.url}`);
+    console.log(`-- 📬 ${req.method} :: ${req.url}`);
     return {
       headers: req.headers,
     };

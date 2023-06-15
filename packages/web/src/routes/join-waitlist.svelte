@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createMeQuery } from "@/lib/api/me";
   import { trpc } from "@/lib/api/trpc";
   import Button from "@/lib/components/button.svelte";
   import Dialog from "@/lib/components/dialog.svelte";
@@ -11,6 +12,7 @@
   let email = "";
 
   const client = useQueryClient();
+  const me = createMeQuery();
   const mutation = createMutation({
     mutationKey: ["waitlist", "join"],
     mutationFn: trpc.preregister.mutate,
@@ -25,17 +27,31 @@
   });
 </script>
 
-<button
-  class={tw(`relative mt-10 animate-slide-down rounded text-sm font-medium
-  text-text [animation-delay:1.5s] before:absolute before:left-0 
-  before:top-0 before:h-full before:w-full before:border-b  
-  before:border-text before:transition-all before:content-[''] 
-  hover:before:scale-x-100 active:before:scale-x-100 md:mt-16 md:text-base 
-  md:before:scale-x-0 md:before:border-b-2`)}
-  on:click={() => (show = true)}
->
-  Sign up for the waitlist
-</button>
+{#if !!$me.data?.user}
+  <a
+    class={tw(`relative mt-10 animate-slide-down rounded text-sm font-medium
+    text-text [animation-delay:1.5s] before:absolute before:left-0 
+    before:top-0 before:h-full before:w-full before:border-b  
+    before:border-text before:transition-all before:content-[''] 
+    hover:before:scale-x-100 active:before:scale-x-100 md:mt-16 md:text-base 
+    md:before:scale-x-0 md:before:border-b-2`)}
+    href="/app"
+  >
+    Open &rarr;
+  </a>
+{:else}
+  <button
+    class={tw(`relative mt-10 animate-slide-down rounded text-sm font-medium
+    text-text [animation-delay:1.5s] before:absolute before:left-0 
+    before:top-0 before:h-full before:w-full before:border-b  
+    before:border-text before:transition-all before:content-[''] 
+    hover:before:scale-x-100 active:before:scale-x-100 md:mt-16 md:text-base 
+    md:before:scale-x-0 md:before:border-b-2`)}
+    on:click={() => (show = true)}
+  >
+    Sign up for the waitlist
+  </button>
+{/if}
 
 <Dialog bind:show>
   <div

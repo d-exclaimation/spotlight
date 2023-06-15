@@ -32,7 +32,7 @@
   out:exit
 >
   <h1
-    class="pt-8 pb-4 p-2 text-2xl font-bold z-20 sticky top-0 bg-background/75 text-text backdrop-blur border-b border-black/50 w-full"
+    class="pt-8 pb-4 p-2 text-2xl font-bold z-30 sticky top-0 bg-background/75 text-text backdrop-blur border-b border-black/50 w-full"
   >
     Discover
   </h1>

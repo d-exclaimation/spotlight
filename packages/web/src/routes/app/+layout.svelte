@@ -44,7 +44,7 @@
       transition focus-visible:outline-2 outline-sky-400 
       [-webkit-tap-highlight-color:transparent]`)}
       href={path}
-      data-sveltekit-preload-data
+      data-sveltekit-preload-code
     >
       {#if $page.url.pathname === path}
         <span

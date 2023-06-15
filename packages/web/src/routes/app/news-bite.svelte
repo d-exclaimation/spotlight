@@ -32,14 +32,27 @@
       ? "text-lg md:text-2xl"
       : "text-base md:text-xl";
 
+  $: filter =
+    item.type === "ask"
+      ? "after:bg-orange-500/5"
+      : item.type === "job"
+      ? "after:bg-emerald-500/5"
+      : item.title.startsWith("Show HN") || item.title.startsWith("Tell HN")
+      ? "after:bg-rose-500/5"
+      : "after:bg-indigo-500/5";
+
   $: bg =
     item.type === "ask"
-      ? "bg-orange-600 saturate-[.75]"
+      ? "bg-[url('/cover/ask.webp')]"
       : item.type === "job"
-      ? "bg-emerald-600 saturate-[.75]"
-      : item.title.startsWith("Show HN")
-      ? "bg-amber-600 saturate-[.75]"
-      : "bg-primary2";
+      ? "bg-[url('/cover/jobs.webp')]"
+      : item.title.startsWith("Show HN") || item.title.startsWith("Tell HN")
+      ? "bg-[url('/cover/show.webp')]"
+      : item.id % 3 === 0
+      ? "bg-[url('/cover/news-1.webp')]"
+      : item.id % 3 === 1
+      ? "bg-[url('/cover/news-2.webp')]"
+      : "bg-[url('/cover/news-3.webp')]";
 
   beforeNavigate(() => {
     isNavigating = true;
@@ -60,12 +73,15 @@
 
 <div
   class={tw(
-    `flex flex-col relative justify-between
-    max-w-lg w-full h-[70vh] md:h-[75vh] text-white 
-    break-words font-bold rounded-2xl py-10 px-8
-    transition-all duration-500 ease-in-out
-    cursor-grab active:cursor-grabbing select-none`,
-    bg
+    `flex flex-col relative justify-end
+    w-full h-[70vh] md:h-[75vh] text-text
+    break-words font-bold gap-2 bg-cover md:gap-4 
+    rounded-lg transition-all duration-500 ease-in-out
+    cursor-grab active:cursor-grabbing select-none
+    after:absolute after:inset-0 after:z-10 after:rounded-lg
+    after:bg-indigo-500/10`,
+    bg,
+    filter
   )}
   in:smartfly={{
     y: direction === "top" ? "100%" : "-100%",
@@ -88,24 +104,30 @@
     dispatch(direction === "top" ? "next" : "prev");
   }}
 >
-  <span class={tw("max-w-full break-words", size)}>{item.title}</span>
+  <div
+    class={tw(`flex flex-col w-full items-center py-10
+    px-8 justify-end gap-4 md:gap-6 bg-gradient-to-t
+    from-background from-65% via-background/50 relative z-20`)}
+  >
+    <span class={tw("max-w-full break-words", size)}>{item.title}</span>
 
-  <div class="flex flex-col w-full items-center justify-center">
-    <div class="flex flex-row w-full items-end justify-between">
-      <span class="text-xs md:text-sm">
-        by {item.user ?? "anonymous"}
-      </span>
-    </div>
-    <div class="flex flex-row w-full items-end justify-between">
-      <span class="text-xs md:text-sm font-normal">
-        {item.time_ago}
-      </span>
-      <a
-        class="text-xs md:text-sm hover:underline cursor-pointer"
-        href={item.url}
-      >
-        {item.domain || "news.ycombinator.com"}
-      </a>
+    <div class="flex flex-col w-full items-center justify-center">
+      <div class="flex flex-row w-full items-end justify-between">
+        <span class="text-xs md:text-sm">
+          {item.type} by {item.user ?? "anonymous"}
+        </span>
+      </div>
+      <div class="flex flex-row w-full items-end justify-between">
+        <span class="text-xs md:text-sm font-normal">
+          {item.time_ago}
+        </span>
+        <a
+          class="text-xs md:text-sm hover:underline cursor-pointer"
+          href={item.url}
+        >
+          {item.domain || "news.ycombinator.com"}
+        </a>
+      </div>
     </div>
   </div>
 </div>

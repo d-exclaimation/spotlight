@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { createMeQuery } from "@/lib/api/me";
-  import Redirect from "@/lib/components/redirect.svelte";
   import { tw } from "@/lib/tailwind";
   import { onDestroy, onMount } from "svelte";
   import { fly } from "svelte/transition";
@@ -9,7 +7,6 @@
 
   const PHRASES = ["Streamlined", "Supercharged", "Simplified"];
   const DELAY = 5_000;
-  const me = createMeQuery();
 
   let ref = undefined as number | NodeJS.Timeout | undefined;
   let index = 0;
@@ -79,7 +76,3 @@
     <JoinWaitlist />
   </div>
 </div>
-
-{#if !$me.isLoading && $me.data && $me.data.user}
-  <Redirect href="/app" />
-{/if}

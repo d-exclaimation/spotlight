@@ -9,7 +9,7 @@ export const Env = z.object({
     .string()
     .transform((secret) => new TextEncoder().encode(secret)),
   EMAIL_KEY: z.string(),
-  EMAIL_ADDRESS: z.string().email().catch("onboarding@resend.dev"),
+  EMAIL_ADDRESS: z.string().catch("onboarding@resend.dev"),
 });
 
 export const env = Env.parse(process.env);

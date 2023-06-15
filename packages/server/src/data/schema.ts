@@ -39,7 +39,7 @@ export const codes = pgTable(
   {
     code: char("code", { length: 8 }).notNull().primaryKey(),
     userId: uuid("user_id").notNull(),
-    createdAt: timestamp("created_at").defaultNow(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
   },
   (table) => ({
     userCodeIdx: uniqueIndex("user_code_idx").on(table.userId, table.code),

@@ -15,6 +15,13 @@
       "when": 1686757292603,
       "tag": "0001_shallow_roland_deschain",
       "breakpoints": false
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1686786213442,
+      "tag": "0002_groovy_lady_vermin",
+      "breakpoints": false
     }
   ]
 }

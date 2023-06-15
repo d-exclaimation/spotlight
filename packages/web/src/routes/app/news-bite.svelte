@@ -106,7 +106,7 @@
 >
   <div
     class={tw(`flex flex-col w-full items-center py-10
-    px-8 justify-end gap-4 md:gap-6 bg-gradient-to-t
+    px-4 justify-end gap-4 md:gap-6 bg-gradient-to-t md:px-8
     from-background from-65% via-background/50 relative z-20`)}
   >
     <span class={tw("max-w-full break-words", size)}>{item.title}</span>
@@ -124,6 +124,7 @@
         <a
           class="text-xs md:text-sm hover:underline cursor-pointer"
           href={item.url}
+          target="_blank"
         >
           {item.domain || "news.ycombinator.com"}
         </a>

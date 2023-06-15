@@ -19,7 +19,7 @@
   href={item.url}
   target="_blank"
 >
-  <div class="flex items-start justify-center mr-4">
+  <div class="flex items-start justify-center mr-2 md:mr-4">
     {#if item.type === "ask"}
       <svg
         class="w-8 aspect-square md:w-10 rounded-full fill-orange-600 saturate-[.75]"
@@ -78,9 +78,7 @@
         {item.type}
       </span>
     </div>
-    <span
-      class="break-words text-sm md:text-base max-w-full group-hover:underline"
-    >
+    <span class="break-words text-base max-w-full group-hover:underline">
       {item.title}
     </span>
     <div

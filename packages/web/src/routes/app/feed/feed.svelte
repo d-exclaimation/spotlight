@@ -20,7 +20,7 @@
   <div class="flex items-start justify-center mr-4">
     {#if item.type === "ask"}
       <svg
-        class="w-8 aspect-square md:w-10 rounded-full fill-orange-60a0 saturate-[.75]"
+        class="w-8 aspect-square md:w-10 rounded-full fill-orange-600 saturate-[.75]"
         viewBox="-1 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -40,7 +40,7 @@
       </svg>
     {:else if item.title.startsWith("Show HN")}
       <svg
-        class="w-8 aspect-square md:w-10 rounded-full fill-indigo-600 saturate-[.75"
+        class="w-8 aspect-square md:w-10 rounded-full fill-indigo-600 saturate-[.75]"
         viewBox="-1 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
       >

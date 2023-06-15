@@ -6,6 +6,7 @@
   interface $$Props extends HTMLInputAttributes {
     id: string;
     value: string;
+    label?: string;
     classes?: { root?: string; label?: string; input?: string };
   }
 
@@ -22,18 +23,12 @@
 >
   <label
     class={tw(
-      "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+      "text-sm text-text font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
       classes?.label
     )}
     for={id}
   >
-    Email
+    {$$restProps.label || "Email"}
   </label>
-  <Input
-    {...$$restProps}
-    {id}
-    class={classes?.input}
-    bind:value
-    placeholder="Enter your email address"
-  />
+  <Input {...$$restProps} {id} class={classes?.input} bind:value />
 </div>

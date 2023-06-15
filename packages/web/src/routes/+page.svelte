@@ -5,6 +5,7 @@
   import { onDestroy, onMount } from "svelte";
   import { fly } from "svelte/transition";
   import JoinWaitlist from "./join-waitlist.svelte";
+  import Navbar from "./navbar.svelte";
 
   const PHRASES = ["Streamlined", "Supercharged", "Simplified"];
   const DELAY = 5_000;
@@ -34,25 +35,22 @@
 <div
   class="flex flex-col items-start justify-start min-h-screen min-w-[100vw] bg-gradient-to-br from-background via-background to-secondary"
 >
-  <nav class="flex items-center justify-start min-w-full px-6 md:px-10 py-6">
-    <a class="flex items-center justify-center gap-1 md:gap-2" href="/">
-      <img class="w-4 h-4 md:w-6 md:h-6" src="/spotlight.svg" alt="brand" />
-      <h3 class="font-semibold text-base md:text-xl">Spotlight</h3>
-    </a>
-  </nav>
+  <Navbar />
 
   <!-- Main -->
   <div class="flex flex-col items-center justify-center h-[75vh] w-full">
     <div class="mt-5 flex flex-col items-center justify-center md:mt-8">
       <div class="flex items-center justify-center gap-3 md:gap-4">
-        <span class="animate-slide-down text-4xl font-bold md:text-8xl">
+        <span
+          class="animate-slide-down text-text text-4xl font-bold md:text-8xl"
+        >
           Browsing
         </span>
         <div
-          class={tw(`relative animate-slide-up
+          class={tw(`relative animate-slide-up text-text
           font-bold [animation-delay:0.5s] before:absolute
           before:left-0 before:top-0 before:h-full before:w-full 
-          before:animate-expand-right before:border-b before:border-black 
+          before:animate-expand-right before:border-b before:border-text 
           before:content-[''] before:[animation-delay:1.25s]
           md:text-8xl md:before:border-b-2 min-w-max text-4xl
           flex items-center justify-center`)}

@@ -14,7 +14,9 @@ export const waitlist = pgTable(
     id: uuid("id").defaultRandom().primaryKey(),
     email: text("email").notNull(),
     note: text("note").default(""),
-    createdAt: timestamp("created_at").defaultNow(),
+    createdAt: timestamp("created_at", { withTimezone: false })
+      .notNull()
+      .defaultNow(),
   },
   (table) => ({
     emailIdx: uniqueIndex("email_idx").on(table.email),
@@ -27,7 +29,9 @@ export const users = pgTable(
     id: uuid("id").defaultRandom().primaryKey(),
     username: text("username").notNull(),
     email: text("email").notNull(),
-    createdAt: timestamp("created_at").defaultNow(),
+    createdAt: timestamp("created_at", { withTimezone: false })
+      .notNull()
+      .defaultNow(),
   },
   (table) => ({
     emailIdx: uniqueIndex("email_idx").on(table.email),
@@ -39,7 +43,9 @@ export const codes = pgTable(
   {
     code: char("code", { length: 8 }).notNull().primaryKey(),
     userId: uuid("user_id").notNull(),
-    createdAt: timestamp("created_at").notNull().defaultNow(),
+    createdAt: timestamp("created_at", { withTimezone: false })
+      .notNull()
+      .defaultNow(),
   },
   (table) => ({
     userCodeIdx: uniqueIndex("user_code_idx").on(table.userId, table.code),

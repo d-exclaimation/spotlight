@@ -5,16 +5,20 @@
   import Textfield from "@/lib/components/textfield.svelte";
   import { tw } from "@/lib/tailwind";
   import { auth } from "@/lib/utils/storage";
-  import { createMutation } from "@tanstack/svelte-query";
+  import { createMutation, useQueryClient } from "@tanstack/svelte-query";
 
   let show = false;
   let email = "";
 
+  const client = useQueryClient();
   const mutation = createMutation({
     mutationKey: ["waitlist", "join"],
     mutationFn: trpc.preregister.mutate,
-    onSuccess({ token }) {
-      auth.set({ token });
+    onSuccess(res) {
+      if (res.token) {
+        auth.set({ token: res.token });
+        client.invalidateQueries(["users", "me"]);
+      }
       show = false;
       email = "";
     },
@@ -23,22 +27,23 @@
 
 <button
   class={tw(`relative mt-10 animate-slide-down rounded text-sm font-medium
-  text-blue-950 [animation-delay:1.5s] before:absolute before:left-0 
-  before:top-0 before:h-full before:w-full before:border-b 
-  before:border-black before:transition-all before:content-[''] 
+  text-text [animation-delay:1.5s] before:absolute before:left-0 
+  before:top-0 before:h-full before:w-full before:border-b  
+  before:border-text before:transition-all before:content-[''] 
   hover:before:scale-x-100 active:before:scale-x-100 md:mt-16 md:text-base 
   md:before:scale-x-0 md:before:border-b-2`)}
   on:click={() => (show = true)}
 >
-  Coming soon
+  Sign up for the waitlist
 </button>
 
 <Dialog bind:show>
   <div
-    class="flex flex-col rounded-md p-6 shadow bg-white max-w-[90vw] w-[32rem]"
+    class="flex flex-col rounded-md p-6 shadow bg-black max-w-[90vw] w-[32rem]"
   >
     <div class="flex items-start w-full justify-between">
-      <span class="text-xl font-semibold"> Join the waitlist </span>
+      <span class="text-xl font-semibold text-text"> Join the waitlist </span>
+
       <button on:click={() => (show = false)}>
         <svg
           class="w-6 h-6"
@@ -56,15 +61,22 @@
         </svg>
       </button>
     </div>
+    <span class="text-text/75 text-sm md:text-base mt-1">
+      Sign up for the waitlist to get early access to the app.
+    </span>
     <div class="flex flex-col items-center justify-center mt-4">
-      <Textfield id="email" bind:value={email} />
+      <Textfield
+        id="email"
+        bind:value={email}
+        placeholder="Enter your email address"
+      />
 
       <div class="flex justify-between items-center w-full mt-2">
-        <Button class="bg-accent" on:click={() => (show = false)}>
+        <Button class="bg-red-700 text-text" on:click={() => (show = false)}>
           Cancel
         </Button>
         <Button
-          class="bg-primary"
+          class="bg-accent text-text font-medium"
           on:click={() => {
             $mutation.mutate({ email });
           }}

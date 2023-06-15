@@ -10,7 +10,7 @@
       : latest.type === "job"
       ? "bg-emerald-600 saturate-[.75]"
       : latest.title.startsWith("Show HN")
-      ? "bg-purple-600 saturate-[.75]"
+      ? "bg-amber-600 saturate-[.75]"
       : "bg-primary2";
 </script>
 

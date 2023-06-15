@@ -1,9 +1,5 @@
-import { news } from "@/lib/api/news";
+import type { Config } from "@sveltejs/adapter-vercel";
 
-export async function load({ fetch, parent }) {
-  const { queryClient } = await parent();
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: ["news"],
-    queryFn: async () => news({ page: 1 }, fetch),
-  });
-}
+export const config = {
+  runtime: "edge",
+} satisfies Config;

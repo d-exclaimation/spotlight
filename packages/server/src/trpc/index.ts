@@ -49,7 +49,7 @@ export const app = router({
         columns: { email: true, id: true },
       });
       if (!user) {
-        return { user: undefined };
+        return { user: null };
       }
 
       const existingCode = await db.query.codes.findFirst({
@@ -73,7 +73,10 @@ export const app = router({
 
       await db.transaction(async (tx) => {
         await tx.delete(codes).where(eq(codes.userId, user.id)).execute();
-        await tx.insert(codes).values({ code, userId: user.id }).execute();
+        await tx
+          .insert(codes)
+          .values({ code, userId: user.id, createdAt: new Date() })
+          .execute();
       });
 
       await mail({
@@ -98,13 +101,13 @@ export const app = router({
       });
 
       if (!code) {
-        return { user: undefined, token: undefined };
+        return { user: null, token: null };
       }
 
       await db.delete(codes).where(eq(codes.userId, code.userId)).execute();
 
       if (hoursSince(code.createdAt) >= 2) {
-        return { user: undefined, token: undefined };
+        return { user: null, token: null };
       }
 
       const token = await sign({ id: code.user.id });
@@ -123,13 +126,14 @@ export const app = router({
       });
 
       if (existing) {
-        return { token: undefined };
+        return { token: null };
       }
 
       const rows = await db
         .insert(waitlist)
         .values({
           email: input.email,
+          createdAt: new Date(),
         })
         .returning();
       const token = await sign({ id: rows[0].id });

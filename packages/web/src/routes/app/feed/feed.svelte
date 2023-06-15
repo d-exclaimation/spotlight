@@ -8,19 +8,19 @@
     item.type === "ask"
       ? "text-orange-600"
       : item.type === "job"
-      ? "text-red-600"
+      ? "text-emerald-600"
       : "text-primary2";
 </script>
 
 <a
-  class="flex flex-row group items-start justify-start w-full p-2 md:p-4 bg-background hover:bg-slate-50 active:bg-slate-50"
+  class="flex flex-row group items-start justify-start w-full p-2 md:p-4 bg-background hover:bg-neutral-900 active:bg-neutral-900"
   href={item.url}
   target="_blank"
 >
   <div class="flex items-start justify-center mr-4">
     {#if item.type === "ask"}
       <svg
-        class="w-8 aspect-square md:w-10 rounded-full fill-orange-600 saturate-[.75]"
+        class="w-8 aspect-square md:w-10 rounded-full fill-orange-60a0 saturate-[.75]"
         viewBox="-1 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -60,7 +60,7 @@
       >
     {/if}
   </div>
-  <div class="flex-1 flex flex-col items-start justify-start">
+  <div class="flex-1 flex flex-col items-start justify-start text-text">
     <div
       class="flex items-center justify-start w-full text-xs md:text-base gap-2"
     >
@@ -72,7 +72,7 @@
         {item.time_ago}
       </span>
       <span>·</span>
-      <span class={tw("capitalize font-extralight", text)}>
+      <span class={tw("capitalize text-xs md:text-sm font-medium", text)}>
         {item.type}
       </span>
     </div>
@@ -82,7 +82,7 @@
       {item.title}
     </span>
     <div
-      class="flex items-center justify-start text-xs gap-3 md:text-sm py-1 text-black/75"
+      class="flex items-center justify-start text-xs gap-3 md:text-sm py-1 text-text/75"
     >
       <div class="flex items-center justify-center">
         <img class="w-3 aspect-square md:w-4 mr-2" src="/like.svg" alt="like" />

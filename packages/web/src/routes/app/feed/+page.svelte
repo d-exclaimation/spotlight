@@ -26,13 +26,13 @@
 </svelte:head>
 
 <div
-  class="flex flex-col mt-6 items-start justify-start h-[100vh] overflow-y-scroll w-full px-6 max-w-2xl bg-white md:border-x"
+  class="flex flex-col mt-6 items-start justify-start h-[100vh] overflow-y-scroll w-full px-6 max-w-2xl bg-background md:border-x border-white/40"
   bind:this={view}
   in:enter
   out:exit
 >
   <h1
-    class="pt-8 pb-4 p-2 text-2xl font-bold sticky top-0 bg-white/75 backdrop-blur border-b border-black/50 w-full"
+    class="pt-8 pb-4 p-2 text-2xl font-bold sticky top-0 bg-background/75 text-text backdrop-blur border-b border-black/50 w-full"
   >
     Feeds
   </h1>
@@ -42,17 +42,19 @@
     <span>Error: {$query.error?.toString()}</span>
   {:else if paginated.length === 0}
     <div class="flex flex-col items-center justify-center w-full py-6 h-4/5">
-      <span class="font-semibold text-lg">No news</span>
-      <span class="font-medium text-black/75">
+      <span class="font-semibold text-lg text-text">No news</span>
+      <span class="font-medium text-text/75">
         There's nothing at the moment
       </span>
     </div>
   {:else}
     {@const [latest, ...rest] = paginated}
-    <div class="flex flex-col items-center justify-center w-full py-6 divide-y">
+    <div
+      class="flex flex-col items-center justify-center w-full py-6 divide-y divide-white/40"
+    >
       <div class="flex flex-col items-center justify-center w-full p-2 md:p-4">
         <div
-          class="flex w-full items-center justify-start font-semibold text-lg"
+          class="flex w-full items-center justify-start font-semibold text-lg text-text"
         >
           Latest
         </div>

@@ -26,7 +26,7 @@
 
 {#if show}
   <div
-    class="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm select-none outline-none"
+    class="fixed inset-0 z-40 bg-white/10 backdrop-blur-sm select-none outline-none"
     in:fade={{ duration: 300 }}
     out:fade={{ duration: 150 }}
     on:click={close}

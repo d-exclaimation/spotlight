@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import { createMeQuery } from "@/lib/api/me";
   import { trpc } from "@/lib/api/trpc";
   import Button from "@/lib/components/button.svelte";
@@ -30,10 +31,11 @@
       if (res.token) {
         auth.set({ token: res.token });
         client.invalidateQueries(["users", "me"]);
+        goto("/app");
+        email = "";
+        code = "";
+        submitted = false;
       }
-      email = "";
-      code = "";
-      submitted = false;
     },
   });
 </script>
@@ -44,7 +46,7 @@
   <Navbar />
 
   <div class="flex flex-col items-center justify-center h-[80vh] w-full">
-    <div class="max-w-md w-[90vw] flex flex-col">
+    <div class="max-w-md w-[85vw] flex flex-col">
       {#if submitted}
         <div
           class="flex flex-col w-full"

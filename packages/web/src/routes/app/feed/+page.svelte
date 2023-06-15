@@ -32,7 +32,7 @@
   out:exit
 >
   <h1
-    class="pt-8 pb-4 p-2 text-2xl font-bold sticky top-0 bg-background/75 text-text backdrop-blur border-b border-black/50 w-full"
+    class="pt-8 pb-4 p-2 text-2xl z-20 font-bold sticky top-0 bg-background/75 text-text backdrop-blur border-b border-black/50 w-full"
   >
     Feeds
   </h1>

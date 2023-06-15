@@ -74,4 +74,3 @@
     {/if}
   </div>
 </div>
-<div class="h-16 flex items-center w-full justify-center" />

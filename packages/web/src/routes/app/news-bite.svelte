@@ -61,7 +61,7 @@
 <div
   class={tw(
     `flex flex-col relative justify-between
-    max-w-lg w-[90vw] h-[75vh] text-white 
+    max-w-lg w-full h-[75vh] text-white 
     break-words font-bold rounded-2xl py-10 px-8
     transition-all duration-500 ease-in-out
     cursor-grab active:cursor-grabbing select-none`,

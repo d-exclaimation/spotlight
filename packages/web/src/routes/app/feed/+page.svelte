@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { news } from "@/lib/api/news";
+  import { feeds } from "@/lib/api/news";
   import { dedup } from "@/lib/utils";
   import { enter, exit } from "@/lib/utils/transition";
   import { createInfiniteQuery } from "@tanstack/svelte-query";
@@ -9,7 +9,7 @@
 
   const query = createInfiniteQuery({
     queryKey: ["news"],
-    queryFn: ({ pageParam }) => news({ page: pageParam }),
+    queryFn: ({ pageParam }) => feeds({ page: pageParam }),
     getNextPageParam: ({ page }) => page + 1,
   });
 
@@ -37,9 +37,19 @@
     Feeds
   </h1>
   {#if $query.isLoading || $query.isInitialLoading}
-    <span>Loading ...</span>
+    <div class="flex flex-col items-center justify-center w-full py-6 h-4/5">
+      <span class="font-semibold text-lg text-text">Loading</span>
+      <span class="font-bold text-text/75 animate-pulse text-xl md:text-2xl">
+        ...
+      </span>
+    </div>
   {:else if $query.error}
-    <span>Error: {$query.error?.toString()}</span>
+    <div class="flex flex-col items-center justify-center w-full py-6 h-4/5">
+      <span class="font-semibold text-lg text-text">No news</span>
+      <span class="font-medium text-text/75">
+        Error: {$query.error?.toString()}
+      </span>
+    </div>
   {:else if paginated.length === 0}
     <div class="flex flex-col items-center justify-center w-full py-6 h-4/5">
       <span class="font-semibold text-lg text-text">No news</span>

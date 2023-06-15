@@ -77,6 +77,7 @@
         </Button>
         <Button
           class="bg-accent text-text font-medium"
+          disabled={!email.length || $mutation.isLoading}
           on:click={() => {
             $mutation.mutate({ email });
           }}

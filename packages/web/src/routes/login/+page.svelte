@@ -67,6 +67,7 @@
           </div>
           <Button
             class="bg-accent text-text font-medium"
+            disabled={!code.length || $login2.isLoading}
             on:click={() => $login2.mutate({ code })}
           >
             Login
@@ -93,6 +94,7 @@
           </div>
           <Button
             class="bg-accent text-text font-medium"
+            disabled={!email.length || $login.isLoading}
             on:click={() => $login.mutate({ email })}
           >
             Continue

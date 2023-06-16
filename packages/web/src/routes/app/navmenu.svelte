@@ -29,12 +29,11 @@
 </script>
 
 <nav
-  class={tw(`fixed bottom-5 right-2 
-  md:right-[unset] bg-background/10 z-50 
-  rounded-full gap-4 shadow-lg p-2 
-  backdrop-blur-md flex flex-col-reverse
-  items-end md:flex-row md:items-center 
-  justify-center ring-[1px]ring-text/30`)}
+  class={tw(`flex fixed bottom-5 right-3
+  md:right-[unset] shadow-lg bg-background/10 
+  z-50 rounded-full gap-4 p-2 backdrop-blur-md  
+  flex-col-reverse md:flex-row items-center 
+  justify-center ring-[1px] ring-text/20`)}
 >
   {#each ROUTES as { name, path } (path)}
     <a

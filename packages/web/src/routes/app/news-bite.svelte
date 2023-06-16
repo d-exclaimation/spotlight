@@ -80,7 +80,7 @@
 <div
   class={tw(
     `flex flex-col relative justify-end
-    w-full h-[85dvh] md:h-[80vh] text-text
+    w-full h-[87dvh] md:h-[82vh] text-text
     break-words gap-2 bg-cover md:gap-4 
     rounded-lg transition-all duration-500 ease-in-out
     cursor-grab active:cursor-grabbing select-none
@@ -101,14 +101,16 @@
   }}
   on:dblclick={() => ref.click()}
   on:swipe={(event) => {
-    if (
-      event.detail.direction !== "top" &&
-      event.detail.direction !== "bottom"
-    ) {
+    const dir = event.detail.direction;
+    if (dir === "right") {
+      ref.click();
       return;
     }
-    direction = event.detail.direction;
-    dispatch(direction === "top" ? "next" : "prev");
+    if (dir !== "top" && dir !== "bottom") {
+      return;
+    }
+    direction = dir;
+    dispatch(dir === "top" ? "next" : "prev");
   }}
 >
   <div
@@ -116,21 +118,41 @@
     px-4 justify-end gap-4 md:gap-6 bg-gradient-to-t md:px-8
     from-background from-65% via-background/50 relative z-20`)}
   >
-    <span class={tw("max-w-full break-words", size)}>{item.title}</span>
+    <div class="w-full flex items-center">
+      <span
+        class={tw(
+          "max-w-[90%] break-words text-left [text-wrap:balance]",
+          size
+        )}
+      >
+        {item.title}
+      </span>
+    </div>
 
     <div
       class="flex flex-col md:flex-row-reverse w-full items-end justify-center"
     >
-      <div
-        class="flex flex-col md:flex-row w-full items-start md:items-end justify-end"
-      >
+      <div class="flex flex-col md:flex-row w-full md:items-end justify-end">
         <a
           bind:this={ref}
-          class="font-bold hover:underline cursor-pointer"
+          class="font-bold hover:underline md:text-lg cursor-pointer flex items-center gap-1"
           href={link}
           target="_blank"
         >
           {item.domain || "news.ycombinator.com"}
+          <svg
+            class="w-3 aspect-square md:w-4 mt-0.5 md:mt-1 animate-bounce-r"
+            viewBox="0 0 800 800"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M650 400L150 400M150 400L350 600M150 400L350 200"
+              stroke="white"
+              stroke-width="66.6667"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
         </a>
       </div>
       <div

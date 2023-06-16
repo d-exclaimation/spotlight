@@ -135,7 +135,7 @@
       <div class="flex flex-col md:flex-row w-full md:items-end justify-end">
         <a
           bind:this={ref}
-          class="font-bold hover:underline md:text-lg cursor-pointer flex items-center gap-1"
+          class="font-bold hover:underline md:text-lg cursor-pointer flex items-center gap-1 md:gap-2"
           href={link}
           target="_blank"
         >

@@ -81,9 +81,6 @@ importers:
       '@spotlight/server':
         specifier: '*'
         version: link:../server
-      '@sveltejs/adapter-auto':
-        specifier: ^2.0.0
-        version: 2.1.0(@sveltejs/kit@1.20.2)
       '@sveltejs/adapter-vercel':
         specifier: ^3.0.1
         version: 3.0.1(@sveltejs/kit@1.20.2)
@@ -463,15 +460,6 @@ packages:
       domhandler: 5.0.3
       selderee: 0.10.0
     dev: false
-
-  /@sveltejs/adapter-auto@2.1.0(@sveltejs/kit@1.20.2):
-    resolution: {integrity: sha512-o2pZCfATFtA/Gw/BB0Xm7k4EYaekXxaPGER3xGSY3FvzFJGTlJlZjBseaXwYSM94lZ0HniOjTokN3cWaLX6fow==}
-    peerDependencies:
-      '@sveltejs/kit': ^1.0.0
-    dependencies:
-      '@sveltejs/kit': 1.20.2(svelte@3.59.1)(vite@4.3.9)
-      import-meta-resolve: 3.0.0
-    dev: true
 
   /@sveltejs/adapter-vercel@3.0.1(@sveltejs/kit@1.20.2):
     resolution: {integrity: sha512-PBY3YRm7Q7Prax07mxD/rvcho2CntGkYncAIkz2DtG5NTcVG5JZ1RM627it5zYYtc2/RB3YjMkZuCMBqDCiPkA==}
@@ -1712,10 +1700,6 @@ packages:
     dependencies:
       parent-module: 1.0.1
       resolve-from: 4.0.0
-    dev: true
-
-  /import-meta-resolve@3.0.0:
-    resolution: {integrity: sha512-4IwhLhNNA8yy445rPjD/lWh++7hMDOml2eHtd58eG7h+qK3EryMuuRbsHGPikCoAgIkkDnckKfWSk2iDla/ejg==}
     dev: true
 
   /inflight@1.0.6:

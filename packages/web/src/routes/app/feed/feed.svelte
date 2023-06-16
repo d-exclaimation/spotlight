@@ -13,9 +13,10 @@
       ? "text-rose-600"
       : "text-primary2";
 
-  $: link = item.url.startsWith("/item")
-    ? `https://news.ycombinator.com${item.url}`
-    : item.url;
+  $: link =
+    item.url.startsWith("/item?") || item.url.startsWith("item?")
+      ? `https://news.ycombinator.com${item.url}`
+      : item.url;
 </script>
 
 <a

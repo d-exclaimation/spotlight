@@ -55,9 +55,10 @@
       ? "bg-[url('/cover/news-2.webp')]"
       : "bg-[url('/cover/news-3.webp')]";
 
-  $: link = item.url.startsWith("/item")
-    ? `https://news.ycombinator.com${item.url}`
-    : item.url;
+  $: link =
+    item.url.startsWith("/item?") || item.url.startsWith("item?")
+      ? `https://news.ycombinator.com${item.url}`
+      : item.url;
 
   beforeNavigate(() => {
     isNavigating = true;

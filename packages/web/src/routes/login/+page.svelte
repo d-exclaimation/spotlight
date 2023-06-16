@@ -13,7 +13,7 @@
 
   let email = "";
   let code = "";
-  let submitted = true;
+  let submitted = false;
 
   const client = useQueryClient();
   const me = createMeQuery();

@@ -3,6 +3,7 @@
   import { createMeQuery } from "@/lib/api/me";
   import { trpc } from "@/lib/api/trpc";
   import Button from "@/lib/components/button.svelte";
+  import PinInput from "@/lib/components/pin-input.svelte";
   import Redirect from "@/lib/components/redirect.svelte";
   import Textfield from "@/lib/components/textfield.svelte";
   import { auth } from "@/lib/utils/storage";
@@ -12,14 +13,14 @@
 
   let email = "";
   let code = "";
-  let submitted = false;
+  let submitted = true;
 
   const client = useQueryClient();
   const me = createMeQuery();
   const login = createMutation({
     mutationKey: ["login", "first"],
     mutationFn: trpc.login.mutate,
-    onSuccess(res) {
+    onSuccess: (res) => {
       submitted = !!res.user;
     },
   });
@@ -27,11 +28,11 @@
   const login2 = createMutation({
     mutationKey: ["login", "second"],
     mutationFn: trpc.login2.mutate,
-    onSuccess(res) {
+    onSuccess: async (res) => {
       if (res.token) {
         auth.set({ token: res.token });
-        client.invalidateQueries(["users", "me"]);
-        goto("/app");
+        await client.invalidateQueries(["users", "me"]);
+        await goto("/app");
         email = "";
         code = "";
         submitted = false;
@@ -60,12 +61,17 @@
             Enter the code sent to your email
           </span>
           <div class="flex flex-col items-center justify-center mt-4">
-            <Textfield
-              id="code"
-              label="8 digit code"
-              placeholder="Enter the 8 digit code given in your email"
-              bind:value={code}
-            />
+            <div
+              class="flex w-full flex-col items-start justify-center gap-2 md:gap-3"
+            >
+              <label
+                class="text-sm text-text font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                for="code"
+              >
+                8 digit code
+              </label>
+              <PinInput id="code" bind:value={code} length={8} />
+            </div>
           </div>
           <Button
             class="bg-accent text-text font-medium"

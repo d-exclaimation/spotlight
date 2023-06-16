@@ -55,6 +55,10 @@
       ? "bg-[url('/cover/news-2.webp')]"
       : "bg-[url('/cover/news-3.webp')]";
 
+  $: link = item.url.startsWith("/item")
+    ? `https://news.ycombinator.com${item.url}`
+    : item.url;
+
   beforeNavigate(() => {
     isNavigating = true;
   });
@@ -122,7 +126,7 @@
         <a
           bind:this={ref}
           class="font-bold hover:underline cursor-pointer"
-          href={item.url}
+          href={link}
           target="_blank"
         >
           {item.domain || "news.ycombinator.com"}

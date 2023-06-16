@@ -12,11 +12,15 @@
       : item.title.startsWith("Show HN") || item.title.startsWith("Tell HN")
       ? "text-rose-600"
       : "text-primary2";
+
+  $: link = item.url.startsWith("/item")
+    ? `https://news.ycombinator.com${item.url}`
+    : item.url;
 </script>
 
 <a
   class="flex flex-row group items-start justify-start w-full p-2 md:p-4 bg-background hover:bg-neutral-900 active:bg-neutral-900"
-  href={item.url}
+  href={link}
   target="_blank"
 >
   <div class="flex items-start justify-center mr-2 md:mr-4">

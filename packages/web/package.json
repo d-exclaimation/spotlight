@@ -11,7 +11,6 @@
 	},
 	"devDependencies": {
 		"@spotlight/server": "*",
-		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/adapter-vercel": "^3.0.1",
 		"@sveltejs/kit": "^1.5.0",
 		"autoprefixer": "^10.4.14",

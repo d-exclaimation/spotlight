@@ -16,10 +16,10 @@
   const mutation = createMutation({
     mutationKey: ["waitlist", "join"],
     mutationFn: trpc.preregister.mutate,
-    onSuccess(res) {
+    onSuccess: async (res) => {
       if (res.token) {
         auth.set({ token: res.token });
-        client.invalidateQueries(["users", "me"]);
+        await client.invalidateQueries(["users", "me"]);
       }
       show = false;
       email = "";

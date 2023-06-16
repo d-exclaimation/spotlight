@@ -1,13 +1,17 @@
 <script lang="ts">
+  import Button from "@/lib/components/button.svelte";
   import { tw } from "@/lib/tailwind";
   import { onDestroy, onMount } from "svelte";
   import { fly } from "svelte/transition";
+  import FeatureInfo from "./feature-info.svelte";
+  import Feature from "./feature.svelte";
   import JoinWaitlist from "./join-waitlist.svelte";
   import Navbar from "./navbar.svelte";
 
   const PHRASES = ["Streamlined", "Supercharged", "Simplified"];
   const DELAY = 5_000;
 
+  let feature: HTMLElement;
   let ref = undefined as number | NodeJS.Timeout | undefined;
   let index = 0;
 
@@ -30,12 +34,12 @@
 </svelte:head>
 
 <div
-  class="flex flex-col items-start justify-start min-h-screen min-w-[100vw] bg-gradient-to-br from-background via-background to-secondary"
+  class="flex flex-col flex-shrink-0 items-start justify-start min-h-screen min-w-[100vw] bg-gradient-to-br from-background via-background to-secondary"
 >
   <Navbar />
 
   <!-- Main -->
-  <div class="flex flex-col items-center justify-center h-[75vh] w-full">
+  <div class="flex flex-col items-center justify-center h-[80vh] w-full">
     <div class="mt-5 flex flex-col items-center justify-center md:mt-8">
       <div class="flex items-center justify-center gap-3 md:gap-4">
         <span
@@ -73,6 +77,129 @@
     </div>
 
     <!-- Coming soon button -->
-    <JoinWaitlist />
+    <JoinWaitlist
+      on:learn={() => feature.scrollIntoView({ behavior: "smooth" })}
+    />
   </div>
+
+  <div bind:this={feature} class="h-[30vh]" />
+
+  <!-- Feature 1: Spotlight's Glance -->
+  <div class="flex flex-col items-center justify-center w-full">
+    <span class="text-text text-2xl font-bold md:text-5xl">
+      Stay informed at a
+      <span class="text-sky-400">Glance</span>
+    </span>
+    <span
+      class="text-text/75 font-medium text-sm max-w-[90%] md:text-2xl mt-2 md:mt-3 text-center"
+    >
+      Say hello to Glance. A clutter-free, personalised, easy to read news all
+      in one place.
+    </span>
+
+    <Feature
+      class="bg-gradient-to-r from-sky-400 to-blue-600"
+      icon="/icons/glance.svg"
+      alt="Spotlight's Glance"
+      title="Curated news in a swipe"
+      preview="/banner/glance.png"
+    >
+      Spotlight's Glance is a personalised news feed that is curated just for
+      you. It's a clutter-free, easy to read news feed that you can swipe
+      through.
+    </Feature>
+
+    <div class="flex flex-col md:flex-row w-[90%] text-text mt-4 gap-6">
+      <FeatureInfo
+        class="md:flex-[3]"
+        icon="/icons/swipe-up.svg"
+        alt="Swipe up"
+        title="Just a breeze"
+      >
+        Goodbye to the days of opening multiple tabs and switching between them.
+        Just swipe up and read the news you want to read.
+      </FeatureInfo>
+
+      <FeatureInfo
+        class="md:flex-[2]"
+        icon="/icons/bottomless.svg"
+        alt="Bottomless"
+        title="Unending"
+      >
+        You can swipe up as much as you want. We'll keep showing you articles
+        that you'll love.
+      </FeatureInfo>
+    </div>
+  </div>
+
+  <div class="h-[30vh]" />
+
+  <!-- Feature 2: Spotlight's Feeds -->
+  <div class="flex flex-col items-center justify-center w-full">
+    <span class="text-text text-2xl font-bold md:text-5xl">
+      Waste no time with
+      <span class="text-green-400">Feeds</span>
+    </span>
+    <span
+      class="text-text/75 font-medium text-sm max-w-[90%] md:text-2xl mt-2 md:mt-3 text-center"
+    >
+      Introducing Feeds. A quick, dead-simple, and easy to use news feed that
+      you can use to stay updated.
+    </span>
+
+    <Feature
+      class="bg-gradient-to-r from-emerald-600 to-green-400"
+      icon="/icons/feeds.svg"
+      alt="Spotlight's Feeds"
+      title="One stop for the latest happenings"
+      preview="/banner/feeds.png"
+      reverse
+    >
+      Spotlight's Feeds is a quick, dead-simple, and intuitive stop to catch up
+      on the latest happenings around the world. It's optimised for speed, so
+      you can get the latest news in a jiffy.
+    </Feature>
+
+    <div class="flex flex-col md:flex-row w-[90%] text-text mt-4 gap-6">
+      <FeatureInfo
+        class="md:flex-[2]"
+        icon="/icons/no-bs.svg"
+        alt="No BS"
+        title="Clutter free"
+      >
+        No more ads, no more distractions. Just the news you want to read.
+      </FeatureInfo>
+
+      <FeatureInfo
+        class="md:flex-[3]"
+        icon="/icons/brain.svg"
+        alt="Knowledge"
+        title="Informative"
+      >
+        We'll show you the latest news from the best sources. You'll never miss
+        out on anything.
+      </FeatureInfo>
+    </div>
+  </div>
+
+  <div class="h-[30vh]" />
+
+  <div class="flex flex-col items-center justify-center w-full h-[75vh]">
+    <span class="text-text text-2xl font-bold md:text-5xl">
+      So what are you waiting for?
+    </span>
+    <span
+      class="text-text/75 font-medium text-sm max-w-[90%] md:text-2xl mt-2 md:mt-3 text-center"
+    >
+      Join the waitlist now and be the first to know when we launch.
+    </span>
+
+    <Button
+      class="mt-10 px-4 py-2 max-w-fit rounded-lg bg-text/30 text-text font-bold md:text-lg"
+      on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+    >
+      Sign up
+    </Button>
+  </div>
+  <div class="h-[10vh]" />
 </div>

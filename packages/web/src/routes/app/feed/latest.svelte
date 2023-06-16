@@ -36,9 +36,5 @@
     <span class="font-bold">
       {latest.user ?? "anonymous"}
     </span>
-    <span>·</span>
-    <span class="capitalize">
-      {latest.type}
-    </span>
   </div>
 </a>

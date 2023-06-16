@@ -40,7 +40,7 @@
   <h1
     class="pt-8 pb-4 p-2 text-2xl font-bold z-30 sticky top-0 bg-background/75 text-text backdrop-blur border-b border-black/50 w-full"
   >
-    Discover
+    Glance
   </h1>
   <div class="flex flex-col items-center justify-start w-full md:mt-6 flex-1">
     {#if $query.isLoading}

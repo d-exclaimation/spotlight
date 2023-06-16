@@ -7,6 +7,9 @@
   import { tw } from "@/lib/tailwind";
   import { auth } from "@/lib/utils/storage";
   import { createMutation, useQueryClient } from "@tanstack/svelte-query";
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher<{ learn: void }>();
 
   let show = false;
   let email = "";
@@ -50,6 +53,15 @@
     on:click={() => (show = true)}
   >
     Sign up for the waitlist
+  </button>
+
+  <button
+    class="text-text/70 text-xs mt-8 animate-slide-down [animation-delay:1.75s]"
+    on:click={() => dispatch("learn")}
+  >
+    <span class="block animate-bounce [animation-duration:2s]">
+      Learn more &darr;
+    </span>
   </button>
 {/if}
 

@@ -60,14 +60,9 @@
   {:else}
     {@const [latest, ...rest] = paginated}
     <div
-      class="flex flex-col items-center justify-center w-full py-6 divide-y divide-white/40"
+      class="flex flex-col items-center justify-center w-full divide-y divide-white/40"
     >
       <div class="flex flex-col items-center justify-center w-full p-2 md:p-4">
-        <div
-          class="flex w-full items-center justify-start font-semibold text-lg text-text"
-        >
-          Latest
-        </div>
         <Latest {latest} />
       </div>
       {#each rest as item, i (item.id)}

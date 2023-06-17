@@ -2,6 +2,7 @@
   import { afterNavigate, beforeNavigate } from "$app/navigation";
   import { tw } from "@/lib/tailwind";
   import type { TechFeed } from "@/lib/types";
+  import { link } from "@/lib/utils/link";
   import { createEventDispatcher } from "svelte";
   import { swipe } from "svelte-gestures";
   import { fly, type FlyParams } from "svelte/transition";
@@ -54,11 +55,6 @@
       : item.id % 3 === 1
       ? "bg-[url('/cover/news-2.webp')]"
       : "bg-[url('/cover/news-3.webp')]";
-
-  $: link =
-    item.url.startsWith("/item?") || item.url.startsWith("item?")
-      ? `https://news.ycombinator.com${item.url}`
-      : item.url;
 
   beforeNavigate(() => {
     isNavigating = true;
@@ -136,7 +132,7 @@
         <a
           bind:this={ref}
           class="font-bold hover:underline md:text-lg cursor-pointer flex items-center gap-1 md:gap-2"
-          href={link}
+          href={link(item.url)}
           target="_blank"
         >
           {item.domain || "news.ycombinator.com"}

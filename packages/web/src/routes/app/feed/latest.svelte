@@ -1,6 +1,7 @@
 <script lang="ts">
   import { tw } from "@/lib/tailwind";
   import type { TechFeed } from "@/lib/types";
+  import { link } from "@/lib/utils/link";
 
   export let latest: TechFeed;
 
@@ -21,7 +22,7 @@
     hover:brightness-105 active:brightness-105`,
     bg
   )}
-  href={latest.url}
+  href={link(latest.url)}
   target="_blank"
 >
   <span class="w-full break-words text-xl md:text-2xl">

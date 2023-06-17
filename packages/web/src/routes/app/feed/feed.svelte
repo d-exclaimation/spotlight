@@ -1,26 +1,13 @@
 <script lang="ts">
   import type { TechFeed } from "@/lib/types";
+  import { link } from "@/lib/utils/link";
 
   export let item: TechFeed;
-
-  $: text =
-    item.type === "ask"
-      ? "text-orange-600"
-      : item.type === "job"
-      ? "text-emerald-600"
-      : item.title.startsWith("Show HN") || item.title.startsWith("Tell HN")
-      ? "text-rose-600"
-      : "text-primary2";
-
-  $: link =
-    item.url.startsWith("/item?") || item.url.startsWith("item?")
-      ? `https://news.ycombinator.com${item.url}`
-      : item.url;
 </script>
 
 <a
   class="flex flex-row group items-start justify-start w-full p-2 md:p-4 bg-background hover:bg-neutral-900 active:bg-neutral-900"
-  href={link}
+  href={link(item.url)}
   target="_blank"
 >
   <div class="flex items-start justify-center mr-2 md:mr-4">

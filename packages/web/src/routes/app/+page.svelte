@@ -4,7 +4,6 @@
   import { enter, exit } from "@/lib/utils/transition";
   import { createInfiniteQuery } from "@tanstack/svelte-query";
   import NewsBite from "./news-bite.svelte";
-  import { index } from "./stores";
 
   const query = createInfiniteQuery({
     queryKey: ["best"],
@@ -12,6 +11,7 @@
     getNextPageParam: ({ page }) => page + 1,
   });
 
+  let index = 0;
   let direction: "top" | "bottom" = "top";
 
   $: items = dedup(
@@ -19,7 +19,7 @@
     ({ id }) => id
   );
 
-  $: item = items.at($index);
+  $: item = items.at(index);
 </script>
 
 <svelte:head>
@@ -67,13 +67,13 @@
           {item}
           bind:direction
           on:next={() => {
-            if (items.length - $index <= 10) {
+            if (items.length - index <= 10) {
               $query.fetchNextPage();
             }
-            index.update((prev) => Math.min(prev + 1, items.length - 1));
+            index = Math.min(index + 1, items.length - 1);
           }}
           on:prev={() => {
-            index.update((prev) => Math.max(prev - 1, 0));
+            index = Math.max(index - 1, 0);
           }}
         />
       {/key}

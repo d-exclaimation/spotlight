@@ -134,6 +134,12 @@
           class="font-bold hover:underline md:text-lg cursor-pointer flex items-center gap-1 md:gap-2"
           href={link(item.url)}
           target="_blank"
+          on:touchend={() => {
+            console.log("touchend");
+          }}
+          on:click={() => {
+            console.log("click");
+          }}
         >
           {item.domain || "news.ycombinator.com"}
           <svg

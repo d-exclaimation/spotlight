@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { ulid } from "ulid";
 import { z } from "zod";
 import { sign, verify } from "../config/jwt.js";
+import { consola, now } from "../config/log.js";
 import { db } from "../data/index.js";
 import { codes, users, waitlist } from "../data/schema.js";
 import { mail } from "../email/index.js";
@@ -85,6 +86,8 @@ export const app = router({
         html: markup.login(code),
       });
 
+      consola.info(`[${now()}] 📧 Sent login code to ${user.email}`);
+
       return { user };
     }),
 
@@ -136,7 +139,11 @@ export const app = router({
           createdAt: new Date(),
         })
         .returning();
+
       const token = await sign({ id: rows[0].id });
+
+      consola.info(`[${now()}] 🚏 ${input.email} joined the wailist`);
+
       return {
         token,
       };

@@ -1,6 +1,7 @@
 import { createHTTPServer } from "@trpc/server/adapters/standalone";
 import cors from "cors";
 import { env } from "./config/env.js";
+import { consola, icon, now } from "./config/log.js";
 import "./data/index.js";
 import { app } from "./trpc/index.js";
 
@@ -18,7 +19,8 @@ const server = createHTTPServer({
     ],
   }),
   createContext: ({ req }) => {
-    console.log(`-- 📬 ${req.method} :: ${req.url}`);
+    const ico = icon[req.method ?? "UNKNOWN"];
+    consola.info(`[${now()}] ${ico} ${req.method} on ${req.url}`);
     return {
       headers: req.headers,
     };
@@ -27,4 +29,4 @@ const server = createHTTPServer({
 
 // Start the server
 server.listen(env.PORT);
-console.log(`🚀 Running on http://localhost:${env.PORT}`);
+consola.start(`[${now()}] 🚀 Running on http://localhost:${env.PORT}`);

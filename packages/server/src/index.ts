@@ -4,6 +4,9 @@ import { env } from "./config/env.js";
 import "./data/index.js";
 import { app } from "./trpc/index.js";
 
+/**
+ * The trpc Node.js HTTP server.
+ */
 const server = createHTTPServer({
   router: app,
   middleware: cors({
@@ -22,5 +25,6 @@ const server = createHTTPServer({
   },
 });
 
+// Start the server
 server.listen(env.PORT);
 console.log(`🚀 Running on http://localhost:${env.PORT}`);

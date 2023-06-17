@@ -8,6 +8,9 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 
+/**
+ * The waitlist table.
+ */
 export const waitlist = pgTable(
   "wailist",
   {
@@ -23,6 +26,9 @@ export const waitlist = pgTable(
   })
 );
 
+/**
+ * The users table.
+ */
 export const users = pgTable(
   "users",
   {
@@ -38,6 +44,9 @@ export const users = pgTable(
   })
 );
 
+/**
+ * The 8 digit one-time codes table.
+ */
 export const codes = pgTable(
   "codes",
   {
@@ -52,6 +61,9 @@ export const codes = pgTable(
   })
 );
 
+/**
+ * Relation between one-time codes and users for login.
+ */
 export const codesRelations = relations(codes, ({ one }) => ({
   user: one(users, { fields: [codes.userId], references: [users.id] }),
 }));

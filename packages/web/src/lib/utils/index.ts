@@ -1,3 +1,9 @@
+/**
+ * Remove duplicate items from an array by key function
+ * @param arr The array to deduplicate
+ * @param key The key function to use to determine uniqueness
+ * @returns A deduplicated array
+ */
 export function dedup<T, K extends number | string>(
   arr: T[],
   key: (data: T) => K
@@ -12,6 +18,13 @@ export function dedup<T, K extends number | string>(
   });
 }
 
+/**
+ * Clamp a number between a min and max value
+ * @param x Given number
+ * @param min The minimum value
+ * @param max The maximum value
+ * @returns A clamped number
+ */
 export function clamp(x: number, min: number, max: number) {
   return Math.min(max, Math.max(min, x));
 }

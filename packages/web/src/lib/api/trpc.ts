@@ -5,9 +5,16 @@ import type {
   CreateMutationOptions,
   CreateQueryOptions,
 } from "@tanstack/svelte-query";
-import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
+import {
+  TRPCClientError,
+  createTRPCProxyClient,
+  httpBatchLink,
+} from "@trpc/client";
 import { auth } from "../utils/storage";
 
+/**
+ * tRPC client for the spotlight API
+ */
 export const trpc = createTRPCProxyClient<App>({
   links: [
     httpBatchLink({
@@ -22,16 +29,35 @@ export const trpc = createTRPCProxyClient<App>({
   ],
 });
 
+/**
+ * Get the tanstack mutation options for any mutation using the trpc client
+ */
 export type MutationsOpts<T extends keyof typeof trpc> = Omit<
   CreateMutationOptions<AppOutput[T], unknown, AppInput[T]>,
   "mutationFn"
 >;
 
-export type QueryOpts<T extends keyof typeof trpc> = CreateQueryOptions<
-  AppOutput[T],
-  unknown,
-  AppInput[T]
+/**
+ * Get the tanstack query options for any query using the trpc client
+ */
+export type QueryOpts<T extends keyof typeof trpc> = Omit<
+  CreateQueryOptions<AppOutput[T], unknown, AppOutput[T], unknown[]>,
+  "queryFn"
 >;
 
-export type InfiniteQueryOpts<T extends keyof typeof trpc> =
-  CreateInfiniteQueryOptions<AppOutput[T], unknown, AppInput[T]>;
+/**
+ * Get the tanstack infinite query options for any infinite query using the trpc client
+ */
+export type InfiniteQueryOpts<T extends keyof typeof trpc> = Omit<
+  CreateInfiniteQueryOptions<AppOutput[T], unknown, AppOutput[T], unknown[]>,
+  "queryFn"
+>;
+
+/**
+ * Check if an error is a TRPC error
+ * @param error An error
+ * @returns True if the error is a TRPC error
+ */
+export function isTRPCError(error: unknown): error is TRPCClientError<App> {
+  return error instanceof TRPCClientError;
+}

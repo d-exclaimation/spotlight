@@ -1,5 +1,8 @@
 import { Auth } from "../types";
 
+/**
+ * Storage for auth data
+ */
 export const auth = {
   get: () => {
     const raw = localStorage.getItem("auth");

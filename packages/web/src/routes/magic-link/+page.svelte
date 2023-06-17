@@ -11,7 +11,7 @@
   import Navbar from "../navbar.svelte";
 
   const client = useQueryClient();
-  const login2 = createLogin2Mutation({});
+  const login2 = createLogin2Mutation();
 
   const _code = $page.url.searchParams.get("code") || "";
 

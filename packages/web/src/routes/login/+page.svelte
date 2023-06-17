@@ -1,13 +1,16 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { createMeQuery } from "@/lib/api/me";
-  import { trpc } from "@/lib/api/trpc";
+  import {
+    createLogin2Mutation,
+    createLoginMutation,
+    createMeQuery,
+  } from "@/lib/api/me";
   import Button from "@/lib/components/button.svelte";
   import PinInput from "@/lib/components/pin-input.svelte";
   import Redirect from "@/lib/components/redirect.svelte";
   import Textfield from "@/lib/components/textfield.svelte";
   import { auth } from "@/lib/utils/storage";
-  import { createMutation, useQueryClient } from "@tanstack/svelte-query";
+  import { useQueryClient } from "@tanstack/svelte-query";
   import { fly } from "svelte/transition";
   import Navbar from "../navbar.svelte";
 
@@ -17,17 +20,13 @@
 
   const client = useQueryClient();
   const me = createMeQuery();
-  const login = createMutation({
-    mutationKey: ["login", "first"],
-    mutationFn: trpc.login.mutate,
+  const login = createLoginMutation({
     onSuccess: (res) => {
       submitted = !!res.user;
     },
   });
 
-  const login2 = createMutation({
-    mutationKey: ["login", "second"],
-    mutationFn: trpc.login2.mutate,
+  const login2 = createLogin2Mutation({
     onSuccess: async (res) => {
       if (res.token) {
         auth.set({ token: res.token });

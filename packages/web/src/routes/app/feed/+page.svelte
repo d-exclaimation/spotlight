@@ -1,17 +1,14 @@
 <script lang="ts">
-  import { feeds } from "@/lib/api/news";
+  import { createFeedsQuery } from "@/lib/api/news";
+  import Error from "@/lib/components/status/error.svelte";
+  import Loading from "@/lib/components/status/loading.svelte";
   import { dedup } from "@/lib/utils";
   import { enter, exit } from "@/lib/utils/transition";
-  import { createInfiniteQuery } from "@tanstack/svelte-query";
+  import BubbleFeed from "./bubble-feed.svelte";
   import Feed from "./feed.svelte";
   import LastFeed from "./last-feed.svelte";
-  import Latest from "./latest.svelte";
 
-  const query = createInfiniteQuery({
-    queryKey: ["news"],
-    queryFn: ({ pageParam }) => feeds({ page: pageParam }),
-    getNextPageParam: ({ page }) => page + 1,
-  });
+  const query = createFeedsQuery();
 
   $: paginated = dedup(
     $query.data?.pages?.flatMap(({ feeds }) => feeds) ?? [],
@@ -37,19 +34,9 @@
     Feeds
   </h1>
   {#if $query.isLoading || $query.isInitialLoading}
-    <div class="flex flex-col items-center justify-center w-full py-6 h-4/5">
-      <span class="font-semibold text-lg text-text">Loading</span>
-      <span class="font-bold text-text/75 animate-pulse text-xl md:text-2xl">
-        ...
-      </span>
-    </div>
+    <Loading />
   {:else if $query.error}
-    <div class="flex flex-col items-center justify-center w-full py-6 h-4/5">
-      <span class="font-semibold text-lg text-text">No news</span>
-      <span class="font-medium text-text/75">
-        Error: {$query.error?.toString()}
-      </span>
-    </div>
+    <Error label="No news" error={$query.error} />
   {:else if paginated.length === 0}
     <div class="flex flex-col items-center justify-center w-full py-6 h-4/5">
       <span class="font-semibold text-lg text-text">No news</span>
@@ -58,15 +45,17 @@
       </span>
     </div>
   {:else}
-    {@const [latest, ...rest] = paginated}
     <div
       class="flex flex-col items-center justify-center w-full divide-y divide-white/40"
     >
-      <div class="flex flex-col items-center justify-center w-full p-2 md:p-4">
-        <Latest {latest} />
-      </div>
-      {#each rest as item, i (item.id)}
-        {#if rest.length - i < 5}
+      {#each paginated as item, i (item.id)}
+        {#if i % 8 === 0}
+          <div
+            class="flex flex-col items-center justify-center w-full p-2 md:p-4"
+          >
+            <BubbleFeed {item} />
+          </div>
+        {:else if paginated.length - i < 8}
           <LastFeed
             root={view}
             {item}

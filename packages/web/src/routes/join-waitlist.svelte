@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { createMeQuery } from "@/lib/api/me";
-  import { trpc } from "@/lib/api/trpc";
+  import { createMeQuery, createWaitlistMutation } from "@/lib/api/me";
   import Button from "@/lib/components/button.svelte";
   import Dialog from "@/lib/components/dialog.svelte";
   import Textfield from "@/lib/components/textfield.svelte";
   import { tw } from "@/lib/tailwind";
   import { auth } from "@/lib/utils/storage";
-  import { createMutation, useQueryClient } from "@tanstack/svelte-query";
+  import { useQueryClient } from "@tanstack/svelte-query";
   import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher<{ learn: void }>();
@@ -16,9 +15,7 @@
 
   const client = useQueryClient();
   const me = createMeQuery();
-  const mutation = createMutation({
-    mutationKey: ["waitlist", "join"],
-    mutationFn: trpc.preregister.mutate,
+  const mutation = createWaitlistMutation({
     onSuccess: async (res) => {
       if (res.token) {
         auth.set({ token: res.token });

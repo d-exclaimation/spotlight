@@ -1,15 +1,12 @@
 <script lang="ts">
-  import { discover } from "@/lib/api/news";
+  import { createGlanceQuery } from "@/lib/api/news";
+  import Error from "@/lib/components/status/error.svelte";
+  import Loading from "@/lib/components/status/loading.svelte";
   import { dedup } from "@/lib/utils";
   import { enter, exit } from "@/lib/utils/transition";
-  import { createInfiniteQuery } from "@tanstack/svelte-query";
   import NewsBite from "./news-bite.svelte";
 
-  const query = createInfiniteQuery({
-    queryKey: ["best"],
-    queryFn: ({ pageParam }) => discover({ page: pageParam }),
-    getNextPageParam: ({ page }) => page + 1,
-  });
+  const query = createGlanceQuery();
 
   let index = 0;
   let direction: "top" | "bottom" = "top";
@@ -44,19 +41,9 @@
   </h1>
   <div class="flex flex-col items-center justify-start w-full md:mt-6 flex-1">
     {#if $query.isLoading}
-      <div class="flex flex-col items-center justify-center w-full py-6 h-4/5">
-        <span class="font-semibold text-lg text-text">Loading</span>
-        <span class="font-bold text-text/75 animate-pulse text-xl md:text-2xl">
-          ...
-        </span>
-      </div>
+      <Loading />
     {:else if $query.error}
-      <div class="flex flex-col items-center justify-center w-full py-6 h-4/5">
-        <span class="font-semibold text-lg text-text">No news</span>
-        <span class="font-medium text-text/75">
-          Error: {$query.error?.toString()}
-        </span>
-      </div>
+      <Error label="No news" error={$query.error} />
     {:else if !item}
       <div
         class="flex flex-col items-center justify-center w-full py-6 h-4/5"

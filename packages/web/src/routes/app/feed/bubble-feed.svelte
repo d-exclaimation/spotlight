@@ -3,14 +3,14 @@
   import type { TechFeed } from "@/lib/types";
   import { link } from "@/lib/utils/link";
 
-  export let latest: TechFeed;
+  export let item: TechFeed;
 
   $: bg =
-    latest.type === "ask"
+    item.type === "ask"
       ? "bg-orange-600 saturate-[.75]"
-      : latest.type === "job"
+      : item.type === "job"
       ? "bg-emerald-600 saturate-[.75]"
-      : latest.title.startsWith("Show HN") || latest.title.startsWith("Tell HN")
+      : item.title.startsWith("Show HN") || item.title.startsWith("Tell HN")
       ? "bg-rose-600 saturate-[.75]"
       : "bg-primary2";
 </script>
@@ -22,20 +22,20 @@
     hover:brightness-105 active:brightness-105`,
     bg
   )}
-  href={link(latest.url)}
+  href={link(item.url)}
   target="_blank"
 >
   <span class="w-full break-words text-xl md:text-2xl">
-    {latest.title}
+    {item.title}
   </span>
 
   <div class="flex w-full items-center justify-start mt-2 gap-2 text-sm">
     <span class="font-medium">
-      {latest.time_ago}
+      {item.time_ago}
     </span>
     <span>·</span>
     <span class="font-bold">
-      {latest.user ?? "anonymous"}
+      {item.user ?? "anonymous"}
     </span>
   </div>
 </a>

@@ -1,20 +1,17 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
-  import { trpc } from "@/lib/api/trpc";
+  import { createLogin2Mutation } from "@/lib/api/me";
   import Button from "@/lib/components/button.svelte";
   import PinInput from "@/lib/components/pin-input.svelte";
   import { auth } from "@/lib/utils/storage";
-  import { createMutation, useQueryClient } from "@tanstack/svelte-query";
+  import { useQueryClient } from "@tanstack/svelte-query";
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
   import Navbar from "../navbar.svelte";
 
   const client = useQueryClient();
-  const login2 = createMutation({
-    mutationKey: ["login", "second"],
-    mutationFn: trpc.login2.mutate,
-  });
+  const login2 = createLogin2Mutation({});
 
   const _code = $page.url.searchParams.get("code") || "";
 

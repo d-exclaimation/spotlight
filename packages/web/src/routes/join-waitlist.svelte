@@ -5,7 +5,7 @@
   import Textfield from "@/lib/components/textfield.svelte";
   import { tw } from "@/lib/tailwind";
   import { auth } from "@/lib/utils/storage";
-  import { useQueryClient } from "@tanstack/svelte-query";
+  import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
   import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher<{ learn: void }>();
@@ -13,7 +13,7 @@
   let show = false;
   let email = "";
 
-  const client = useQueryClient();
+  const client = getQueryClient();
   const me = createMeQuery();
   const mutation = createWaitlistMutation({
     onSuccess: async (res) => {

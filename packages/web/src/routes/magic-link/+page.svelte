@@ -5,12 +5,12 @@
   import Button from "@/lib/components/button.svelte";
   import PinInput from "@/lib/components/pin-input.svelte";
   import { auth } from "@/lib/utils/storage";
-  import { useQueryClient } from "@tanstack/svelte-query";
+  import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
   import Navbar from "../navbar.svelte";
 
-  const client = useQueryClient();
+  const client = getQueryClient();
   const login2 = createLogin2Mutation();
 
   const _code = $page.url.searchParams.get("code") || "";

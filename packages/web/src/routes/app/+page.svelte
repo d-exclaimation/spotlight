@@ -46,9 +46,7 @@
     {:else if $query.error}
       <Error label="No news" error={$query.error} />
     {:else if !item}
-      <div
-        class="flex flex-col items-center justify-center w-full py-6 h-4/5"
-      />
+      <Error label="No news" error={"No curated news"} />
     {:else}
       {#key item.id}
         <NewsBite

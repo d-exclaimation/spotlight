@@ -10,7 +10,7 @@
   import Redirect from "@/lib/components/redirect.svelte";
   import Textfield from "@/lib/components/textfield.svelte";
   import { auth } from "@/lib/utils/storage";
-  import { useQueryClient } from "@tanstack/svelte-query";
+  import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
   import { fly } from "svelte/transition";
   import Navbar from "../navbar.svelte";
 
@@ -18,7 +18,7 @@
   let code = "";
   let submitted = false;
 
-  const client = useQueryClient();
+  const client = getQueryClient();
   const me = createMeQuery();
   const login = createLoginMutation({
     onSuccess: (res) => {

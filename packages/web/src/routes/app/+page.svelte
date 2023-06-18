@@ -19,8 +19,6 @@
   );
 
   $: item = items.at($glance.current);
-
-  $: console.table({ item, items, current: $glance.current });
 </script>
 
 <svelte:head>

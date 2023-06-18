@@ -1,13 +1,13 @@
 <script lang="ts">
   import { afterNavigate, beforeNavigate } from "$app/navigation";
   import { tw } from "@/lib/tailwind";
-  import type { TechFeed } from "@/lib/types";
   import { link } from "@/lib/utils/link";
+  import type { AppOutput } from "@spotlight/server";
   import { createEventDispatcher } from "svelte";
   import { swipe } from "svelte-gestures";
   import { fly, type FlyParams } from "svelte/transition";
 
-  export let item: TechFeed;
+  export let item: AppOutput["curation"]["news"][number];
   export let direction: "top" | "bottom";
 
   const dispatch = createEventDispatcher<{

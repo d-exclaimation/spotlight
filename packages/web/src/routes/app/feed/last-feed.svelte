@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { TechFeed } from "@/lib/types";
+  import type { AppOutput } from "@spotlight/server";
   import { createEventDispatcher } from "svelte";
   import Feed from "./feed.svelte";
   import InView from "./in-view.svelte";
 
   export let root: HTMLElement;
-  export let item: TechFeed;
+  export let item: AppOutput["newest"]["news"][number];
 
   const dispatch = createEventDispatcher<{ visible: void }>();
 </script>

@@ -11,7 +11,7 @@
   const query = createFeedsQuery();
 
   $: paginated = dedup(
-    $query.data?.pages?.flatMap(({ feeds }) => feeds) ?? [],
+    $query.data?.pages?.flatMap(({ news }) => news) ?? [],
     ({ id }) => id
   );
 

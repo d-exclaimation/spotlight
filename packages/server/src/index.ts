@@ -3,6 +3,7 @@ import cors from "cors";
 import { env } from "./config/env.js";
 import { consola, icon, now } from "./config/log.js";
 import "./data/index.js";
+import { auth } from "./lib/auth.js";
 import { app } from "./trpc/index.js";
 
 /**
@@ -18,11 +19,14 @@ const server = createHTTPServer({
       "https://spotlight.d-exclaimation.me",
     ],
   }),
-  createContext: ({ req }) => {
+  createContext: async ({ req }) => {
+    const user = await auth(req.headers);
     const ico = icon[req.method ?? "UNKNOWN"];
-    consola.info(`[${now()}] ${ico} ${req.method} on ${req.url}`);
+    const userinfo = user ? `by ${user.username}` : "";
+    consola.info(`[${now()}] ${ico} ${req.method} on ${req.url} ${userinfo}`);
     return {
       headers: req.headers,
+      user,
     };
   },
 });

@@ -3,20 +3,21 @@
   import Error from "@/lib/components/status/error.svelte";
   import Loading from "@/lib/components/status/loading.svelte";
   import { dedup } from "@/lib/utils";
+  import { hoursSince } from "@/lib/utils/time";
   import { enter, exit } from "@/lib/utils/transition";
   import NewsBite from "./news-bite.svelte";
+  import { glance } from "./stores";
 
   const query = createGlanceQuery();
 
-  let index = 0;
   let direction: "top" | "bottom" = "top";
 
   $: items = dedup(
-    $query.data?.pages?.flatMap(({ feeds }) => feeds) ?? [],
+    $query.data?.pages?.flatMap(({ news }) => news) ?? [],
     ({ id }) => id
   );
 
-  $: item = items.at(index);
+  $: item = items.at($glance.current);
 </script>
 
 <svelte:head>
@@ -54,13 +55,27 @@
           {item}
           bind:direction
           on:next={() => {
-            if (items.length - index <= 10) {
+            if (items.length - $glance.current <= 10) {
               $query.fetchNextPage();
             }
-            index = Math.min(index + 1, items.length - 1);
+            glance.update(({ current, on }) => {
+              const next = Math.min(current + 1, items.length - 1);
+              const stale = hoursSince(on) > 3;
+              return {
+                current: stale ? next : 0,
+                on: new Date(),
+              };
+            });
           }}
           on:prev={() => {
-            index = Math.max(index - 1, 0);
+            glance.update(({ current, on }) => {
+              const prev = Math.max(current - 1, 0);
+              const stale = hoursSince(on) > 3;
+              return {
+                current: stale ? prev : 0,
+                on: new Date(),
+              };
+            });
           }}
         />
       {/key}

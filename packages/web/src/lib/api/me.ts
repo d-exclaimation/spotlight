@@ -4,9 +4,9 @@ import { trpc, type MutationsOpts, type QueryOpts } from "./trpc";
 /**
  * Create a query store for checking if the logged in user info, if any
  */
-export function createMeQuery({ queryKey, ...rest }: QueryOpts<"me"> = {}) {
+export function createMeQuery({ queryKey: _, ...rest }: QueryOpts<"me"> = {}) {
   return createQuery({
-    queryKey: ["users", "me", ...(queryKey ?? [])],
+    queryKey: ["users", "me"] as unknown[],
     queryFn: () => trpc.me.query(),
     retry: 1,
     ...rest,

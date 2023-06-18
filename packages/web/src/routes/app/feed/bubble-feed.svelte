@@ -1,9 +1,9 @@
 <script lang="ts">
   import { tw } from "@/lib/tailwind";
-  import type { TechFeed } from "@/lib/types";
   import { link } from "@/lib/utils/link";
+  import type { AppOutput } from "@spotlight/server";
 
-  export let item: TechFeed;
+  export let item: AppOutput["newest"]["news"][number];
 
   $: bg =
     item.type === "ask"

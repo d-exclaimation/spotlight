@@ -36,12 +36,12 @@
 
   $: filter =
     item.type === "ask"
-      ? "after:bg-orange-500/5"
+      ? "after:bg-orange-500/10"
       : item.type === "job"
-      ? "after:bg-emerald-500/5"
+      ? "after:bg-emerald-500/10"
       : item.title.startsWith("Show HN") || item.title.startsWith("Tell HN")
-      ? "after:bg-rose-500/5"
-      : "after:bg-indigo-500/5";
+      ? "after:bg-rose-500/10"
+      : "after:bg-indigo-500/10";
 
   $: bg =
     item.type === "ask"

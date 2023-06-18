@@ -3,8 +3,8 @@ import cors from "cors";
 import { env } from "./config/env.js";
 import { consola, icon, now } from "./config/log.js";
 import "./data/index.js";
-import { auth } from "./lib/auth.js";
 import { app } from "./trpc/index.js";
+import { auth } from "./utils/auth.js";
 
 /**
  * The trpc Node.js HTTP server.

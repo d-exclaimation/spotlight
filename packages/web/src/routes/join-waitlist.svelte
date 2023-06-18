@@ -97,11 +97,14 @@
       />
 
       <div class="flex justify-between items-center w-full mt-2">
-        <Button class="bg-red-700 text-text" on:click={() => (show = false)}>
+        <Button
+          class="bg-red-700  mt-4 text-text"
+          on:click={() => (show = false)}
+        >
           Cancel
         </Button>
         <Button
-          class="bg-accent text-text font-medium"
+          class="bg-accent mt-4 text-text font-medium"
           disabled={!email.length || $mutation.isLoading}
           on:click={() => {
             $mutation.mutate({ email });

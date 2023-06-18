@@ -60,7 +60,7 @@
           </div>
         </div>
         <Button
-          class="bg-accent text-text font-medium animate-pulse text-xl"
+          class="bg-accent mt-4 text-text font-medium animate-pulse text-xl"
           disabled
         >
           ...

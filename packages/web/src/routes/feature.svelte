@@ -38,7 +38,7 @@
     </p>
 
     <Button
-      class="px-4 py-2 max-w-fit rounded-lg bg-text/30 text-text font-bold md:text-lg"
+      class="mt-4 px-4 py-2 max-w-fit rounded-lg bg-text/30 text-text font-bold md:text-lg"
     >
       Learn more
     </Button>

@@ -7,7 +7,7 @@ import { db } from "../data/index.js";
 import { codes, users, waitlist } from "../data/schema.js";
 import { mail } from "../email/index.js";
 import { markup } from "../email/markup.js";
-import { hoursSince, minutesSince } from "../lib/time.js";
+import { hoursSince, minutesSince } from "../utils/time.js";
 import { procedure, router } from "./t.js";
 
 export const app = router({

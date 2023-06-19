@@ -6,6 +6,7 @@
   import { enter, exit } from "@/lib/utils/transition";
   import BubbleFeed from "./bubble-feed.svelte";
   import Feed from "./feed.svelte";
+  import InView from "./in-view.svelte";
   import LastFeed from "./last-feed.svelte";
 
   const query = createFeedsQuery();
@@ -49,13 +50,13 @@
       class="flex flex-col items-center justify-center w-full divide-y divide-white/40"
     >
       {#each paginated as item, i (item.id)}
-        {#if i % 8 === 0}
+        {#if item.points && item.points >= 10}
           <div
             class="flex flex-col items-center justify-center w-full p-2 md:p-4"
           >
             <BubbleFeed {item} />
           </div>
-        {:else if paginated.length - i < 8}
+        {:else if paginated.length - i < 5}
           <LastFeed
             root={view}
             {item}
@@ -68,7 +69,15 @@
           <Feed {item} />
         {/if}
       {/each}
-      <div class="h-16 flex items-center w-full justify-center" />
+      <InView
+        root={view}
+        on:visible={() => {
+          if ($query.isFetchingNextPage) return;
+          $query.fetchNextPage({});
+        }}
+      >
+        <div class="h-16 flex items-center w-full justify-center" />
+      </InView>
     </div>
   {/if}
 </div>

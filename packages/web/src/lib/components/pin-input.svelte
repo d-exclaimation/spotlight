@@ -39,9 +39,9 @@
             const start = i;
             const end = Math.min(start + chars.length, length);
             for (let i = start; i < end; i++) {
-              values[i] = chars[i - start];
+              values[i] = chars[i - start].toUpperCase();
             }
-            value = values.join("");
+            value = values.join("").toUpperCase();
             refs[end]?.focus();
           }
         }
@@ -49,7 +49,7 @@
       on:input={(e) => {
         if (e instanceof InputEvent) {
           const curr = e.data ?? "";
-          values[i] = curr;
+          values[i] = curr.toUpperCase();
           value = values.join("");
           refs[i + 1]?.focus();
         }
@@ -59,7 +59,7 @@
           if (e.key === "Backspace") {
             e.preventDefault();
             values[i] = "";
-            value = values.join("");
+            value = values.join("").toUpperCase();
             refs[i - 1]?.focus();
           }
           if (e.key === "ArrowLeft") {

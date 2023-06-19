@@ -62,7 +62,7 @@
             {item}
             on:visible={() => {
               if ($query.isFetchingNextPage) return;
-              $query.fetchNextPage({});
+              $query.fetchNextPage();
             }}
           />
         {:else}
@@ -73,10 +73,16 @@
         root={view}
         on:visible={() => {
           if ($query.isFetchingNextPage) return;
-          $query.fetchNextPage({});
+          $query.fetchNextPage();
         }}
       >
-        <div class="h-16 flex items-center w-full justify-center" />
+        <button
+          class="h-16 flex items-center w-full justify-center text-text animate-pulse text-lg"
+          disabled={$query.isFetchingNextPage}
+          on:click={() => $query.fetchNextPage()}
+        >
+          {$query.isFetchingNextPage ? "..." : "Load more"}
+        </button>
       </InView>
     </div>
   {/if}

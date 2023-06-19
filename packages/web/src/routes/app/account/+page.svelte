@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createMeQuery } from "@/lib/api/me";
+  import Button from "@/lib/components/button.svelte";
   import { enter, exit } from "@/lib/utils/transition";
   import Info from "./info.svelte";
 
@@ -39,27 +40,33 @@
       </div>
     {:else}
       <div
-        class="relative flex w-full z-40 flex-col items-center pt-2 overflow-visible mb-6 md:mb-10 justify-center"
+        class="flex items-center justify-start mb-2 p-3 mx-2 w-full gap-2 rounded-3xl bg-primary2"
       >
-        <span
-          class="absolute w-24 md:w-36 aspect-square rounded-full bg-rose-600/80 translate-x-2 blur-xl"
-        />
-        <span
-          class="absolute w-24 md:w-36 aspect-square rounded-full bg-indigo-500/80 -translate-x-2 blur-xl"
-        />
         <img
-          class="w-24 md:w-36 relative aspect-square object-cover rounded-full"
+          class="w-28 md:w-32 p-2 relative aspect-square object-cover rounded-[2rem]"
           src={`https://api.dicebear.com/6.x/notionists-neutral/svg?seed=${$me.data.user.email}`}
           alt={`Avatar for ${$me.data.user.username}`}
         />
+        <div class="flex flex-col items-start flex-1 h-full px-2 py-3">
+          <span class="font-bold text-text text-xl md:text-3xl">
+            {$me.data.user.username}
+          </span>
+          <span class="font-medium text-text/75 text-sm md:text-lg">
+            {$me.data.user.email}
+          </span>
+          <div class="flex items-center gap-3 mt-3 mb-2">
+            <Button class="bg-background/30 backdrop-blur-lg rounded-3xl">
+              Edit profile
+            </Button>
+            <Button class="bg-background/30 backdrop-blur-lg rounded-3xl">
+              Logout
+            </Button>
+          </div>
+        </div>
       </div>
       <div
         class="flex flex-col gap-8 md:gap-10 items-center justify-start w-full"
       >
-        <span class="font-bold text-text text-lg md:text-2xl">
-          {$me.data.user.username}
-        </span>
-
         <div
           class="flex flex-col items-start justify-center w-full gap-4 md:gap-8"
         >

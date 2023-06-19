@@ -28,7 +28,8 @@
   <link rel="preload" as="image" href="/cover/jobs.webp" />
   <link rel="preload" as="image" href="/cover/ask.webp" />
   <link rel="preload" as="image" href="/cover/show.webp" />
-  <title>Discover</title>
+  <title>Glance</title>
+  <meta name="description" content="Glance at the hottest news" />
 </svelte:head>
 
 <div

@@ -21,6 +21,7 @@
 
 <svelte:head>
   <title>Feeds</title>
+  <meta name="description" content="Feeds of the latest news" />
 </svelte:head>
 
 <div
@@ -50,7 +51,7 @@
       class="flex flex-col items-center justify-center w-full divide-y divide-white/40"
     >
       {#each paginated as item, i (item.id)}
-        {#if item.points && item.points >= 10}
+        {#if i == 0 || (item.points && item.points >= 10)}
           <div
             class="flex flex-col items-center justify-center w-full p-2 md:p-4"
           >

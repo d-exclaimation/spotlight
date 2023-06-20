@@ -40,7 +40,6 @@ export const users = pgTable(
     createdAt: timestamp("created_at", { withTimezone: false })
       .notNull()
       .defaultNow(),
-    glances: integer("glances").notNull().default(0),
   },
   (table) => ({
     emailIdx: uniqueIndex("email_idx").on(table.email),

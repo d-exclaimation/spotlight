@@ -50,6 +50,13 @@
       "when": 1687235972579,
       "tag": "0006_lowly_zodiak",
       "breakpoints": false
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1687237514602,
+      "tag": "0007_whole_molly_hayes",
+      "breakpoints": false
     }
   ]
 }

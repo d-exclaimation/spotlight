@@ -5,13 +5,17 @@
   import Popover from "@/lib/components/popover.svelte";
   import { tw } from "@/lib/tailwind";
   import { auth } from "@/lib/utils/storage";
+  import { hoursAndMinutesSince } from "@/lib/utils/time";
   import { enter, exit } from "@/lib/utils/transition";
   import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
+  import { beginning } from "../stores";
 
   const client = getQueryClient();
   const me = createMeQuery();
 
   let open = false;
+
+  $: time = hoursAndMinutesSince($beginning);
 </script>
 
 <svelte:head>
@@ -102,20 +106,23 @@
       </div>
 
       <div class="flex w-full p-2 md:p-3 items-center justify-around">
-        <div class="flex justify-center flex-col flex-1">
-          <span class="font-light text-sm md:text-lg">Viewed</span>
-          <span class="font-semibold text-xl md:text-3xl">1,587</span>
+        <div class="flex justify-center flex-col flex-[2]">
+          <span class="font-light text-sm md:text-lg">Engangement</span>
+          <div class="flex gap-2 items-end">
+            <span class="font-semibold text-xl md:text-3xl">87</span>
+            <span class="font-light mr-1">news</span>
+          </div>
         </div>
-        <div class="flex justify-center flex-col flex-1">
-          <span class="font-light text-sm md:text-lg">Enganged</span>
-          <span class="font-semibold text-xl md:text-3xl">87</span>
-        </div>
-        <div class="flex justify-center flex-col flex-[2] md:flex-[3]">
+        <div class="flex justify-center flex-col flex-[3] md:flex-[3]">
           <span class="font-light text-sm md:text-lg">Time spent</span>
           <div class="flex gap-2 items-end">
-            <span class="font-semibold text-xl md:text-3xl"> 4.5 </span>
+            <span class="font-semibold text-xl md:text-3xl">
+              {time.hours}
+            </span>
             <span class="font-light mr-1">hr</span>
-            <span class="font-semibold text-xl md:text-3xl"> 14.5 </span>
+            <span class="font-semibold text-xl md:text-3xl">
+              {time.minutes}
+            </span>
             <span class="font-light">min</span>
           </div>
         </div>

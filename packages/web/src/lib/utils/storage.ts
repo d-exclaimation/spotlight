@@ -1,4 +1,4 @@
-import { Auth } from "../types";
+import { Auth, datestring } from "../types";
 
 /**
  * Storage for auth data
@@ -21,5 +21,28 @@ export const auth = {
   },
   clear: () => {
     localStorage.removeItem("auth");
+  },
+};
+
+/**
+ * Storage for auth data
+ */
+export const tracking = {
+  get: () => {
+    const raw = localStorage.getItem("time");
+    if (!raw) {
+      return undefined;
+    }
+    const parsed = datestring.safeParse(raw);
+    if (!parsed.success) {
+      return undefined;
+    }
+    return parsed.data;
+  },
+  set: (data: Date) => {
+    localStorage.setItem("time", data.toISOString());
+  },
+  clear: () => {
+    localStorage.removeItem("time");
   },
 };

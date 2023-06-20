@@ -16,7 +16,7 @@
 
   let email = "";
   let code = "";
-  let submitted = true;
+  let submitted = false;
 
   const client = getQueryClient();
   const me = createMeQuery();

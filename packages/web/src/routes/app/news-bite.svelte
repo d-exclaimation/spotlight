@@ -36,12 +36,12 @@
 
   $: filter =
     item.type === "ask"
-      ? "after:bg-orange-300/10"
+      ? "after:bg-orange-300/20"
       : item.type === "job"
-      ? "after:bg-emerald-300/10"
+      ? "after:bg-emerald-300/20"
       : item.title.startsWith("Show HN") || item.title.startsWith("Tell HN")
-      ? "after:bg-rose-300/10"
-      : "after:bg-indigo-300/10";
+      ? "after:bg-rose-300/20"
+      : "after:bg-indigo-300/20";
 
   $: bg =
     item.type === "ask"
@@ -149,7 +149,7 @@
           >
             <path
               d="M650 400L150 400M150 400L350 600M150 400L350 200"
-              stroke="black"
+              stroke="white"
               stroke-width="66.6667"
               stroke-linecap="round"
               stroke-linejoin="round"

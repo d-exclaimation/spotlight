@@ -31,6 +31,7 @@ export default {
         "expand-right":
           "expand-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
         "bounce-r": "bounce-r 1s infinite",
+        "heavy-bounce": "heavy-bounce 1s infinite",
       },
       keyframes: {
         overlay: {
@@ -85,6 +86,16 @@ export default {
         "bounce-r": {
           "0%, 100%": {
             transform: "translateX(-25%)",
+            "animation-timing-function": "cubic-bezier(0.8,0,1,1)",
+          },
+          "50%": {
+            transform: "none",
+            "animation-timing-function": "cubic-bezier(0,0,0.2,1)",
+          },
+        },
+        "heavy-bounce": {
+          "0%, 100%": {
+            transform: "translateY(-100%)",
             "animation-timing-function": "cubic-bezier(0.8,0,1,1)",
           },
           "50%": {

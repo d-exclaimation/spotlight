@@ -3,6 +3,8 @@
   import { createMeQuery } from "@/lib/api/me";
   import Button from "@/lib/components/button.svelte";
   import Popover from "@/lib/components/popover.svelte";
+  import Error from "@/lib/components/status/error.svelte";
+  import Loading from "@/lib/components/status/loading.svelte";
   import { tw } from "@/lib/tailwind";
   import { auth } from "@/lib/utils/storage";
   import { hoursAndMinutesSince } from "@/lib/utils/time";
@@ -36,19 +38,9 @@
     class="flex flex-col items-center justify-start w-full text-text md:mt-6 flex-1"
   >
     {#if $me.isLoading || !$me.data?.user}
-      <div class="flex flex-col items-center justify-center w-full py-6 h-4/5">
-        <span class="font-semibold text-lg text-text">Loading</span>
-        <span class="font-bold text-text/75 animate-pulse text-xl md:text-2xl">
-          ...
-        </span>
-      </div>
+      <Loading />
     {:else if $me.error}
-      <div class="flex flex-col items-center justify-center w-full py-6 h-4/5">
-        <span class="font-semibold text-lg text-text">No news</span>
-        <span class="font-medium text-text/75">
-          Error: {$me.error?.toString()}
-        </span>
-      </div>
+      <Error label="Not logged in" error={$me.error} />
     {:else}
       <div class="flex items-center justify-start mb-2 p-2 md:p-3 w-full gap-2">
         <img

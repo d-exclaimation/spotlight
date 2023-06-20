@@ -1,10 +1,13 @@
 <script lang="ts">
   import { createMeQuery } from "@/lib/api/me";
   import Button from "@/lib/components/button.svelte";
+  import Popover from "@/lib/components/popover.svelte";
   import { tw } from "@/lib/tailwind";
   import { enter, exit } from "@/lib/utils/transition";
 
   const me = createMeQuery();
+
+  let open = false;
 </script>
 
 <svelte:head>
@@ -17,7 +20,7 @@
   out:exit
 >
   <h1
-    class="pt-8 pb-4 p-2 text-2xl font-bold z-30 sticky top-0 bg-background/75 text-text backdrop-blur border-b border-black/50 w-full"
+    class="pt-8 pb-4 p-2 text-2xl font-bold z-40 sticky top-0 bg-background/75 text-text backdrop-blur border-b border-black/50 w-full"
   >
     Profile
   </h1>
@@ -56,13 +59,37 @@
           </span>
         </div>
         <div class="flex items-center justify-end">
-          <Button class="hover:bg-white/10 active:bg-white/10 p-1 md:p-2">
-            <img
-              src="/icons/settings.svg"
-              alt="Settings"
-              class="w-5 md:w-6 aspect-square"
-            />
-          </Button>
+          <div class="relative">
+            <Button
+              class="relative hover:bg-white/10 active:bg-white/10 p-1 md:p-2 z-10"
+              on:click={() => (open = !open)}
+            >
+              <img
+                src="/icons/settings.svg"
+                alt="Settings"
+                class="w-5 md:w-6 aspect-square"
+              />
+            </Button>
+            <Popover bind:open>
+              <div
+                class="flex flex-col items-center justify-center w-28 md:w-32 text-sm md:text-base font-medium"
+              >
+                <Button
+                  class="w-full text-start text-indigo-200 md:text-text bg-background md:hover:bg-indigo-200 md:active:bg-indigo-200 md:hover:text-background md:active:text-background"
+                  on:click={() => (open = false)}
+                >
+                  Edit
+                </Button>
+                <span class="w-[90%] h-[1px] bg-text/20" />
+                <Button
+                  class="w-full text-start text-rose-200 md:text-text bg-background md:hover:bg-rose-200 md:active:bg-rose-200 md:hover:text-background md:active:text-background"
+                  on:click={() => (open = false)}
+                >
+                  Logout
+                </Button>
+              </div>
+            </Popover>
+          </div>
         </div>
       </div>
 

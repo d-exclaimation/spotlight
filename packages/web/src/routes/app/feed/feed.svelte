@@ -6,7 +6,7 @@
 </script>
 
 <a
-  class="flex flex-row group items-start justify-start w-full p-2 md:p-4 bg-background hover:brightness-110 active:brightness-110"
+  class="flex flex-row group items-start justify-start w-full p-2 md:p-4 bg-background hover:bg-neutral-800 active:bg-neutral-800"
   href={link(item.url)}
   target="_blank"
 >

@@ -7,18 +7,18 @@
 
   $: bg =
     item.type === "ask"
-      ? "bg-orange-600 saturate-[.75]"
+      ? "bg-orange-200"
       : item.type === "job"
-      ? "bg-emerald-600 saturate-[.75]"
+      ? "bg-emerald-200"
       : item.title.startsWith("Show HN") || item.title.startsWith("Tell HN")
-      ? "bg-rose-600 saturate-[.75]"
-      : "bg-primary2";
+      ? "bg-rose-200"
+      : "bg-primary";
 </script>
 
 <a
   class={tw(
     `flex flex-col items-center justify-center
-    rounded-lg text-white w-full p-4 md:p-6 my-2 
+    rounded-lg text-background w-full p-4 md:p-6 my-2 
     hover:brightness-105 active:brightness-105`,
     bg
   )}

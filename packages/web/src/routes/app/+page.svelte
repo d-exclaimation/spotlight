@@ -42,7 +42,7 @@
   >
     <h1 class="text-2xl font-bold text-text">Glance</h1>
     <Button
-      class="text-text bg-background bg-accent/30 py-1 px-2 md:px-3 hover:bg-accent/50 active:bg-accent/50"
+      class="text-text bg-background bg-primary/30 py-1 px-2 md:px-3 hover:bg-primary/40 active:bg-primary/40"
       on:click={async () => {
         await $query.refetch();
         glance.update(() => ({ current: 0, on: new Date() }));

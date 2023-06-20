@@ -48,7 +48,14 @@
         <span
           in:receive={{ key: BUBBLE }}
           out:send={{ key: BUBBLE }}
-          class="absolute inset-0 z-[60] bg-primary rounded-full"
+          class={tw(
+            "absolute inset-0 z-[60] rounded-full",
+            path === "/app"
+              ? "bg-sky-300"
+              : path === "/app/feed"
+              ? "bg-green-300"
+              : "bg-primary"
+          )}
         />
       {/if}
       <span

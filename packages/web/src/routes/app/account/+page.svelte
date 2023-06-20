@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createMeQuery } from "@/lib/api/me";
   import Button from "@/lib/components/button.svelte";
+  import { tw } from "@/lib/tailwind";
   import { enter, exit } from "@/lib/utils/transition";
 
   const me = createMeQuery();
@@ -74,7 +75,7 @@
           <span class="font-light text-sm md:text-lg">Enganged</span>
           <span class="font-semibold text-xl md:text-3xl">87</span>
         </div>
-        <div class="flex justify-center flex-col flex-[3]">
+        <div class="flex justify-center flex-col flex-[2] md:flex-[3]">
           <span class="font-light text-sm md:text-lg">Time spent</span>
           <div class="flex gap-2 items-end">
             <span class="font-semibold text-xl md:text-3xl"> 4.5 </span>
@@ -89,9 +90,19 @@
         <span class="font-semibold">Activities</span>
         <div class="flex w-full items-end h-40 max-w-full justify-start gap-1">
           {#each { length: 10 } as _, i (i)}
+            {@const height = Math.round(Math.random() * 6 + 2)}
             <div
-              class="w-[9%] shrink-0 h-36 rounded bg-primary"
-              style={`height:${Math.round(Math.random() * 6 + 2)}rem`}
+              class={tw(
+                "w-[9%] shrink-0 h-36 rounded",
+                height > 6
+                  ? "bg-blue-200"
+                  : height > 4
+                  ? "bg-emerald-200"
+                  : height > 2
+                  ? "bg-amber-200"
+                  : "bg-rose-200"
+              )}
+              style={`height:${height}rem`}
             />
           {/each}
         </div>
@@ -99,13 +110,16 @@
 
       <div class="flex flex-col w-full my-2 md:my-3 p-2 md:p-3 gap-2">
         <span class="font-semibold">Top categories</span>
-        <div class="flex flex-col w-full gap-2">
+        <div class="flex flex-col w-full gap-2 divide-y divide-text/20">
           {#each { length: 5 } as _, i (i)}
             <div
-              class="flex items-center justify-start md:justify-between p-2 gap-2"
+              class="flex flex-col md:flex-row items-start md:items-start justify-between p-2 gap-2"
             >
-              <span>Sport</span>
-              <span>1,587</span>
+              <span class="font-medium">Sport</span>
+              <span class="font-light">
+                1,587
+                <span class="font-extralight">engagements</span>
+              </span>
             </div>
           {/each}
         </div>

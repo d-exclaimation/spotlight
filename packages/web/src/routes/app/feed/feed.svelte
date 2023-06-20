@@ -6,14 +6,14 @@
 </script>
 
 <a
-  class="flex flex-row group items-start justify-start w-full p-2 md:p-4 bg-background hover:brightness-90 active:brightness-90"
+  class="flex flex-row group items-start justify-start w-full p-2 md:p-4 bg-background hover:brightness-110 active:brightness-110"
   href={link(item.url)}
   target="_blank"
 >
   <div class="flex items-start justify-center mr-2 md:mr-4">
     {#if item.type === "ask"}
       <svg
-        class="w-8 aspect-square md:w-10 rounded-full fill-orange-600 saturate-[.75]"
+        class="w-8 aspect-square md:w-10 rounded-full fill-orange-300 saturate-[.75]"
         viewBox="-1 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -23,7 +23,7 @@
       </svg>
     {:else if item.type === "job"}
       <svg
-        class="w-8 aspect-square md:w-10 rounded-full fill-emerald-600 saturate-[.75]"
+        class="w-8 aspect-square md:w-10 rounded-full fill-emerald-300 saturate-[.75]"
         viewBox="-1 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -33,7 +33,7 @@
       </svg>
     {:else if item.title.startsWith("Show HN") || item.title.startsWith("Tell HN")}
       <svg
-        class="w-8 aspect-square md:w-10 rounded-full fill-rose-600 saturate-[.75]"
+        class="w-8 aspect-square md:w-10 rounded-full fill-rose-300 saturate-[.75]"
         viewBox="-1 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -43,7 +43,7 @@
       </svg>
     {:else}
       <svg
-        class="w-8 aspect-square md:w-10 rounded-full fill-primary2"
+        class="w-8 aspect-square md:w-10 rounded-full fill-primary"
         viewBox="-1 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
       >

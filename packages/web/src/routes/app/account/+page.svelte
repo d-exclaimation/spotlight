@@ -1,10 +1,14 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import { createMeQuery } from "@/lib/api/me";
   import Button from "@/lib/components/button.svelte";
   import Popover from "@/lib/components/popover.svelte";
   import { tw } from "@/lib/tailwind";
+  import { auth } from "@/lib/utils/storage";
   import { enter, exit } from "@/lib/utils/transition";
+  import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
 
+  const client = getQueryClient();
   const me = createMeQuery();
 
   let open = false;
@@ -83,7 +87,11 @@
                 <span class="w-[90%] h-[1px] bg-text/20" />
                 <Button
                   class="w-full text-start text-rose-200 md:text-text bg-background md:hover:bg-rose-200 md:active:bg-rose-200 md:hover:text-background md:active:text-background"
-                  on:click={() => (open = false)}
+                  on:click={async () => {
+                    auth.clear();
+                    await client.invalidateQueries(["users", "me"]);
+                    await goto("/");
+                  }}
                 >
                   Logout
                 </Button>

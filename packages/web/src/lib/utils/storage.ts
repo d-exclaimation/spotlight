@@ -19,4 +19,7 @@ export const auth = {
   set: (data: Auth) => {
     localStorage.setItem("auth", JSON.stringify(data));
   },
+  clear: () => {
+    localStorage.removeItem("auth");
+  },
 };

@@ -43,6 +43,13 @@
       "when": 1686800325167,
       "tag": "0005_bizarre_wallflower",
       "breakpoints": false
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1687235972579,
+      "tag": "0006_lowly_zodiak",
+      "breakpoints": false
     }
   ]
 }

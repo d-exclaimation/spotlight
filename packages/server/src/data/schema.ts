@@ -1,7 +1,9 @@
 import { relations } from "drizzle-orm";
 import {
   char,
+  integer,
   pgTable,
+  primaryKey,
   text,
   timestamp,
   uniqueIndex,
@@ -38,6 +40,7 @@ export const users = pgTable(
     createdAt: timestamp("created_at", { withTimezone: false })
       .notNull()
       .defaultNow(),
+    glances: integer("glances").notNull().default(0),
   },
   (table) => ({
     emailIdx: uniqueIndex("email_idx").on(table.email),
@@ -62,8 +65,38 @@ export const codes = pgTable(
 );
 
 /**
+ * The preferences table for each person to news category.
+ */
+export const preferences = pgTable(
+  "preferences",
+  {
+    userId: uuid("user_id").notNull(),
+    category: text("category").notNull(),
+    engagements: integer("engagements").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: false }),
+  },
+  (table) => ({
+    pk: primaryKey(table.userId, table.category),
+  })
+);
+
+/**
  * Relation between one-time codes and users for login.
  */
 export const codesRelations = relations(codes, ({ one }) => ({
   user: one(users, { fields: [codes.userId], references: [users.id] }),
+}));
+
+/**
+ * Relation between preferences and users for news category preferences.
+ */
+export const preferencesRelations = relations(preferences, ({ one }) => ({
+  user: one(users, { fields: [preferences.userId], references: [users.id] }),
+}));
+
+/**
+ * Relation between users and preferences for news category preferences.
+ */
+export const usersRelations = relations(users, ({ many }) => ({
+  preferences: many(preferences),
 }));

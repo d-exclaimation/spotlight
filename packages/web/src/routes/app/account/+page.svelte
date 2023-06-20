@@ -2,7 +2,6 @@
   import { createMeQuery } from "@/lib/api/me";
   import Button from "@/lib/components/button.svelte";
   import { enter, exit } from "@/lib/utils/transition";
-  import Info from "./info.svelte";
 
   const me = createMeQuery();
 </script>
@@ -12,7 +11,7 @@
 </svelte:head>
 
 <div
-  class="flex flex-col items-start justify-start h-[100vh] overflow-y-scroll w-full px-6 max-w-2xl bg-background md:border-x border-white/40"
+  class="flex flex-col items-start justify-start h-[100vh] overflow-y-scroll w-full px-6 max-w-2xl bg-background md:border-x border-text/40"
   in:enter
   out:exit
 >
@@ -39,52 +38,76 @@
         </span>
       </div>
     {:else}
-      <div
-        class="flex items-center justify-start mb-2 p-3 mx-2 w-full gap-2 rounded-3xl bg-primary2"
-      >
+      <div class="flex items-center justify-start mb-2 p-2 md:p-3 w-full gap-2">
         <img
-          class="w-28 md:w-32 p-2 relative aspect-square object-cover rounded-[2rem]"
+          class="w-16 md:w-20 p-2 relative aspect-square object-cover rounded-xl"
           src={`https://api.dicebear.com/6.x/notionists-neutral/svg?seed=${$me.data.user.email}`}
           alt={`Avatar for ${$me.data.user.username}`}
         />
         <div class="flex flex-col items-start flex-1 h-full px-2 py-3">
-          <span class="font-bold text-text text-xl md:text-3xl">
+          <span class="font-bold text-text text-lg md:text-2xl">
             {$me.data.user.username}
           </span>
-          <span class="font-medium text-text/75 text-sm md:text-lg">
+          <span
+            class="font-medium text-text/75 text-[0.675rem] leading-tight md:text-sm"
+          >
             {$me.data.user.email}
           </span>
-          <div class="flex items-center gap-3 mt-3 mb-2">
-            <Button class="bg-background/30 backdrop-blur-lg rounded-3xl">
-              Edit profile
-            </Button>
-            <Button class="bg-background/30 backdrop-blur-lg rounded-3xl">
-              Logout
-            </Button>
+        </div>
+        <div class="flex items-center justify-end">
+          <Button class="hover:bg-white/10 active:bg-white/10 p-1 md:p-2">
+            <img
+              src="/icons/settings.svg"
+              alt="Settings"
+              class="w-5 md:w-6 aspect-square"
+            />
+          </Button>
+        </div>
+      </div>
+
+      <div class="flex w-full p-2 md:p-3 items-center justify-around">
+        <div class="flex justify-center flex-col flex-1">
+          <span class="font-light text-sm md:text-lg">Viewed</span>
+          <span class="font-semibold text-xl md:text-3xl">1,587</span>
+        </div>
+        <div class="flex justify-center flex-col flex-1">
+          <span class="font-light text-sm md:text-lg">Enganged</span>
+          <span class="font-semibold text-xl md:text-3xl">87</span>
+        </div>
+        <div class="flex justify-center flex-col flex-[3]">
+          <span class="font-light text-sm md:text-lg">Time spent</span>
+          <div class="flex gap-2 items-end">
+            <span class="font-semibold text-xl md:text-3xl"> 4.5 </span>
+            <span class="font-light mr-1">hr</span>
+            <span class="font-semibold text-xl md:text-3xl"> 14.5 </span>
+            <span class="font-light">min</span>
           </div>
         </div>
       </div>
-      <div
-        class="flex flex-col gap-8 md:gap-10 items-center justify-start w-full"
-      >
-        <div
-          class="flex flex-col items-start justify-center w-full gap-4 md:gap-8"
-        >
-          <span class="font-semibold text-text text-lg md:text-2xl px-1">
-            About you
-          </span>
-          <Info
-            icon="📣"
-            label="Bio"
-            value={`Hello there! I'm ${$me.data.user.username}`}
-          />
 
-          <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-            <Info icon="📬" label="Email" value={$me.data.user.email} />
-            <Info icon="🏖️" label="Location" value="Earth" />
-            <Info icon="🏂" label="Hobby" value="Sleeping" />
-            <Info icon="🍹" label="Interest" value="Politics" />
-          </div>
+      <div class="flex flex-col w-full my-2 md:my-3 p-2 md:p-3 gap-2">
+        <span class="font-semibold">Activities</span>
+        <div class="flex w-full items-end h-40 max-w-full justify-start gap-1">
+          {#each { length: 10 } as _, i (i)}
+            <div
+              class="w-[9%] shrink-0 h-36 rounded bg-primary"
+              style={`height:${Math.round(Math.random() * 6 + 2)}rem`}
+            />
+          {/each}
+        </div>
+      </div>
+
+      <div class="flex flex-col w-full my-2 md:my-3 p-2 md:p-3 gap-2">
+        <span class="font-semibold">Top categories</span>
+        <div class="flex flex-col w-full gap-2">
+          {#each { length: 5 } as _, i (i)}
+            <div
+              class="flex items-center justify-start md:justify-between p-2 gap-2"
+            >
+              <span>Sport</span>
+              <span>1,587</span>
+            </div>
+          {/each}
         </div>
       </div>
     {/if}

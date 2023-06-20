@@ -11,9 +11,12 @@ export default {
       colors: {
         primary2: "#4353b5",
         text: "#f0f7f8",
+        // text: "#010404",
         background: "#010404",
+        // background: "#f0f7f8",
         primary: "#b2bdf8",
         secondary: "#050824",
+        // secondary: "0xFAF7DB",
         accent: "#4353e5",
       },
       animation: {

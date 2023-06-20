@@ -36,12 +36,12 @@
 
   $: filter =
     item.type === "ask"
-      ? "after:bg-orange-500/10"
+      ? "after:bg-orange-300/10"
       : item.type === "job"
-      ? "after:bg-emerald-500/10"
+      ? "after:bg-emerald-300/10"
       : item.title.startsWith("Show HN") || item.title.startsWith("Tell HN")
-      ? "after:bg-rose-500/10"
-      : "after:bg-indigo-500/10";
+      ? "after:bg-rose-300/10"
+      : "after:bg-indigo-300/10";
 
   $: bg =
     item.type === "ask"
@@ -112,12 +112,12 @@
   <div
     class={tw(`flex flex-col w-full items-center py-10
     px-4 justify-end gap-4 md:gap-6 bg-gradient-to-t md:px-8
-    from-background from-65% via-background/50 relative z-20`)}
+    from-background from-50% via-background/90 via-80% relative z-20`)}
   >
     <div class="w-full flex items-center">
       <span
         class={tw(
-          "max-w-[90%] break-words text-left [text-wrap:balance]",
+          "max-w-[90%] break-words font-semibold text-left [text-wrap:balance]",
           size
         )}
       >
@@ -149,7 +149,7 @@
           >
             <path
               d="M650 400L150 400M150 400L350 600M150 400L350 200"
-              stroke="white"
+              stroke="black"
               stroke-width="66.6667"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -161,7 +161,7 @@
         class="flex flex-row md:flex-col w-full gap-2 md:gap-0 items-start md:justify-end"
       >
         <span class="text-xs md:text-sm font-medium md:font-bold">
-          {item.type} by {item.user ?? "anonymous"}
+          by {item.user ?? "anonymous"}
         </span>
         <span class="text-xs md:text-sm font-normal">
           {item.time_ago}

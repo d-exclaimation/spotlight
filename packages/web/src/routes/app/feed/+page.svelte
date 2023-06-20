@@ -25,7 +25,7 @@
 </svelte:head>
 
 <div
-  class="flex flex-col items-start justify-start h-[100vh] overflow-y-scroll w-full px-6 max-w-2xl bg-background md:border-x border-white/40"
+  class="flex flex-col items-start justify-start h-[100vh] overflow-y-scroll w-full px-6 max-w-2xl bg-background md:border-x border-text/40"
   bind:this={view}
   in:enter
   out:exit

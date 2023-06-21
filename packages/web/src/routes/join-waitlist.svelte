@@ -63,21 +63,12 @@
   </button>
 {/if}
 
-<!-- <button
-  class="text-text/70 text-xs md:text-base animate-slide-down [animation-delay:2s]"
-  on:click={() => dispatch("learn")}
->
-  <span class="block animate-bounce [animation-duration:2s]">
-    Learn more &darr;
-  </span>
-</button> -->
-
 <Dialog bind:show>
   <div
     class="flex flex-col rounded-md p-6 shadow bg-black max-w-[90vw] w-[32rem]"
   >
     <div class="flex items-start w-full justify-between">
-      <span class="text-xl font-semibold text-text"> Join the waitlist </span>
+      <span class="text-xl font-medium text-text"> Join the waitlist </span>
 
       <button on:click={() => (show = false)}>
         <svg
@@ -109,13 +100,13 @@
 
       <div class="flex justify-between items-center w-full mt-2">
         <Button
-          class="bg-red-700  mt-4 text-text"
+          class="bg-red-700 mt-4 text-text"
           on:click={() => (show = false)}
         >
           Cancel
         </Button>
         <Button
-          class="bg-accent mt-4 text-text font-medium"
+          class="bg-accent mt-4 text-text"
           disabled={!email.length || $mutation.isLoading}
           on:click={() => {
             $mutation.mutate({ email });

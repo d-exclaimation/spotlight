@@ -40,7 +40,7 @@
   >
     <div class="max-w-md w-[85vw] flex flex-col">
       <div class="flex flex-col justify-center w-full h-full">
-        <span class="text-lg md:text-xl font-semibold text-text">
+        <span class="text-lg md:text-xl font-medium text-text">
           Logging in to Spotlight
         </span>
         <span class="text-text/75 text-sm md:text-base mt-1">

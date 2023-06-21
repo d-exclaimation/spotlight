@@ -79,7 +79,7 @@
           in:fly={{ duration: 300, y: "100%", delay: 300 }}
           out:fly={{ duration: 300, y: "100%" }}
         >
-          <span class="text-lg md:text-xl font-semibold text-text">
+          <span class="text-lg md:text-xl font-medium text-text">
             Login to Spotlight
           </span>
           <span class="text-text/75 text-sm md:text-base mt-1">

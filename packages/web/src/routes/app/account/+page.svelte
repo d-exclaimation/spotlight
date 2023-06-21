@@ -49,11 +49,11 @@
           alt={`Avatar for ${$me.data.user.username}`}
         />
         <div class="flex flex-col items-start flex-1 h-full px-2 py-3">
-          <span class="font-bold text-text text-lg md:text-2xl">
+          <span class="font-medium text-text text-lg md:text-2xl">
             {$me.data.user.username}
           </span>
           <span
-            class="font-medium text-text/75 text-[0.675rem] leading-tight md:text-sm"
+            class="font-light text-text/75 text-[0.675rem] leading-tight md:text-sm"
           >
             {$me.data.user.email}
           </span>
@@ -143,13 +143,13 @@
       </div>
 
       <div class="flex flex-col w-full my-2 md:my-3 p-2 md:p-3 gap-2">
-        <span class="font-semibold">Top categories</span>
+        <span class="font-medium">Top categories</span>
         <div class="flex flex-col w-full gap-2 divide-y divide-text/20">
           {#each { length: 5 } as _, i (i)}
             <div
               class="flex flex-col md:flex-row items-start md:items-start justify-between p-2 gap-2"
             >
-              <span class="font-medium">Sport</span>
+              <span class="font-normal">Sport</span>
               <span class="font-light">
                 1,587
                 <span class="font-extralight">engagements</span>

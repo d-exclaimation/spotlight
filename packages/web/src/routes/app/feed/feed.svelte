@@ -55,7 +55,7 @@
   </div>
   <div class="flex-1 flex flex-col items-start justify-start text-text">
     <span
-      class="break-words text-base font-semibold max-w-full group-hover:underline"
+      class="break-words text-base font-medium max-w-full group-hover:underline"
     >
       {item.title}
     </span>

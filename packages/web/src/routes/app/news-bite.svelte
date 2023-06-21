@@ -117,7 +117,7 @@
     <div class="w-full flex items-center">
       <span
         class={tw(
-          "max-w-[90%] break-words font-semibold text-left [text-wrap:balance]",
+          "max-w-[90%] break-words font-medium text-left [text-wrap:balance]",
           size
         )}
       >
@@ -131,7 +131,7 @@
       <div class="flex flex-col md:flex-row w-full md:items-end justify-end">
         <a
           bind:this={ref}
-          class="font-bold hover:underline md:text-lg cursor-pointer flex items-center gap-1 md:gap-2"
+          class="font-medium hover:underline md:text-lg cursor-pointer flex items-center gap-1 md:gap-2"
           href={link(item.url)}
           target="_blank"
           on:touchend={() => {
@@ -160,10 +160,10 @@
       <div
         class="flex flex-row md:flex-col w-full gap-2 md:gap-0 items-start md:justify-end"
       >
-        <span class="text-xs md:text-sm font-medium md:font-bold">
+        <span class="text-xs md:text-sm">
           by {item.user ?? "anonymous"}
         </span>
-        <span class="text-xs md:text-sm font-normal">
+        <span class="text-xs md:text-sm font-extralight">
           {item.time_ago}
         </span>
       </div>

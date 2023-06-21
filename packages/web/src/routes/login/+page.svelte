@@ -5,10 +5,12 @@
     createLoginMutation,
     createMeQuery,
   } from "@/lib/api/me";
+  import { isTRPCError } from "@/lib/api/trpc";
   import Button from "@/lib/components/button.svelte";
   import PinInput from "@/lib/components/pin-input.svelte";
   import Redirect from "@/lib/components/redirect.svelte";
   import Textfield from "@/lib/components/textfield.svelte";
+  import { tw } from "@/lib/tailwind";
   import { auth } from "@/lib/utils/storage";
   import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
   import { fly } from "svelte/transition";
@@ -16,26 +18,49 @@
 
   let email = "";
   let code = "";
+  let error = "";
 
   let submitted = false;
+
+  $: if (email) {
+    error = "";
+  }
 
   const client = getQueryClient();
   const me = createMeQuery();
   const login = createLoginMutation({
     onSuccess: (res) => {
-      submitted = !!res.user;
+      if (!res.user) {
+        error = "Account not found";
+        return;
+      }
+      error = "";
+      submitted = true;
+    },
+    onError: (err) => {
+      if (isTRPCError(err)) {
+        error = err.cause?.message ?? "Invalid email address";
+      }
     },
   });
 
   const login2 = createLogin2Mutation({
     onSuccess: async (res) => {
-      if (res.token) {
-        auth.set({ token: res.token });
-        await client.invalidateQueries(["users", "me"]);
-        await goto("/app");
-        email = "";
-        code = "";
-        submitted = false;
+      if (!res.token) {
+        error = "Invalid login code";
+        return;
+      }
+      auth.set({ token: res.token });
+      await client.invalidateQueries(["users", "me"]);
+      await goto("/app");
+      email = "";
+      code = "";
+      error = "";
+      submitted = false;
+    },
+    onError: (err) => {
+      if (isTRPCError(err)) {
+        error = err.cause?.message ?? "Invalid login code";
       }
     },
   });
@@ -65,20 +90,38 @@
               class="flex w-full flex-col items-start justify-center gap-2 md:gap-3"
             >
               <label
-                class="text-sm text-text font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                class="flex items-center text-sm text-text font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 for="code"
               >
-                8 digit code
+                <span
+                  class="transition-all data-[error=true]:opacity-0 data-[error=true]:-z-0 data-[error=true]:translate-y-5"
+                  data-error={!!error}
+                >
+                  8 digit code
+                </span>
+                <span
+                  class="absolute opacity-0 -z-10 translate-y-5 transition-all data-[error=true]:opacity-100 data-[error=true]:z-0 data-[error=true]:translate-y-0 text-red-300"
+                  data-error={!!error}
+                >
+                  {error}
+                </span>
               </label>
               <PinInput id="code" bind:value={code} length={8} />
             </div>
           </div>
           <Button
-            class="bg-accent mt-4 text-text font-medium"
+            class={tw(
+              "bg-accent mt-4 text-text font-medium",
+              $login2.isLoading && "animate-pulse"
+            )}
             disabled={!code.length || $login2.isLoading}
             on:click={() => $login2.mutate({ code })}
           >
-            Login
+            {#if $login2.isLoading}
+              ...
+            {:else}
+              Login
+            {/if}
           </Button>
         </div>
       {:else}
@@ -98,14 +141,22 @@
               id="email"
               placeholder="Enter your email address"
               bind:value={email}
+              {error}
             />
           </div>
           <Button
-            class="bg-accent mt-4 text-text font-medium"
+            class={tw(
+              "bg-accent mt-4 text-text font-medium",
+              $login.isLoading && "animate-pulse"
+            )}
             disabled={!email.length || $login.isLoading}
             on:click={() => $login.mutate({ email })}
           >
-            Continue
+            {#if $login.isLoading}
+              ...
+            {:else}
+              Continue
+            {/if}
           </Button>
         </div>
       {/if}

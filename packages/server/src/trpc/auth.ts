@@ -105,7 +105,11 @@ export const app = router({
         where: eq(users.email, input.email),
       });
 
-      if (existing) {
+      const waiting = await db.query.waitlist.findFirst({
+        where: eq(waitlist.email, input.email),
+      });
+
+      if (existing || waiting) {
         return { token: null };
       }
 

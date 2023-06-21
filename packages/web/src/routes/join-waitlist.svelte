@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createMeQuery, createWaitlistMutation } from "@/lib/api/me";
+  import { isTRPCError } from "@/lib/api/trpc";
   import Button from "@/lib/components/button.svelte";
   import Dialog from "@/lib/components/dialog.svelte";
   import Textfield from "@/lib/components/textfield.svelte";
@@ -12,17 +13,26 @@
 
   let show = false;
   let email = "";
+  let error = "";
 
   const client = getQueryClient();
   const me = createMeQuery();
   const mutation = createWaitlistMutation({
     onSuccess: async (res) => {
-      if (res.token) {
-        auth.set({ token: res.token });
-        await client.invalidateQueries(["users", "me"]);
+      if (!res.token) {
+        error = "Email already in use";
+        return;
       }
+      error = "";
       show = false;
       email = "";
+      auth.set({ token: res.token });
+      await client.invalidateQueries(["users", "me"]);
+    },
+    onError: (err) => {
+      if (isTRPCError(err)) {
+        error = err.cause?.message ?? "Invalid email address";
+      }
     },
   });
 </script>
@@ -54,7 +64,7 @@
 {/if}
 
 <button
-  class="text-text/70 text-xs md:text-base mt-8 animate-slide-down [animation-delay:1.75s]"
+  class="text-text/70 text-xs md:text-base mt-8 animate-slide-down [animation-delay:2s]"
   on:click={() => dispatch("learn")}
 >
   <span class="block animate-bounce [animation-duration:2s]">
@@ -93,6 +103,7 @@
       <Textfield
         id="email"
         bind:value={email}
+        {error}
         placeholder="Enter your email address"
       />
 
@@ -110,7 +121,11 @@
             $mutation.mutate({ email });
           }}
         >
-          Sign up
+          {#if $mutation.isLoading}
+            ...
+          {:else}
+            Sign up
+          {/if}
         </Button>
       </div>
     </div>

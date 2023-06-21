@@ -9,7 +9,11 @@
   import InView from "./in-view.svelte";
   import LastFeed from "./last-feed.svelte";
 
-  const query = createFeedsQuery();
+  export let data;
+
+  const query = createFeedsQuery({
+    initialData: data.initial,
+  });
 
   $: paginated = dedup(
     $query.data?.pages?.flatMap(({ news }) => news) ?? [],

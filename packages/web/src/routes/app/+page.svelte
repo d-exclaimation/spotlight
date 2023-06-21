@@ -9,7 +9,11 @@
   import NewsBite from "./news-bite.svelte";
   import { glance } from "./stores";
 
-  const query = createGlanceQuery();
+  export let data;
+
+  const query = createGlanceQuery({
+    initialData: data.initial,
+  });
 
   let direction: "top" | "bottom" = "top";
 

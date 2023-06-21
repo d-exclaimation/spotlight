@@ -12,6 +12,13 @@
   src: url('/fonts/Virgil.woff2') format('woff2')
 }
 
+@font-face {
+  font-family: 'custom-font';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/custom-font.woff2') format('woff2')
+}
+
 :root {
   font-family: 'Raleway', serif;
 }

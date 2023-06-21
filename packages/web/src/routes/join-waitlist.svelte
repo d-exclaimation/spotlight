@@ -41,11 +41,11 @@
   </a>
 {:else}
   <button
-    class={tw(`relative mt-10 animate-slide-down rounded text-sm font-medium
-    text-text [animation-delay:1.5s] before:absolute before:left-0 
-    before:top-0 before:h-full before:w-full before:border-b  
+    class={tw(`relative mt-10 animate-slide-down rounded text-sm 
+    font-medium text-text [animation-delay:1.5s] before:absolute 
+    before:left-0 before:top-0 before:h-full before:w-full before:border-b  
     before:border-text before:transition-all before:content-[''] 
-    hover:before:scale-x-100 active:before:scale-x-100 md:mt-16 md:text-base 
+    hover:before:scale-x-100 active:before:scale-x-100 md:mt-16 md:text-base
     md:before:scale-x-0 md:before:border-b-2`)}
     on:click={() => (show = true)}
   >
@@ -54,7 +54,7 @@
 {/if}
 
 <button
-  class="text-text/70 text-xs mt-8 animate-slide-down [animation-delay:1.75s]"
+  class="text-text/70 text-xs md:text-base mt-8 animate-slide-down [animation-delay:1.75s]"
   on:click={() => dispatch("learn")}
 >
   <span class="block animate-bounce [animation-duration:2s]">

@@ -41,12 +41,12 @@
 </script>
 
 <div
-  class="flex flex-col items-start justify-start min-h-screen min-w-[100vw] bg-gradient-to-br from-background via-background to-secondary"
+  class="flex flex-col items-start justify-start min-h-[100dvh] min-w-[100vw] bg-gradient-to-br from-background via-background to-secondary"
 >
   <Navbar />
 
-  <div class="flex flex-col items-center justify-center h-[80vh] w-full">
-    <div class="max-w-md w-[85vw] flex flex-col">
+  <div class="flex flex-col items-center justify-center h-[80dvh] w-full">
+    <div class="max-w-md w-[85dvw] flex flex-col">
       {#if submitted}
         <div
           class="flex flex-col w-full"

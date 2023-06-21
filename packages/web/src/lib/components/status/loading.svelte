@@ -2,9 +2,7 @@
   import { tw } from "@/lib/tailwind";
 </script>
 
-<div
-  class="flex flex-row items-center justify-center w-full py-6 gap-2 h-[87%]"
->
+<div class="flex flex-row items-center justify-center w-full py-6 gap-2 h-4/5">
   {#each { length: 4 } as _, i (i)}
     <span
       class={tw(

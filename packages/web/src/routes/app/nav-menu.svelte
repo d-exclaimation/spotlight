@@ -32,7 +32,7 @@
   class={tw(`flex fixed bottom-8 md:bottom-5 right-3
   md:right-[unset] shadow-lg bg-background/10 
   z-50 rounded-full gap-4 p-2 backdrop-blur-md  
-  flex-col-reverse md:flex-row items-center 
+  flex-col md:flex-row items-center 
   justify-center ring-[1px] ring-text/20`)}
 >
   {#each ROUTES as { name, path } (path)}

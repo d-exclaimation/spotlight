@@ -49,7 +49,13 @@ export type QueryOpts<T extends keyof typeof trpc> = Omit<
  * Get the tanstack infinite query options for any infinite query using the trpc client
  */
 export type InfiniteQueryOpts<T extends keyof typeof trpc> = Omit<
-  CreateInfiniteQueryOptions<AppOutput[T], unknown, AppOutput[T], unknown[]>,
+  CreateInfiniteQueryOptions<
+    AppOutput[T],
+    unknown,
+    AppOutput[T],
+    AppOutput[T],
+    unknown[]
+  >,
   "queryFn"
 >;
 

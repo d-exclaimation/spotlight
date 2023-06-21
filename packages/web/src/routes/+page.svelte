@@ -39,7 +39,7 @@
   <Navbar />
 
   <!-- Main -->
-  <div class="flex flex-col items-center justify-start h-[60vh] w-full">
+  <div class="flex flex-col items-center justify-start w-full mb-8">
     <div
       class="flex flex-col items-center justify-center mt-16 sm:mt-18 md:mt-24"
     >

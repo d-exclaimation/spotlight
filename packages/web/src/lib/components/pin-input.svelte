@@ -20,8 +20,8 @@
       {...$$restProps}
       class={tw(
         `flex w-9 h-9 md:h-10 md:w-10 rounded-md border border-zinc-300
-        bg-transparent py-2 text-center text-text md:text-base
-        ring-offset-zinc-200 text-xs placeholder:text-zinc-400/75 
+        bg-transparent py-2 text-center text-text text-base
+        ring-offset-zinc-200 placeholder:text-zinc-400/75 
         font-medium focus-visible:outline-none focus-visible:ring
         focus-visible:ring-zinc-300/30 focus-visible:ring-offset-1
         disabled:cursor-not-allowed disabled:opacity-50`,
@@ -36,13 +36,11 @@
           if (curr.length > 1) {
             e.preventDefault();
             const chars = curr.split("");
-            const start = i;
-            const end = Math.min(start + chars.length, length);
-            for (let i = start; i < end; i++) {
-              values[i] = chars[i - start].toUpperCase();
+            for (let i = 0; i < length; i++) {
+              values[i] = chars[i].toUpperCase();
             }
             value = values.join("").toUpperCase();
-            refs[end]?.focus();
+            refs.at(-1)?.focus();
           }
         }
       }}

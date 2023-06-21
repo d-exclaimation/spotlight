@@ -13,7 +13,7 @@
   {...$$restProps}
   class={tw(
     `flex h-10 w-full rounded-md border border-zinc-300
-    bg-transparent px-3 py-2 text-sm ring-offset-zinc-200 
+    bg-transparent px-3 py-2 ring-offset-zinc-200 
     file:border-0 file:bg-transparent file:text-sm 
     file:font-medium placeholder:text-zinc-400/75 font-medium
     focus-visible:outline-none focus-visible:ring text-text

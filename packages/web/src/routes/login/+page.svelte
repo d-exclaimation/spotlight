@@ -16,6 +16,7 @@
 
   let email = "";
   let code = "";
+
   let submitted = false;
 
   const client = getQueryClient();

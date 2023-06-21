@@ -20,7 +20,7 @@
 
 <div
   class={tw(
-    "flex flex-col items-center justify-center pt-4 md:pt-6 w-[90%] mt-20 md:mt-24 rounded-lg",
+    "flex flex-col items-center justify-center pt-4 md:pt-6 w-[90%] mt-12 md:mt-16 rounded-lg",
     reverse ? "md:flex-row-reverse" : "md:flex-row",
     $$restProps.class
   )}
@@ -29,11 +29,11 @@
     <div class="w-16 md:w-20 p-4 rounded-xl bg-text/30 backdrop-blur-xl">
       <img class="aspect-square" src={icon} {alt} />
     </div>
-    <span class="font-bold text-text text-xl md:text-2xl">
+    <span class="font text-text text-xl md:text-2xl">
       {title}
     </span>
 
-    <p class="text-text/80 font-medium md:text-lg">
+    <p class="text-text/75 md:text-lg">
       <slot />
     </p>
 

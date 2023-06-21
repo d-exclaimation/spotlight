@@ -8,7 +8,7 @@
 <nav class="flex items-center justify-between min-w-full px-6 md:px-16 py-6">
   <a class="flex items-center justify-center gap-1 md:gap-2" href="/">
     <img class="w-4 h-4 md:w-6 md:h-6" src="/spotlight.svg" alt="brand" />
-    <h3 class="font-semibold text-base md:text-xl text-text">Spotlight</h3>
+    <h3 class="text-base md:text-xl text-text">Spotlight</h3>
   </a>
 
   {#if !$me.isLoading && !$me.data?.user}

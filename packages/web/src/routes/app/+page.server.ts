@@ -10,14 +10,21 @@ export async function load({ isDataRequest }) {
   if (isDataRequest) {
     return { initial: undefined };
   }
-  const page = await strpc.curation.query({ page: 1 });
+  try {
+    const page = await strpc.curation.query({ page: 1 });
 
-  const initial = {
-    pages: [page],
-    pageParams: [1],
-  } satisfies InfiniteData<typeof page>;
+    const initial = {
+      pages: [page],
+      pageParams: [1],
+    } satisfies InfiniteData<typeof page>;
 
-  return {
-    initial,
-  };
+    return {
+      initial,
+    };
+  } catch (e) {
+    console.error(e);
+    return {
+      initial: undefined,
+    };
+  }
 }

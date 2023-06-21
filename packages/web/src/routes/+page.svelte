@@ -39,17 +39,17 @@
   <Navbar />
 
   <!-- Main -->
-  <div class="flex flex-col items-center justify-center h-[80vh] w-full">
-    <div class="mt-5 flex flex-col items-center justify-center md:mt-8">
+  <div class="flex flex-col items-center justify-start h-[60vh] w-full">
+    <div
+      class="flex flex-col items-center justify-center mt-16 sm:mt-18 md:mt-24"
+    >
       <div class="flex items-center justify-center gap-3 md:gap-4">
-        <span
-          class="animate-slide-down text-text text-4xl font-bold md:text-8xl"
-        >
+        <span class="animate-slide-down text-text text-4xl md:text-8xl">
           Browsing
         </span>
         <div
           class={tw(`relative animate-slide-up text-text
-          font-bold [animation-delay:0.5s] before:absolute
+          font-normal [animation-delay:0.5s] before:absolute
           before:left-0 before:top-0 before:h-full before:w-full 
           before:animate-expand-right before:border-b before:border-text 
           before:content-[''] before:[animation-delay:1.25s]
@@ -60,13 +60,13 @@
         </div>
       </div>
       <div
-        class={tw(`animate-slide-right font-bold min-w-max min-h-max md:mt-1
+        class={tw(`animate-slide-right min-w-max min-h-max md:mt-1
         [animation-delay:1s] flex items-center justify-center relative`)}
       >
         {#key phrase}
           <div
-            class={tw(`text-5xl md:text-9xl leading-tight
-            text-transparent font-bold pb-2 md:pb-3 transition-all pt-1
+            class={tw(`text-4xl md:text-8xl leading-tight
+            text-transparent font-medium pb-2 md:pb-3 transition-all pt-1
             bg-gradient-to-r from-primary via-primary to-accent bg-clip-text`)}
             in:fly={{ y: 20, duration: 200 }}
           >
@@ -74,6 +74,16 @@
           </div>
         {/key}
       </div>
+      <p
+        class={tw(`animate-slide-right w-[90%] max-w-lg text-sm
+        min-h-max [animation-delay:1.25s] flex text-center md:text-lg
+        items-center justify-center relative text-text/75 mt-10`)}
+      >
+        Spotlight is a modern take for news consumption.
+        <br />
+        Stay informed in a glance, with a personalised, relevant, and informative
+        news feed.
+      </p>
     </div>
 
     <!-- Coming soon button -->
@@ -82,21 +92,20 @@
     />
   </div>
 
-  <div bind:this={feature} class="h-[30vh]" />
+  <!-- <div  class="h-[30vh]" /> -->
+  <div class="flex w-full items-center justify-center">
+    <span
+      bind:this={feature}
+      class="w-[50%] h-[1px] bg-gradient-to-r via-text/30 my-16 md:my-24"
+    />
+  </div>
 
   <!-- Feature 1: Spotlight's Glance -->
   <div class="flex flex-col items-center justify-center w-full">
-    <span class="text-text text-2xl font-bold md:text-5xl">
+    <span class="text-text text-xl md:text-3xl">
       Stay informed at a
       <span class="text-sky-400">Glance</span>
     </span>
-    <span
-      class="text-text/75 font-medium text-sm max-w-[90%] md:text-2xl mt-2 md:mt-3 text-center"
-    >
-      Say hello to Glance. A clutter-free, personalised, easy to read news all
-      in one place.
-    </span>
-
     <Feature
       class="bg-gradient-to-r from-sky-400 to-blue-600"
       icon="/icons/glance.svg"
@@ -132,19 +141,15 @@
     </div>
   </div>
 
-  <div class="h-[30vh]" />
+  <div class="flex w-full items-center justify-center">
+    <span class="w-[50%] h-[1px] bg-gradient-to-r via-text/30 my-16 md:my-24" />
+  </div>
 
   <!-- Feature 2: Spotlight's Feeds -->
   <div class="flex flex-col items-center justify-center w-full">
-    <span class="text-text text-2xl font-bold md:text-5xl">
+    <span class="text-text text-xl md:text-3xl">
       Waste no time with
       <span class="text-green-400">Feeds</span>
-    </span>
-    <span
-      class="text-text/75 font-medium text-sm max-w-[90%] md:text-2xl mt-2 md:mt-3 text-center"
-    >
-      Introducing Feeds. A quick, dead-simple, and easy to use news feed that
-      you can use to stay updated.
     </span>
 
     <Feature
@@ -182,10 +187,10 @@
     </div>
   </div>
 
-  <div class="h-[30vh]" />
+  <div class="h-[20vh]" />
 
   <div class="flex flex-col items-center justify-center w-full h-[75vh]">
-    <span class="text-text text-2xl font-bold md:text-5xl">
+    <span class="text-text text-2xl md:text-5xl">
       So what are you waiting for?
     </span>
     <span
@@ -195,7 +200,7 @@
     </span>
 
     <Button
-      class="mt-10 px-4 py-2 max-w-fit rounded-lg bg-text/30 text-text font-bold md:text-lg"
+      class="mt-10 px-4 py-2 max-w-fit rounded-lg bg-text/30 text-text"
       on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
     >
       Sign up

@@ -23,9 +23,9 @@
     <div class="w-14 md:w-16 p-4 rounded-xl bg-text/30 backdrop-blur-xl">
       <img class="aspect-square" src={icon} {alt} />
     </div>
-    <span class="font-bold text-text text-xl md:text-2xl"> {title} </span>
+    <span class="text-text text-xl md:text-2xl"> {title} </span>
 
-    <p class="text-text/80 font-medium md:text-lg">
+    <p class="text-text/75 md:text-lg">
       <slot />
     </p>
   </div>

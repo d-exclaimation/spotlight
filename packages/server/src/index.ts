@@ -19,14 +19,22 @@ const server = createHTTPServer({
       "https://spotlight.d-exclaimation.me",
     ],
   }),
-  createContext: async ({ req }) => {
-    const user = await auth(req.headers);
+  createContext: async ({ req, res }) => {
+    const authentication = await auth(req.headers);
     const ico = icon[req.method ?? "UNKNOWN"];
-    const userinfo = user ? `by ${user.username}` : "";
+    const userinfo =
+      authentication.kind === "user"
+        ? `by ${authentication.username}`
+        : authentication.kind === "direct"
+        ? `using api key`
+        : "";
+
     consola.info(`[${now()}] ${ico} ${req.method} on ${req.url} ${userinfo}`);
+
     return {
       headers: req.headers,
-      user,
+      res,
+      auth: authentication,
     };
   },
 });

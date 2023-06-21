@@ -12,7 +12,10 @@ import { procedure, router } from "./t.js";
 
 export const app = router({
   me: procedure.query(async ({ ctx }) => {
-    return { user: ctx.user };
+    if (ctx.auth.kind !== "user") {
+      return { user: null };
+    }
+    return { user: ctx.auth };
   }),
 
   login: procedure

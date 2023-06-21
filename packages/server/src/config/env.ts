@@ -16,6 +16,7 @@ export const Env = z.object({
   JWT_SECRET: z
     .string()
     .transform((secret) => new TextEncoder().encode(secret)),
+  PRIVATE_API_KEY: z.string(),
 
   // Email configuration
   EMAIL_KEY: z.string(),

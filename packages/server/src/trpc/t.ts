@@ -1,14 +1,18 @@
 import { initTRPC } from "@trpc/server";
-import type { InferModel } from "drizzle-orm";
-import { IncomingHttpHeaders } from "http";
-import type { users } from "../data/schema.js";
+import type {
+  IncomingHttpHeaders,
+  IncomingMessage,
+  ServerResponse,
+} from "http";
+import type { AuthUser } from "../utils/auth.js";
 
 /**
  * The router context.
  */
 type Context = {
   headers: IncomingHttpHeaders;
-  user?: InferModel<typeof users>;
+  auth: AuthUser;
+  res: ServerResponse<IncomingMessage>;
 };
 
 /**

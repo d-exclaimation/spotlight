@@ -10,10 +10,9 @@ export const app = router({
       })
     )
     .query(async ({ input, ctx }) => {
-      if (!ctx.user) {
+      if (ctx.auth.kind === "guest") {
         return { news: [], page: input.page };
       }
-
       return await source1.collect({ sort: "news", page: input.page });
     }),
 
@@ -24,7 +23,7 @@ export const app = router({
       })
     )
     .query(async ({ input, ctx }) => {
-      if (!ctx.user) {
+      if (ctx.auth.kind === "guest") {
         return { news: [], page: input.page };
       }
 

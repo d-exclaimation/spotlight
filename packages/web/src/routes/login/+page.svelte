@@ -19,7 +19,6 @@
   let email = "";
   let code = "";
   let error = "";
-
   let submitted = false;
 
   $: if (email) {

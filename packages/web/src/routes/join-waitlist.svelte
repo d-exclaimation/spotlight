@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
   import { createMeQuery, createWaitlistMutation } from "@/lib/api/me";
   import { isTRPCError } from "@/lib/api/trpc";
   import Button from "@/lib/components/button.svelte";
@@ -7,13 +9,18 @@
   import { tw } from "@/lib/tailwind";
   import { auth } from "@/lib/utils/storage";
   import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
-  import { createEventDispatcher } from "svelte";
 
-  const dispatch = createEventDispatcher<{ learn: void }>();
-
-  let show = false;
+  let show = $page.url.searchParams.get("waitlist") === "true";
   let email = "";
   let error = "";
+
+  $: {
+    if (show) {
+      goto("/?waitlist=true");
+    } else {
+      goto("/");
+    }
+  }
 
   const client = getQueryClient();
   const me = createMeQuery();
@@ -57,7 +64,9 @@
     before:border-text before:transition-all before:content-[''] 
     hover:before:scale-x-100 active:before:scale-x-100 md:mt-16 md:text-base
     md:before:scale-x-0 md:before:border-b-2`)}
-    on:click={() => (show = true)}
+    on:click={() => {
+      show = true;
+    }}
   >
     Sign up for the waitlist
   </button>

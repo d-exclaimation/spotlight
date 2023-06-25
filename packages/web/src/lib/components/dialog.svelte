@@ -26,7 +26,7 @@
 
 {#if show}
   <div
-    class="fixed inset-0 z-40 bg-white/10 backdrop-blur select-none outline-none"
+    class="fixed inset-0 z-[60] bg-white/10 backdrop-blur select-none outline-none"
     in:fade={{ duration: 300 }}
     out:fade={{ duration: 150 }}
     on:click={close}
@@ -34,7 +34,7 @@
   />
 
   <div
-    class="fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 w-max h-max"
+    class="fixed top-1/2 left-1/2 z-[70] -translate-x-1/2 -translate-y-1/2 w-max h-max"
     in:scale={{ duration: 300, opacity: 0, start: 0.9 }}
     out:fade={{ duration: 150 }}
   >

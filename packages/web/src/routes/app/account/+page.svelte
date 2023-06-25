@@ -137,8 +137,8 @@
             </Button>
             <Popover bind:open>
               <div
-                class="flex flex-col px-2 items-center justify-center w-52 font-medium
-                overflow-hidden rounded-md p-1 shadow-md"
+                class="flex flex-col px-2 items-center justify-center w-full rounded-xl
+                md:w-52 font-medium overflow-hidden md:rounded-md p-1 shadow-md"
               >
                 <div class="flex w-full items-center p-2">
                   <h3 class="text-base font-bold text-text">My Account</h3>

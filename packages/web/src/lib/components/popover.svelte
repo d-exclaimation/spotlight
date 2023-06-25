@@ -1,9 +1,37 @@
 <script lang="ts">
+  import { tw } from "@/lib/tailwind";
+  import { fade } from "svelte/transition";
+
   export let open: boolean;
+
+  function close() {
+    open = false;
+  }
+
+  function escape(e: KeyboardEvent) {
+    if (e.key === "Escape" && open) {
+      close();
+    }
+  }
 </script>
 
+{#if open}
+  <div
+    class="fixed inset-0 z-[60] bg-white/10 backdrop-blur select-none outline-none"
+    in:fade={{ duration: 300 }}
+    out:fade={{ duration: 150 }}
+    on:click={close}
+    on:keydown={escape}
+  />
+{/if}
+
 <div
-  class="absolute flex min-w-max right-0 origin-top-right bg-background backdrop-blur-lg rounded-md ring-[1px] ring-text/[.15] opacity-0 -translate-y-5 z-0 transition-all data-[visible=true]:z-[30] data-[visible=true]:translate-y-0 data-[visible=true]:opacity-100"
+  class={tw(
+    `fixed flex min-w-max right-1 bottom-1 left-1 origin-top-left bg-background backdrop-blur-lg
+    rounded-md ring-[1px] ring-text/[.15] opacity-0 translate-y-full z-0 transition-all duration-500
+    data-[visible=true]:z-[70] data-[visible=true]:translate-y-0 data-[visible=true]:opacity-100
+    md:absolute md:origin-top-right md:-translate-y-5 md:bottom-[unset] md:left-[unset] md:duration-300`
+  )}
   data-visible={open}
 >
   <slot />

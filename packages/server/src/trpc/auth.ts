@@ -18,6 +18,29 @@ export const app = router({
     return { user: ctx.auth };
   }),
 
+  edit: procedure
+    .input(
+      z.object({
+        username: z.string().min(3).max(32),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      if (ctx.auth.kind !== "user") {
+        return { user: null };
+      }
+      const [res] = await db
+        .update(users)
+        .set({ username: input.username })
+        .where(eq(users.id, ctx.auth.id))
+        .returning();
+
+      if (!res) {
+        return { user: null };
+      }
+
+      return { user: res };
+    }),
+
   login: procedure
     .input(
       z.object({

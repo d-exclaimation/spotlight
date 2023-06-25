@@ -264,6 +264,6 @@
   </div>
 </div>
 
-{#if $me.data.user}
+{#if $me.data?.user}
   <EditDialog bind:editing me={$me.data?.user ?? null} />
 {/if}

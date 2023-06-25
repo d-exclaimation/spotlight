@@ -54,3 +54,17 @@ export function createLogin2Mutation({
     ...rest,
   });
 }
+
+/**
+ * Create a mutation store for editing a user
+ */
+export function createEditMutation({
+  mutationKey,
+  ...rest
+}: MutationsOpts<"edit"> = {}) {
+  return createMutation({
+    mutationKey: ["users", "me", "edit", mutationKey],
+    mutationFn: trpc.edit.mutate,
+    ...rest,
+  });
+}

@@ -78,7 +78,7 @@
         >
           <path
             d="M19 5L4.99998 19M5.00001 5L19 19"
-            stroke="#000000"
+            stroke="#FFFFFF"
             stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"

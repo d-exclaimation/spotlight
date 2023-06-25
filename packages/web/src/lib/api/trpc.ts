@@ -60,6 +60,11 @@ export type InfiniteQueryOpts<T extends keyof typeof trpc> = Omit<
 >;
 
 /**
+ * Get the user auth
+ */
+export type Me = AppOutput["me"]["user"];
+
+/**
  * Check if an error is a TRPC error
  * @param error An error
  * @returns True if the error is a TRPC error

@@ -11,14 +11,17 @@
   import { enter, exit } from "@/lib/utils/transition";
   import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
   import { beginning } from "../stores";
+  import EditDialog from "./edit-dialog.svelte";
 
   const client = getQueryClient();
   const me = createMeQuery();
 
   let open = false;
+  let editing = false;
 
   function openEdit() {
     open = false;
+    editing = true;
   }
 
   async function logout() {
@@ -64,6 +67,7 @@
   on:keydown={(e) => {
     if (e.key === "Escape") {
       open = false;
+      editing = false;
     }
     const isEdit = e.metaKey && e.shiftKey && (e.key === "E" || e.key === "e");
     const isLogout =
@@ -258,3 +262,5 @@
     {/if}
   </div>
 </div>
+
+<EditDialog bind:editing me={$me.data?.user ?? null} />

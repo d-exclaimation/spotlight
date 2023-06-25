@@ -6,6 +6,7 @@
   import Error from "@/lib/components/status/error.svelte";
   import Loading from "@/lib/components/status/loading.svelte";
   import { tw } from "@/lib/tailwind";
+  import { avatar } from "@/lib/utils/image";
   import { auth } from "@/lib/utils/storage";
   import { hoursAndMinutesSince } from "@/lib/utils/time";
   import { enter, exit } from "@/lib/utils/transition";
@@ -107,7 +108,7 @@
         <!-- Profile -->
         <img
           class="w-16 md:w-20 p-2 relative aspect-square object-cover rounded-xl"
-          src={`https://api.dicebear.com/6.x/notionists-neutral/svg?seed=${$me.data.user.email}`}
+          src={avatar($me.data.user.username)}
           alt={`Avatar for ${$me.data.user.username}`}
         />
         <div class="flex flex-col items-start flex-1 h-full px-2 py-3">

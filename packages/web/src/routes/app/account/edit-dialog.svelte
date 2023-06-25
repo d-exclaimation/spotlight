@@ -4,6 +4,7 @@
   import Button from "@/lib/components/button.svelte";
   import Dialog from "@/lib/components/dialog.svelte";
   import Textfield from "@/lib/components/textfield.svelte";
+  import { avatar } from "@/lib/utils/image";
   import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
 
   export let editing: boolean;
@@ -60,8 +61,8 @@
       <div class="flex w-full items-center my-2">
         <img
           class="w-16 md:w-20 relative aspect-square object-cover rounded-xl"
-          src={`https://api.dicebear.com/6.x/notionists-neutral/svg?seed=${me.email}`}
-          alt={`Avatar for ${me.username}`}
+          src={avatar(username)}
+          alt={`Avatar for ${username}`}
         />
       </div>
       <div class="flex flex-col items-center justify-center mt-4 gap-3">

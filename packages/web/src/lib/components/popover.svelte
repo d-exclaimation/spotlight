@@ -27,7 +27,7 @@
 
 <div
   class={tw(
-    `fixed flex min-w-max right-1 bottom-1 left-1 origin-top-left bg-background backdrop-blur-lg
+    `fixed flex min-w-max right-3 bottom-10 left-3 origin-top-left bg-background backdrop-blur-lg
     rounded-md ring-[1px] ring-text/[.15] opacity-0 translate-y-full z-0 transition-all duration-500
     data-[visible=true]:z-[70] data-[visible=true]:translate-y-0 data-[visible=true]:opacity-100
     md:absolute md:origin-top-right md:-translate-y-5 md:bottom-[unset] md:left-[unset] md:duration-300`

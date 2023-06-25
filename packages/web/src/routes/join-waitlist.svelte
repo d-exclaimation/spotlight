@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
-  import { page } from "$app/stores";
   import { createMeQuery, createWaitlistMutation } from "@/lib/api/me";
   import { isTRPCError } from "@/lib/api/trpc";
   import Button from "@/lib/components/button.svelte";
@@ -10,17 +8,9 @@
   import { auth } from "@/lib/utils/storage";
   import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
 
-  let show = $page.url.searchParams.get("waitlist") === "true";
+  let show = false;
   let email = "";
   let error = "";
-
-  $: {
-    if (show) {
-      goto("/?waitlist=true");
-    } else {
-      goto("/");
-    }
-  }
 
   const client = getQueryClient();
   const me = createMeQuery();

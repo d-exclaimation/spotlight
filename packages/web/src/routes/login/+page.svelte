@@ -66,7 +66,7 @@
 </script>
 
 <div
-  class="flex flex-col items-start justify-start min-h-[100dvh] min-w-[100vw] bg-gradient-to-br from-background via-background to-secondary"
+  class="flex flex-col items-start justify-start min-h-[100dvh] min-w-full bg-gradient-to-br from-background via-background to-secondary"
 >
   <Navbar />
 

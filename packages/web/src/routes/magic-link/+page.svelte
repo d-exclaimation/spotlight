@@ -30,7 +30,7 @@
 </script>
 
 <div
-  class="flex flex-col items-start justify-start min-h-screen min-w-[100vw] bg-gradient-to-br from-background via-background to-secondary"
+  class="flex flex-col items-start justify-start min-h-screen min-w-full bg-gradient-to-br from-background via-background to-secondary"
 >
   <Navbar />
 

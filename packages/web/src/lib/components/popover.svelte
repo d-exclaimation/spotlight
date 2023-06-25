@@ -17,7 +17,7 @@
 
 {#if open}
   <div
-    class="fixed inset-0 z-[60] bg-white/10 backdrop-blur select-none outline-none"
+    class="md:hidden fixed inset-0 z-[60] md:-z-10 bg-white/10 backdrop-blur select-none outline-none"
     in:fade={{ duration: 300 }}
     out:fade={{ duration: 150 }}
     on:click={close}

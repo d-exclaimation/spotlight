@@ -25,6 +25,7 @@
     error = "";
   }
 
+  const title = "Login to Spotlight";
   const client = getQueryClient();
   const me = createMeQuery();
   const login = createLoginMutation({
@@ -64,6 +65,12 @@
     },
   });
 </script>
+
+<svelte:head>
+  <title>{title}</title>
+  <meta property="og:title" content={title} />
+  <meta property="twitter:title" content={title} />
+</svelte:head>
 
 <div
   class="flex flex-col items-start justify-start min-h-[100dvh] min-w-full bg-gradient-to-br from-background via-background to-secondary"

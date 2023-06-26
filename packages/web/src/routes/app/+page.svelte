@@ -9,6 +9,8 @@
 
   export let data;
 
+  const title = "Glance";
+  const description = "A glance at the hottest news";
   const query = createGlanceQuery({
     initialData: data.initial,
   });
@@ -30,8 +32,12 @@
   <link rel="preload" as="image" href="/cover/jobs.webp" />
   <link rel="preload" as="image" href="/cover/ask.webp" />
   <link rel="preload" as="image" href="/cover/show.webp" />
-  <title>Glance</title>
-  <meta name="description" content="Glance at the hottest news" />
+  <title>{title}</title>
+  <meta property="og:title" content={title} />
+  <meta property="twitter:title" content={title} />
+  <meta name="description" content={description} />
+  <meta name="twitter:description" content={description} />
+  <meta property="og:description" content={description} />
 </svelte:head>
 
 <div class="flex flex-col items-center justify-start w-full md:mt-6 flex-1">

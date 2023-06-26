@@ -29,10 +29,6 @@
   });
 </script>
 
-<svelte:head>
-  <title>Spotlight</title>
-</svelte:head>
-
 <div
   class="flex flex-col flex-shrink-0 items-start justify-start min-h-screen min-w-full bg-gradient-to-br from-background via-background to-secondary"
 >

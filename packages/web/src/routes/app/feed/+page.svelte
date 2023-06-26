@@ -10,6 +10,8 @@
 
   export let data;
 
+  const title = "Feeds";
+  const description = "A feed of latest news";
   const query = createFeedsQuery({
     initialData: data.initial,
   });
@@ -23,8 +25,12 @@
 </script>
 
 <svelte:head>
-  <title>Feeds</title>
-  <meta name="description" content="Feeds of the latest news" />
+  <title>{title}</title>
+  <meta property="og:title" content={title} />
+  <meta property="twitter:title" content={title} />
+  <meta name="description" content={description} />
+  <meta name="twitter:description" content={description} />
+  <meta property="og:description" content={description} />
 </svelte:head>
 
 {#if $query.isLoading || $query.isInitialLoading}

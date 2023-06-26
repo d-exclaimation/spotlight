@@ -15,6 +15,8 @@
 
   const _code = $page.url.searchParams.get("code") || "";
 
+  const title = "Login with " + _code;
+
   onMount(async () => {
     const code = $page.url.searchParams.get("code") || "";
     if (!code || code.length !== 8) {
@@ -28,6 +30,12 @@
     await goto(res.token ? "/app" : "/login");
   });
 </script>
+
+<svelte:head>
+  <title>{title}</title>
+  <meta property="og:title" content={title} />
+  <meta property="twitter:title" content={title} />
+</svelte:head>
 
 <div
   class="flex flex-col items-start justify-start min-h-screen min-w-full bg-gradient-to-br from-background via-background to-secondary"

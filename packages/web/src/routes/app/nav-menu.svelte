@@ -5,11 +5,7 @@
   import { crossfade } from "svelte/transition";
 
   const BUBBLE = "navbar-bubble";
-  const ROUTES = [
-    { name: "Glance", path: "/app" },
-    { name: "Feeds", path: "/app/feed" },
-    { name: "Account", path: "/app/account" },
-  ];
+  export let routes: { name: string; path: string }[];
 
   const [send, receive] = crossfade({
     fallback: (node) => {
@@ -35,10 +31,10 @@
   flex-col md:flex-row items-center 
   justify-center ring-[1px] ring-text/20`)}
 >
-  {#each ROUTES as { name, path } (path)}
+  {#each routes as { path } (path)}
     <a
-      class={tw(`hover:bg-primary/30 active:bg-primary/30 relative 
-      rounded-full px-1.5 md:px-3 py-1.5 text-sm font-medium
+      class={tw(`hover:bg-primary/30 active:bg-primary/30 
+      relative rounded-full p-1.5 md:p-2 text-sm font-medium
       transition focus-visible:outline-2 outline-sky-400 
       [-webkit-tap-highlight-color:transparent]`)}
       href={path}
@@ -98,9 +94,6 @@
             />
           {/if}
         </svg>
-        <span class="text-base hidden md:block">
-          {name}
-        </span>
       </span>
     </a>
   {/each}

@@ -85,12 +85,15 @@
     bg,
     filter
   )}
-  in:smartfly={{
+  in:smartfly|local={{
     y: direction === "top" ? "100%" : "-100%",
     duration: 300,
     delay: 275,
   }}
-  out:smartfly={{ y: direction === "top" ? "-100%" : "100%", duration: 300 }}
+  out:smartfly|local={{
+    y: direction === "top" ? "-100%" : "100%",
+    duration: 300,
+  }}
   use:swipe={{
     timeframe: 300,
     minSwipeDistance: 50,

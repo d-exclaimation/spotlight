@@ -15,9 +15,11 @@ export default {
         background: "#010404",
         // background: "#f0f7f8",
         primary: "#b2bdf8",
+        // primary: "#4353e5",
         secondary: "#050824",
         // secondary: "0xFAF7DB",
         accent: "#4353e5",
+        // accent: "#b2bdf8",
       },
       animation: {
         overlay: "overlay 300ms cubic-bezier(0.16, 1, 0.3, 1)",

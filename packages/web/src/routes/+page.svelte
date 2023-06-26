@@ -10,6 +10,7 @@
 
   const PHRASES = ["Streamlined", "Supercharged", "Simplified"];
   const DELAY = 5_000;
+  const title = "Spotlight";
 
   let feature: HTMLElement;
   let ref = undefined as number | NodeJS.Timeout | undefined;
@@ -28,6 +29,12 @@
     clearInterval(ref);
   });
 </script>
+
+<svelte:head>
+  <title>{title}</title>
+  <meta property="og:title" content={title} />
+  <meta property="twitter:title" content={title} />
+</svelte:head>
 
 <div
   class="flex flex-col flex-shrink-0 items-start justify-start min-h-screen min-w-full bg-gradient-to-br from-background via-background to-secondary"

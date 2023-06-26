@@ -11,6 +11,7 @@
   const PHRASES = ["Streamlined", "Supercharged", "Simplified"];
   const DELAY = 5_000;
   const title = "Spotlight";
+  const description = "Browsing news streamlined";
 
   let feature: HTMLElement;
   let ref = undefined as number | NodeJS.Timeout | undefined;
@@ -32,8 +33,11 @@
 
 <svelte:head>
   <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
   <meta property="og:title" content={title} />
-  <meta property="twitter:title" content={title} />
+  <meta property="og:description" content={description} />
 </svelte:head>
 
 <div

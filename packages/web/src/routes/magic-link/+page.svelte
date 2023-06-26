@@ -16,6 +16,7 @@
   const _code = $page.url.searchParams.get("code") || "";
 
   const title = "Login with " + _code;
+  const description = "Browsing news streamlined";
 
   onMount(async () => {
     const code = $page.url.searchParams.get("code") || "";
@@ -33,8 +34,11 @@
 
 <svelte:head>
   <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
   <meta property="og:title" content={title} />
-  <meta property="twitter:title" content={title} />
+  <meta property="og:description" content={description} />
 </svelte:head>
 
 <div

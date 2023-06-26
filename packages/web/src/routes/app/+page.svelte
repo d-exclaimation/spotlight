@@ -33,10 +33,10 @@
   <link rel="preload" as="image" href="/cover/ask.webp" />
   <link rel="preload" as="image" href="/cover/show.webp" />
   <title>{title}</title>
-  <meta property="og:title" content={title} />
-  <meta property="twitter:title" content={title} />
   <meta name="description" content={description} />
+  <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
+  <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
 </svelte:head>
 

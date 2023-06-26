@@ -76,7 +76,7 @@
 <div
   class={tw(
     `flex flex-col relative justify-end
-    w-full h-[87dvh] md:h-[82vh] text-text
+    w-full h-[87dvh] text-text
     break-words gap-2 bg-cover md:gap-4 
     rounded-lg transition-all duration-500 ease-in-out
     cursor-grab active:cursor-grabbing select-none

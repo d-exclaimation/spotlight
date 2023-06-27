@@ -57,6 +57,13 @@
       "when": 1687237514602,
       "tag": "0007_whole_molly_hayes",
       "breakpoints": false
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1687861041084,
+      "tag": "0008_low_sentinels",
+      "breakpoints": false
     }
   ]
 }

@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
 import {
   char,
+  date,
   integer,
   pgTable,
   primaryKey,
@@ -72,10 +73,24 @@ export const preferences = pgTable(
     userId: uuid("user_id").notNull(),
     category: text("category").notNull(),
     engagements: integer("engagements").notNull().default(0),
-    createdAt: timestamp("created_at", { withTimezone: false }),
+    createdAt: timestamp("created_at", { withTimezone: false })
+      .notNull()
+      .defaultNow(),
   },
   (table) => ({
     pk: primaryKey(table.userId, table.category),
+  })
+);
+
+export const statistics = pgTable(
+  "statistics",
+  {
+    userId: uuid("user_id").notNull(),
+    date: date("date", { mode: "date" }).notNull(),
+    engagements: integer("engagements").notNull().default(0),
+  },
+  (table) => ({
+    pk: primaryKey(table.userId, table.date),
   })
 );
 
@@ -94,8 +109,22 @@ export const preferencesRelations = relations(preferences, ({ one }) => ({
 }));
 
 /**
+ * Relation between statistics and users for news daily engagements.
+ */
+export const statisticsRelations = relations(statistics, ({ one }) => ({
+  user: one(users, { fields: [statistics.userId], references: [users.id] }),
+}));
+
+/**
  * Relation between users and preferences for news category preferences.
  */
 export const usersRelations = relations(users, ({ many }) => ({
   preferences: many(preferences),
+}));
+
+/**
+ * Relation between users and statistics for news daily engagements.
+ */
+export const usersStatisticsRelations = relations(users, ({ many }) => ({
+  statistics: many(statistics),
 }));

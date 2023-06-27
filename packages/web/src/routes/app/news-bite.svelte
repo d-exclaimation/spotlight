@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { afterNavigate, beforeNavigate } from "$app/navigation";
   import { createEngangementMutation } from "@/lib/api/dashboard";
   import type { News } from "@/lib/api/trpc";
   import { tw } from "@/lib/tailwind";
@@ -7,7 +6,7 @@
   import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
   import { createEventDispatcher } from "svelte";
   import { swipe } from "svelte-gestures";
-  import { fly, type FlyParams } from "svelte/transition";
+  import { fly } from "svelte/transition";
 
   export let item: News[number];
   export let direction: "top" | "bottom";
@@ -24,7 +23,6 @@
   });
 
   let ref: HTMLAnchorElement;
-  let isNavigating = false;
 
   $: length = item?.title?.split(" ").length ?? 0;
   $: size =
@@ -63,23 +61,17 @@
       : item.id % 3 === 1
       ? "bg-[url('/cover/news-2.webp')]"
       : "bg-[url('/cover/news-3.webp')]";
-
-  beforeNavigate(() => {
-    isNavigating = true;
-  });
-
-  afterNavigate(() => {
-    isNavigating = false;
-  });
-
-  function smartfly(node: Element, params: FlyParams) {
-    if (!isNavigating) {
-      return fly(node, params);
-    }
-
-    return {};
-  }
 </script>
+
+<svelte:window
+  on:keydown={(e) => {
+    if (e.key !== "ArrowUp" && e.key !== "ArrowDown") {
+      return;
+    }
+    direction = e.key === "ArrowDown" ? "top" : "bottom";
+    dispatch(direction === "top" ? "next" : "prev");
+  }}
+/>
 
 <div
   class={tw(
@@ -93,12 +85,12 @@
     bg,
     filter
   )}
-  in:smartfly|local={{
+  in:fly|local={{
     y: direction === "top" ? "100%" : "-100%",
     duration: 300,
     delay: 275,
   }}
-  out:smartfly|local={{
+  out:fly|local={{
     y: direction === "top" ? "-100%" : "100%",
     duration: 300,
   }}

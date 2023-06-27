@@ -3,10 +3,16 @@
   import type { News } from "@/lib/api/trpc";
   import { tw } from "@/lib/tailwind";
   import { link } from "@/lib/utils/link";
+  import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
 
   export let item: News[number];
 
-  const mutation = createEngangementMutation();
+  const client = getQueryClient();
+  const mutation = createEngangementMutation({
+    onSuccess: async () => {
+      await client.invalidateQueries(["users", "me", "dashboard"]);
+    },
+  });
 
   $: bg =
     item.type === "ask"

@@ -4,6 +4,7 @@
   import type { News } from "@/lib/api/trpc";
   import { tw } from "@/lib/tailwind";
   import { link } from "@/lib/utils/link";
+  import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
   import { createEventDispatcher } from "svelte";
   import { swipe } from "svelte-gestures";
   import { fly, type FlyParams } from "svelte/transition";
@@ -15,7 +16,12 @@
     prev: void;
     next: void;
   }>();
-  const mutation = createEngangementMutation();
+  const client = getQueryClient();
+  const mutation = createEngangementMutation({
+    onSuccess: async () => {
+      await client.invalidateQueries(["users", "me", "dashboard"]);
+    },
+  });
 
   let ref: HTMLAnchorElement;
   let isNavigating = false;

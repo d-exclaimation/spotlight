@@ -2,10 +2,16 @@
   import { createEngangementMutation } from "@/lib/api/dashboard";
   import type { News } from "@/lib/api/trpc";
   import { link } from "@/lib/utils/link";
+  import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
 
   export let item: News[number];
 
-  const mutation = createEngangementMutation();
+  const client = getQueryClient();
+  const mutation = createEngangementMutation({
+    onSuccess: async () => {
+      await client.invalidateQueries(["users", "me", "dashboard"]);
+    },
+  });
 </script>
 
 <a

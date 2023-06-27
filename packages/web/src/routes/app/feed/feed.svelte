@@ -1,14 +1,20 @@
 <script lang="ts">
+  import { createEngangementMutation } from "@/lib/api/dashboard";
+  import type { News } from "@/lib/api/trpc";
   import { link } from "@/lib/utils/link";
-  import type { AppOutput } from "@spotlight/server";
 
-  export let item: AppOutput["newest"]["news"][number];
+  export let item: News[number];
+
+  const mutation = createEngangementMutation();
 </script>
 
 <a
   class="flex flex-row group items-start justify-start w-full p-2 md:p-4 bg-background hover:bg-neutral-800 active:bg-neutral-800"
   href={link(item.url)}
   target="_blank"
+  on:click={() => {
+    $mutation.mutate({});
+  }}
 >
   <div class="flex items-start justify-center mr-2 md:mr-4">
     {#if item.type === "ask"}

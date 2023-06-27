@@ -1,9 +1,12 @@
 <script lang="ts">
+  import { createEngangementMutation } from "@/lib/api/dashboard";
+  import type { News } from "@/lib/api/trpc";
   import { tw } from "@/lib/tailwind";
   import { link } from "@/lib/utils/link";
-  import type { AppOutput } from "@spotlight/server";
 
-  export let item: AppOutput["newest"]["news"][number];
+  export let item: News[number];
+
+  const mutation = createEngangementMutation();
 
   $: bg =
     item.type === "ask"
@@ -24,6 +27,9 @@
   )}
   href={link(item.url)}
   target="_blank"
+  on:click={() => {
+    $mutation.mutate({});
+  }}
 >
   <span class="w-full break-words text-xl md:text-2xl">
     {item.title}

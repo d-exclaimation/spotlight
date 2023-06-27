@@ -1,19 +1,21 @@
 <script lang="ts">
   import { afterNavigate, beforeNavigate } from "$app/navigation";
+  import { createEngangementMutation } from "@/lib/api/dashboard";
+  import type { News } from "@/lib/api/trpc";
   import { tw } from "@/lib/tailwind";
   import { link } from "@/lib/utils/link";
-  import type { AppOutput } from "@spotlight/server";
   import { createEventDispatcher } from "svelte";
   import { swipe } from "svelte-gestures";
   import { fly, type FlyParams } from "svelte/transition";
 
-  export let item: AppOutput["curation"]["news"][number];
+  export let item: News[number];
   export let direction: "top" | "bottom";
 
   const dispatch = createEventDispatcher<{
     prev: void;
     next: void;
   }>();
+  const mutation = createEngangementMutation();
 
   let ref: HTMLAnchorElement;
   let isNavigating = false;
@@ -137,11 +139,8 @@
           class="font-medium hover:underline md:text-lg cursor-pointer flex items-center gap-1 md:gap-2"
           href={link(item.url)}
           target="_blank"
-          on:touchend={() => {
-            console.log("touchend");
-          }}
           on:click={() => {
-            console.log("click");
+            $mutation.mutate({});
           }}
         >
           {item.domain || "news.ycombinator.com"}

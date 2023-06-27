@@ -70,6 +70,11 @@ export type Me = AppOutput["me"]["user"];
 export type Dashboard = NonNullable<AppOutput["dashboard"]["user"]>;
 
 /**
+ * Get the news data
+ */
+export type News = AppOutput["curation"]["news"];
+
+/**
  * Check if an error is a TRPC error
  * @param error An error
  * @returns True if the error is a TRPC error

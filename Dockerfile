@@ -1,28 +1,40 @@
-FROM node:alpine
+FROM node:alpine as base
 
-RUN npm install -g pnpm
+# --- Docker optimisation image ---
+FROM base as optimiser
+
+RUN apk add --no-cache libc6-compat
+RUN apk update
 RUN npm install -g turbo
+
+WORKDIR /app
+COPY . .
+RUN turbo prune --scope=@spotlight/server --docker
+
+# --- Build image ---
+FROM base as builder
+RUN apk add --no-cache libc6-compat
+RUN apk update
+RUN npm install -g turbo
+RUN npm install -g pnpm
 RUN npm install -g tsup
 
-# Root configs
-COPY package.json .
-COPY pnpm-lock.yaml .
-COPY pnpm-workspace.yaml .
-COPY turbo.json .
-
-# Copy workspaces' package.json
-COPY packages/server/package.json .
-
-# Fetch
-RUN pnpm fetch 
-
-# Install dependencies
+WORKDIR /app
+COPY .gitignore .gitignore
+COPY --from=optimiser /app/out/json/ .
+COPY --from=optimiser /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+RUN pnpm fetch
 RUN pnpm install
 
-# Get the rest of the files
-COPY . .
+COPY --from=optimiser /app/out/full/ .
+RUN turbo run build --filter=@spotlight/server
 
-# Build
-RUN turbo run build --filter=server
+# --- Runner image ---
+FROM base as runner
+
+RUN npm install -g pnpm
+
+WORKDIR /app
+COPY --from=builder /app/ .
 
 CMD ["pnpm", "start"]

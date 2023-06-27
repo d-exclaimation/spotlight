@@ -1,8 +1,8 @@
-import { fly } from "svelte/transition";
+import { blur } from "svelte/transition";
 
 /**
  * Entering transition for svelte
  */
 export function enter(node: Element) {
-  return fly(node, { duration: 500, y: "15%", opacity: 0 });
+  return blur(node, { duration: 500, opacity: 0.25, amount: 5 });
 }

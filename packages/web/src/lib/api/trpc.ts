@@ -65,6 +65,11 @@ export type InfiniteQueryOpts<T extends keyof typeof trpc> = Omit<
 export type Me = AppOutput["me"]["user"];
 
 /**
+ * Get the dashboard data
+ */
+export type Dashboard = NonNullable<AppOutput["dashboard"]["user"]>;
+
+/**
  * Check if an error is a TRPC error
  * @param error An error
  * @returns True if the error is a TRPC error

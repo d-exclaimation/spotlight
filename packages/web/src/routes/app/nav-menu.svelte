@@ -26,7 +26,7 @@
 
 <nav
   class={tw(`flex fixed bottom-8 right-3 
-  md:top-8 md:bottom-[unset] md:right-[calc(50vw-19.5rem)]
+  md:top-8 md:bottom-[unset] md:right-[calc(50vw-19rem)]
   shadow-lg bg-background/10 z-50 rounded-full 
   gap-4 p-2 md:p-0 backdrop-blur-md flex-col md:flex-row 
   items-center justify-center ring-[1px] md:ring-0 ring-text/[.15]`)}

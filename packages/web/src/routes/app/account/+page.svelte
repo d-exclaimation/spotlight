@@ -1,22 +1,25 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
+  import { createDashboardQuery } from "@/lib/api/dashboard";
   import { createMeQuery } from "@/lib/api/me";
   import Button from "@/lib/components/button.svelte";
   import Popover from "@/lib/components/popover.svelte";
   import Error from "@/lib/components/status/error.svelte";
   import Loading from "@/lib/components/status/loading.svelte";
-  import { tw } from "@/lib/tailwind";
   import { avatar } from "@/lib/utils/image";
   import { auth } from "@/lib/utils/storage";
   import { hoursAndMinutesSince } from "@/lib/utils/time";
   import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
   import { beginning } from "../stores";
+  import ActivitiesChart from "./activities-chart.svelte";
   import EditDialog from "./edit-dialog.svelte";
+  import TopCategories from "./top-categories.svelte";
 
   const title = "Account";
   const description = "View and manage your account and its dashboard";
   const client = getQueryClient();
   const me = createMeQuery();
+  const dashboard = createDashboardQuery();
 
   let open = false;
   let editing = false;
@@ -63,6 +66,11 @@
   };
 
   $: time = hoursAndMinutesSince($beginning);
+  $: maxEngagements =
+    $dashboard.data?.user?.activities?.reduce(
+      (acc, curr) => (curr.engagements > acc ? curr.engagements : acc),
+      0
+    ) ?? 1;
 </script>
 
 <svelte:window
@@ -96,10 +104,12 @@
 <div
   class="flex flex-col items-center justify-start w-full text-text md:mt-6 flex-1"
 >
-  {#if $me.isLoading || !$me.data?.user}
+  {#if $me.isLoading || $dashboard.isLoading || !$me.data?.user || !$dashboard.data?.user}
     <Loading />
   {:else if $me.error}
     <Error label="Not logged in" error={$me.error} />
+  {:else if $dashboard.error}
+    <Error label="Failed to load dashboard" error={$dashboard.error} />
   {:else}
     <div class="flex items-center justify-start mb-2 p-2 md:p-3 w-full gap-2">
       <!-- Profile -->
@@ -194,7 +204,9 @@
       <div class="flex justify-center flex-col flex-[2]">
         <span class="font-light text-sm md:text-lg">Engangement</span>
         <div class="flex gap-2 items-end">
-          <span class="font-semibold text-xl md:text-3xl">87</span>
+          <span class="font-semibold text-xl md:text-3xl">
+            {$dashboard.data.user.engagenments}
+          </span>
           <span class="font-light mr-1">news</span>
         </div>
       </div>
@@ -213,46 +225,11 @@
       </div>
     </div>
 
-    <!-- Graph -->
-    <div class="flex flex-col w-full my-2 md:my-3 p-2 md:p-3 gap-2">
-      <span class="font-semibold">Activities</span>
-      <div class="flex w-full items-end h-40 max-w-full justify-start gap-1">
-        {#each { length: 10 } as _, i (i)}
-          {@const height = Math.round(Math.random() * 6 + 2)}
-          <div
-            class={tw(
-              "w-[9%] shrink-0 h-36 rounded",
-              height > 6
-                ? "bg-blue-200"
-                : height > 4
-                ? "bg-emerald-200"
-                : height > 2
-                ? "bg-amber-200"
-                : "bg-rose-200"
-            )}
-            style={`height:${height}rem`}
-          />
-        {/each}
-      </div>
-    </div>
+    <!-- Activities -->
+    <ActivitiesChart activities={$dashboard.data.user.activities} />
 
     <!-- Categories -->
-    <div class="flex flex-col w-full my-2 md:my-3 p-2 md:p-3 gap-2">
-      <span class="font-medium">Top categories</span>
-      <div class="flex flex-col w-full gap-2 divide-y divide-text/20">
-        {#each { length: 5 } as _, i (i)}
-          <div
-            class="flex flex-col md:flex-row items-start md:items-start justify-between p-2 gap-2"
-          >
-            <span class="font-normal">Sport</span>
-            <span class="font-light">
-              1,587
-              <span class="font-extralight">engagements</span>
-            </span>
-          </div>
-        {/each}
-      </div>
-    </div>
+    <TopCategories topCategories={$dashboard.data.user.topCategories} />
   {/if}
 </div>
 

@@ -48,10 +48,12 @@ export const app = router({
         username: ctx.auth.username,
         email: ctx.auth.email,
         engagenments: totalEngagements ?? 0,
-        activities: recentEngagements.map(({ date, engagements }) => ({
-          date,
-          engagements,
-        })),
+        activities: recentEngagements
+          .map(({ date, engagements }) => ({
+            date,
+            engagements,
+          }))
+          .reverse(),
         topCategories: [
           ...topPreferences.map(({ category, engagements }) => ({
             category,

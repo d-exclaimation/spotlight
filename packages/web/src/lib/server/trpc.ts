@@ -1,20 +1,24 @@
-import { PRIVATE_API_KEY } from "$env/static/private";
 import { PUBLIC_API_URL } from "$env/static/public";
 import type { App } from "@spotlight/server";
+import type { RequestEvent } from "@sveltejs/kit";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 
 /**
- * Server only tRPC client for the spotlight API
+ * Get the tRPC caller for the current svelte-kit event.
  */
-export const strpc = createTRPCProxyClient<App>({
-  links: [
-    httpBatchLink({
-      url: PUBLIC_API_URL,
-      headers() {
-        return {
-          Authorization: `Key ${PRIVATE_API_KEY}`,
-        };
-      },
-    }),
-  ],
-});
+export function caller<T extends RequestEvent<any, any>>(event: T) {
+  const proxyToken = event.cookies.get("proxy-token");
+  return createTRPCProxyClient<App>({
+    links: [
+      httpBatchLink({
+        url: PUBLIC_API_URL,
+
+        headers() {
+          return {
+            Authorization: proxyToken ? `Proxy ${proxyToken}` : undefined,
+          };
+        },
+      }),
+    ],
+  });
+}

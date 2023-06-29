@@ -1,5 +1,9 @@
 import { eq, type InferModel } from "drizzle-orm";
-import type { IncomingHttpHeaders } from "http";
+import type {
+  IncomingHttpHeaders,
+  IncomingMessage,
+  ServerResponse,
+} from "http";
 import { env } from "../config/env.js";
 import { verify } from "../config/jwt.js";
 import { db } from "../data/index.js";
@@ -11,6 +15,7 @@ import { users } from "../data/schema.js";
 export type AuthUser =
   | { kind: "guest" }
   | ({ kind: "user" } & InferModel<typeof users>)
+  | ({ kind: "proxy" } & InferModel<typeof users>)
   | { kind: "direct" };
 
 /**
@@ -23,6 +28,7 @@ export async function auth(headers: IncomingHttpHeaders): Promise<AuthUser> {
   if (kind === "Key" && token === env.PRIVATE_API_KEY) {
     return { kind: "direct" };
   }
+
   if (!token) {
     return { kind: "guest" };
   }
@@ -38,7 +44,88 @@ export async function auth(headers: IncomingHttpHeaders): Promise<AuthUser> {
     return { kind: "guest" };
   }
   return {
-    kind: "user",
+    kind: kind === "Bearer" ? "user" : "proxy",
     ...user,
   };
+}
+
+/**
+ * Set the query-only cookie token.
+ * @param res The server response.
+ * @param param1 The cookie options.
+ */
+export function setQueryToken(
+  res: ServerResponse<IncomingMessage>,
+  value: string
+) {
+  setCookie(res, {
+    name: "proxy-token",
+    value,
+    httpOnly: true,
+    secure: env.NODE_ENV === "production",
+    sameSite: "none",
+  });
+}
+
+type CookieOptions = {
+  /**
+   * The cookie name.
+   */
+  name: string;
+
+  /**
+   * The cookie value.
+   */
+  value: string;
+
+  /**
+   * The cookie domain.
+   */
+  domain?: string;
+
+  /**
+   * The cookie path.
+   */
+  path?: string;
+
+  /**
+   * The cookie expires.
+   */
+  expires?: Date;
+
+  /**
+   * The cookie max age.
+   */
+  maxAge?: number;
+
+  /**
+   * The cookie http only.
+   */
+  httpOnly?: boolean;
+
+  /**
+   * The cookie secure.
+   */
+  secure?: boolean;
+
+  /**
+   * The cookie same site.
+   */
+  sameSite?: "strict" | "lax" | "none";
+};
+
+/**
+ * Helper to set a cookie.
+ * @param res The server response.
+ * @param param1 The cookie options.
+ */
+export function setCookie(
+  res: ServerResponse<IncomingMessage>,
+  { name, value, ...rest }: CookieOptions
+) {
+  const cookie = `${name}=${value}; ${Object.entries(rest)
+    .map(([key, value]) => `${key}=${value}`)
+    .join("; ")}`;
+
+  res.setHeader("Set-Cookie", cookie);
 }

@@ -7,12 +7,13 @@ import { db } from "../data/index.js";
 import { codes, users, waitlist } from "../data/schema.js";
 import { mail } from "../email/index.js";
 import { markup } from "../email/markup.js";
+import { setQueryToken } from "../utils/auth.js";
 import { hoursSince, minutesSince } from "../utils/time.js";
 import { procedure, router } from "./t.js";
 
 export const app = router({
   me: procedure.query(async ({ ctx }) => {
-    if (ctx.auth.kind !== "user") {
+    if (ctx.auth.kind !== "user" && ctx.auth.kind !== "proxy") {
       return { user: null };
     }
     return { user: ctx.auth };
@@ -100,7 +101,7 @@ export const app = router({
         code: z.string().length(8),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       const code = await db.query.codes.findFirst({
         where: eq(codes.code, input.code),
         with: { user: true },
@@ -117,6 +118,8 @@ export const app = router({
       }
 
       const token = await sign({ id: code.user.id });
+      setQueryToken(ctx.res, token);
+
       return { user: code.user, token };
     }),
 
@@ -126,7 +129,7 @@ export const app = router({
         email: z.string().email(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       const existing = await db.query.users.findFirst({
         where: eq(users.email, input.email),
       });
@@ -148,6 +151,7 @@ export const app = router({
         .returning();
 
       const token = await sign({ id: rows[0].id });
+      setQueryToken(ctx.res, token);
 
       consola.info(`[${now()}] 🚏 ${input.email} joined the wailist`);
 

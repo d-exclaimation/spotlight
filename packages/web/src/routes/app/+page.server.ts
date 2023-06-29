@@ -1,4 +1,4 @@
-import { strpc } from "@/lib/server/trpc";
+import { caller } from "@/lib/server/trpc";
 import type { Config } from "@sveltejs/adapter-vercel";
 import type { InfiniteData } from "@tanstack/svelte-query";
 
@@ -6,12 +6,12 @@ export const config = {
   runtime: "edge",
 } satisfies Config;
 
-export async function load({ isDataRequest }) {
-  if (isDataRequest) {
+export async function load(event) {
+  if (event.isDataRequest) {
     return { initial: undefined };
   }
   try {
-    const page = await strpc.curation.query({ page: 1 });
+    const page = await caller(event).curation.query({ page: 1 });
 
     const initial = {
       pages: [page],

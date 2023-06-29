@@ -10,7 +10,8 @@ export async function load(event) {
     return { initial: undefined };
   }
   try {
-    const initial = await caller(event).dashboard.query();
+    const data = await caller(event).dashboard.query();
+    const initial = data.user ? { user: data.user } : undefined;
     return { initial };
   } catch (e) {
     console.error(e);

@@ -13,10 +13,13 @@ export async function load(event) {
   try {
     const page = await caller(event).curation.query({ page: 1 });
 
-    const initial = {
-      pages: [page],
-      pageParams: [1],
-    } satisfies InfiniteData<typeof page>;
+    const initial =
+      page.news.length !== 0
+        ? ({
+            pages: [page],
+            pageParams: [1],
+          } satisfies InfiniteData<typeof page>)
+        : undefined;
 
     return {
       initial,

@@ -13,12 +13,14 @@ export const internal = {
     console.log("Logging out");
     await fetch("/internal/logout", {
       method: "POST",
+      credentials: "include",
     });
   },
   async login(token: string) {
     console.log("Logging in");
     await fetch("/internal/login", {
       method: "POST",
+      credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
       },

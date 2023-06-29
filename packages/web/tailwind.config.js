@@ -32,6 +32,8 @@ export default {
           "slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
         "expand-right":
           "expand-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
+        "expand-y":
+          "expand-y 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
         "bounce-r": "bounce-r 1s infinite",
         "heavy-bounce": "heavy-bounce 1s infinite",
       },
@@ -83,6 +85,11 @@ export default {
           },
           "100%": {
             width: "100%",
+          },
+        },
+        "expand-y": {
+          "0%": {
+            height: 0,
           },
         },
         "bounce-r": {

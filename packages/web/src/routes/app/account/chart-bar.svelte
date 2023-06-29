@@ -5,7 +5,7 @@
 
 <div
   class={tw(
-    "w-[9%] shrink-0 h-36 rounded",
+    "w-[9%] shrink-0 h-36 rounded animate-expand-y",
     height > 6
       ? "bg-blue-200"
       : height > 4

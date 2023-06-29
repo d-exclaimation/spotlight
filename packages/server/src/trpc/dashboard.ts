@@ -7,7 +7,7 @@ import { procedure, router } from "./t.js";
 
 export const app = router({
   dashboard: procedure.query(async ({ ctx }) => {
-    if (ctx.auth.kind !== "user") {
+    if (ctx.auth.kind !== "user" && ctx.auth.kind !== "proxy") {
       return { user: null };
     }
 
@@ -113,4 +113,19 @@ export const app = router({
         return { success: !!stat && !!pref };
       });
     }),
+
+  clearData: procedure.mutation(async ({ ctx }) => {
+    if (ctx.auth.kind !== "user") {
+      return { success: false };
+    }
+
+    const userId = ctx.auth.id;
+
+    return await db.transaction(async (tx) => {
+      await tx.delete(statistics).where(eq(statistics.userId, userId));
+      await tx.delete(preferences).where(eq(preferences.userId, userId));
+
+      return { success: true };
+    });
+  }),
 });

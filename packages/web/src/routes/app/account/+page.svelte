@@ -1,6 +1,9 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { createDashboardQuery } from "@/lib/api/dashboard";
+  import {
+    createClearDataMutation,
+    createDashboardQuery,
+  } from "@/lib/api/dashboard";
   import { createMeQuery } from "@/lib/api/me";
   import Button from "@/lib/components/button.svelte";
   import Popover from "@/lib/components/popover.svelte";
@@ -17,16 +20,28 @@
 
   const title = "Account";
   const description = "View and manage your account and its dashboard";
-  const client = getQueryClient();
-  const me = createMeQuery();
-  const dashboard = createDashboardQuery();
 
   let open = false;
   let editing = false;
 
+  const client = getQueryClient();
+  const me = createMeQuery();
+  const dashboard = createDashboardQuery();
+  const clear = createClearDataMutation({
+    onSuccess: async () => {
+      await client.invalidateQueries(["users", "me", "dashboard"]);
+      open = false;
+    },
+  });
+
   function openEdit() {
     open = false;
     editing = true;
+  }
+
+  async function clearData() {
+    beginning.set(new Date());
+    await $clear.mutateAsync();
   }
 
   async function logout() {
@@ -43,6 +58,11 @@
         label: "Feeds",
         click: () => goto("/app/feed"),
       },
+      {
+        icon: "/icons/account.svg",
+        label: "Account",
+        click: () => goto("/app/account"),
+      },
     ],
     settings: [
       {
@@ -52,9 +72,9 @@
         click: openEdit,
       },
       {
-        icon: "/icons/account.svg",
-        label: "Account",
-        click: () => goto("/app/account"),
+        icon: "/icons/reset-clear.svg",
+        label: "Clear data",
+        click: clearData,
       },
     ],
     logout: {
@@ -66,22 +86,17 @@
   };
 
   $: time = hoursAndMinutesSince($beginning);
-  $: maxEngagements =
-    $dashboard.data?.user?.activities?.reduce(
-      (acc, curr) => (curr.engagements > acc ? curr.engagements : acc),
-      0
-    ) ?? 1;
 </script>
 
 <svelte:window
   on:keydown={(e) => {
-    if (e.key === "Escape") {
-      open = false;
-      editing = false;
-    }
     const isEdit = e.metaKey && e.shiftKey && (e.key === "E" || e.key === "e");
     const isLogout =
       e.metaKey && e.shiftKey && (e.key === "Q" || e.key === "q");
+    const isOpenSettings = e.metaKey && (e.key === "K" || e.key === "k");
+    if (isOpenSettings) {
+      open = !open;
+    }
     if (isEdit) {
       openEdit();
     }
@@ -145,10 +160,10 @@
           <Popover bind:open>
             <div
               class="flex flex-col px-2 items-center justify-center w-full rounded-xl
-                md:w-52 font-medium overflow-hidden md:rounded-md p-1 shadow-md"
+                md:w-56 font-medium overflow-hidden md:rounded-md p-1 shadow-md"
             >
               <div class="flex w-full items-center p-2">
-                <h3 class="text-base font-bold text-text">My Account</h3>
+                <h3 class="text-base font-bold text-text">Settings</h3>
               </div>
               <span class="w-full h-[1px] bg-text/20 my-1" />
               {#each options.navigation as opt (opt.label)}
@@ -156,7 +171,7 @@
                   class="flex items-center gap-2 w-full px-2 py-2 text-start rounded text-text hover:bg-neutral-900 active:bg-neutral-900"
                   on:click={opt.click}
                 >
-                  <img src={opt.icon} alt="Edit" class="w-4" />
+                  <img src={opt.icon} alt={opt.label} class="w-4" />
                   <span> {opt.label} </span>
                   {#if "command" in opt}
                     <span class="ml-auto font-extralight text-text/90 text-sm">
@@ -171,7 +186,7 @@
                   class="flex items-center gap-2 w-full px-2 py-2 text-start rounded text-text hover:bg-neutral-900 active:bg-neutral-900"
                   on:click={opt.click}
                 >
-                  <img src={opt.icon} alt="Edit" class="w-4" />
+                  <img src={opt.icon} alt={opt.label} class="w-4" />
                   <span> {opt.label} </span>
                   {#if "command" in opt}
                     <span class="ml-auto font-extralight text-text/90 text-sm">

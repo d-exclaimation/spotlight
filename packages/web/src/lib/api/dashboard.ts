@@ -29,3 +29,17 @@ export function createEngangementMutation({
     ...rest,
   });
 }
+
+/**
+ * Create a mutation store for clearing user data
+ */
+export function createClearDataMutation({
+  mutationKey,
+  ...rest
+}: MutationsOpts<"clearData"> = {}) {
+  return createMutation({
+    mutationKey: ["users", "me", "clear", mutationKey],
+    mutationFn: trpc.clearData.mutate,
+    ...rest,
+  });
+}

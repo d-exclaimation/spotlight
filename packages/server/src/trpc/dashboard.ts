@@ -7,7 +7,7 @@ import { procedure, router } from "./t.js";
 
 export const app = router({
   dashboard: procedure.query(async ({ ctx }) => {
-    if (ctx.auth.kind !== "user" && ctx.auth.kind !== "proxy") {
+    if (ctx.auth.kind !== "user") {
       return { user: null };
     }
 

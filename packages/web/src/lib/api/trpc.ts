@@ -19,12 +19,6 @@ export const trpc = createTRPCProxyClient<App>({
   links: [
     httpBatchLink({
       url: PUBLIC_API_URL,
-      fetch(url, options) {
-        return fetch(url, {
-          ...options,
-          credentials: "include",
-        });
-      },
       headers() {
         const jwt = auth.get();
         return {
@@ -64,11 +58,6 @@ export type InfiniteQueryOpts<T extends keyof typeof trpc> = Omit<
   >,
   "queryFn"
 >;
-
-/**
- * Get the user auth
- */
-export type Me = AppOutput["me"]["user"];
 
 /**
  * Get the dashboard data

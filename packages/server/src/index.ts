@@ -12,9 +12,7 @@ import { auth } from "./utils/auth.js";
 const server = createHTTPServer({
   router: app,
   middleware: cors({
-    credentials: true,
     methods: ["GET", "POST", "OPTIONS"],
-    exposedHeaders: ["set-cookie"],
     origin: [
       "http://localhost:3000",
       "http://localhost:4000",
@@ -25,7 +23,7 @@ const server = createHTTPServer({
     const authentication = await auth(req.headers);
     const ico = icon[req.method ?? "UNKNOWN"];
     const userinfo =
-      authentication.kind === "user" || authentication.kind === "proxy"
+      authentication.kind === "user"
         ? `by ${authentication.username}`
         : authentication.kind === "direct"
         ? `using api key`

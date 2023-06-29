@@ -7,13 +7,12 @@ import { db } from "../data/index.js";
 import { codes, users, waitlist } from "../data/schema.js";
 import { mail } from "../email/index.js";
 import { markup } from "../email/markup.js";
-import { clearQueryToken, setQueryToken } from "../utils/auth.js";
 import { hoursSince, minutesSince } from "../utils/time.js";
 import { procedure, router } from "./t.js";
 
 export const app = router({
   me: procedure.query(async ({ ctx }) => {
-    if (ctx.auth.kind !== "user" && ctx.auth.kind !== "proxy") {
+    if (ctx.auth.kind !== "user") {
       return { user: null };
     }
     return { user: ctx.auth };
@@ -118,19 +117,9 @@ export const app = router({
       }
 
       const token = await sign({ id: code.user.id });
-      setQueryToken(ctx.res, token);
 
       return { user: code.user, token };
     }),
-
-  logout: procedure.mutation(async ({ ctx }) => {
-    if (ctx.auth.kind !== "user") {
-      return { success: false };
-    }
-
-    clearQueryToken(ctx.res);
-    return { success: true };
-  }),
 
   preregister: procedure
     .input(
@@ -160,7 +149,6 @@ export const app = router({
         .returning();
 
       const token = await sign({ id: rows[0].id });
-      setQueryToken(ctx.res, token);
 
       consola.info(`[${now()}] 🚏 ${input.email} joined the wailist`);
 

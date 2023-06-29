@@ -15,7 +15,6 @@ import { users } from "../data/schema.js";
 export type AuthUser =
   | { kind: "guest" }
   | ({ kind: "user" } & InferModel<typeof users>)
-  | ({ kind: "proxy" } & InferModel<typeof users>)
   | { kind: "direct" };
 
 /**
@@ -44,44 +43,10 @@ export async function auth(headers: IncomingHttpHeaders): Promise<AuthUser> {
     return { kind: "guest" };
   }
   return {
-    kind: kind === "Bearer" ? "user" : "proxy",
+    kind: "user",
     ...user,
   };
 }
-
-/**
- * Set the query-only cookie token.
- * @param res The server response.
- * @param value The token value.
- */
-export function setQueryToken(
-  res: ServerResponse<IncomingMessage>,
-  value: string
-) {
-  setCookie(res, {
-    name: "proxy-token",
-    value,
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-  });
-}
-
-/**
- * Clear the query-only cookie token.
- * @param res The server response.
- */
-export function clearQueryToken(res: ServerResponse<IncomingMessage>) {
-  setCookie(res, {
-    name: "proxy-token",
-    value: "",
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    expires: new Date(0),
-  });
-}
-
 type CookieOptions = {
   /**
    * The cookie name.

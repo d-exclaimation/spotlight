@@ -1,4 +1,5 @@
 import { createMutation, createQuery } from "@tanstack/svelte-query";
+import { internal, type InternalMutationsOpts } from "./internal";
 import { trpc, type MutationsOpts, type QueryOpts } from "./trpc";
 
 /**
@@ -50,7 +51,13 @@ export function createLogin2Mutation({
 }: MutationsOpts<"login2"> = {}) {
   return createMutation({
     mutationKey: ["login", "second", mutationKey],
-    mutationFn: trpc.login2.mutate,
+    mutationFn: async (input) => {
+      const res = await trpc.login2.mutate(input);
+      if (res.token) {
+        await internal.login(res.token);
+      }
+      return res;
+    },
     ...rest,
   });
 }
@@ -61,10 +68,10 @@ export function createLogin2Mutation({
 export function createLogoutMutation({
   mutationKey,
   ...rest
-}: MutationsOpts<"logout"> = {}) {
+}: InternalMutationsOpts = {}) {
   return createMutation({
     mutationKey: ["logout", mutationKey],
-    mutationFn: trpc.logout.mutate,
+    mutationFn: internal.logout,
     ...rest,
   });
 }

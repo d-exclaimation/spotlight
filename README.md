@@ -1,7 +1,7 @@
 <div align="center">
   <br />
 
-  <img width="80" src="packages/web/static/spotlight-app.png">
+  <img width="80" src="packages/web/static/spotlight.png">
 
   <h2>Spotlight</h2>
 

@@ -86,14 +86,18 @@
       class="flex items-center justify-start text-xs gap-3 md:text-sm py-1 text-text/75"
     >
       <div class="flex items-center justify-center">
-        <img class="w-3 aspect-square md:w-4 mr-2" src="/like.svg" alt="like" />
+        <img
+          class="w-3 aspect-square md:w-4 mr-2"
+          src="/icons/like.svg"
+          alt="like"
+        />
         {item.points ?? "N/A"}
       </div>
 
       <div class="flex items-center justify-center">
         <img
           class="w-3 aspect-square md:w-4 mr-2"
-          src="/comment.svg"
+          src="/icons/comment.svg"
           alt="comment"
         />
         {item.comments_count ?? "N/A"}

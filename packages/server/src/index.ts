@@ -17,6 +17,7 @@ const server = createHTTPServer({
       "http://localhost:3000",
       "http://localhost:4000",
       "https://spotlight.d-exclaimation.me",
+      "https://spotlight.talker.dev",
     ],
   }),
   createContext: async ({ req, res }) => {

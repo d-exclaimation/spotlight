@@ -56,6 +56,20 @@ export function createLogin2Mutation({
 }
 
 /**
+ * Create a mutation store for logging out a user
+ */
+export function createLogoutMutation({
+  mutationKey,
+  ...rest
+}: MutationsOpts<"logout"> = {}) {
+  return createMutation({
+    mutationKey: ["logout", mutationKey],
+    mutationFn: trpc.logout.mutate,
+    ...rest,
+  });
+}
+
+/**
  * Create a mutation store for editing a user
  */
 export function createEditMutation({

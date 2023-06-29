@@ -7,7 +7,7 @@ import { db } from "../data/index.js";
 import { codes, users, waitlist } from "../data/schema.js";
 import { mail } from "../email/index.js";
 import { markup } from "../email/markup.js";
-import { setQueryToken } from "../utils/auth.js";
+import { clearQueryToken, setQueryToken } from "../utils/auth.js";
 import { hoursSince, minutesSince } from "../utils/time.js";
 import { procedure, router } from "./t.js";
 
@@ -122,6 +122,15 @@ export const app = router({
 
       return { user: code.user, token };
     }),
+
+  logout: procedure.mutation(async ({ ctx }) => {
+    if (ctx.auth.kind !== "user") {
+      return { success: false };
+    }
+
+    clearQueryToken(ctx.res);
+    return { success: true };
+  }),
 
   preregister: procedure
     .input(

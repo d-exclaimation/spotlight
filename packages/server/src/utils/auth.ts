@@ -52,7 +52,7 @@ export async function auth(headers: IncomingHttpHeaders): Promise<AuthUser> {
 /**
  * Set the query-only cookie token.
  * @param res The server response.
- * @param param1 The cookie options.
+ * @param value The token value.
  */
 export function setQueryToken(
   res: ServerResponse<IncomingMessage>,
@@ -64,6 +64,21 @@ export function setQueryToken(
     httpOnly: true,
     secure: true,
     sameSite: "none",
+  });
+}
+
+/**
+ * Clear the query-only cookie token.
+ * @param res The server response.
+ */
+export function clearQueryToken(res: ServerResponse<IncomingMessage>) {
+  setCookie(res, {
+    name: "proxy-token",
+    value: "",
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    expires: new Date(0),
   });
 }
 

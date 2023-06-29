@@ -47,7 +47,7 @@ export const app = router({
         id: ctx.auth.id,
         username: ctx.auth.username,
         email: ctx.auth.email,
-        engagenments: totalEngagements ?? 0,
+        engagements: totalEngagements ?? 0,
         activities: recentEngagements
           .map(({ date, engagements }) => ({
             date,

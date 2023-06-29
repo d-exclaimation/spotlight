@@ -1,10 +1,11 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import { goto } from "$app/navigation";
   import {
     createClearDataMutation,
     createDashboardQuery,
   } from "@/lib/api/dashboard";
-  import { createMeQuery } from "@/lib/api/me";
+  import { createLogoutMutation, createMeQuery } from "@/lib/api/me";
   import Button from "@/lib/components/button.svelte";
   import Popover from "@/lib/components/popover.svelte";
   import Error from "@/lib/components/status/error.svelte";
@@ -21,16 +22,26 @@
   const title = "Account";
   const description = "View and manage your account and its dashboard";
 
+  export let data;
   let open = false;
   let editing = false;
 
   const client = getQueryClient();
   const me = createMeQuery();
-  const dashboard = createDashboardQuery();
+  const dashboard = createDashboardQuery({
+    initialData: data.initial,
+  });
   const clear = createClearDataMutation({
     onSuccess: async () => {
       await client.invalidateQueries(["users", "me", "dashboard"]);
       open = false;
+    },
+  });
+  const logout = createLogoutMutation({
+    onSuccess: async () => {
+      auth.clear();
+      await client.invalidateQueries(["users", "me"]);
+      await goto("/");
     },
   });
 
@@ -42,12 +53,6 @@
   async function clearData() {
     beginning.set(new Date());
     await $clear.mutateAsync();
-  }
-
-  async function logout() {
-    auth.clear();
-    await client.invalidateQueries(["users", "me"]);
-    await goto("/");
   }
 
   const options = {
@@ -81,7 +86,7 @@
       label: "Logout",
       icon: "/icons/logout.svg",
       command: "⇧⌘Q",
-      click: logout,
+      click: () => $logout.mutate(),
     },
   };
 
@@ -101,7 +106,7 @@
       openEdit();
     }
     if (isLogout) {
-      logout();
+      $logout.mutate();
     }
   }}
 />
@@ -119,10 +124,8 @@
 <div
   class="flex flex-col items-center justify-start w-full text-text md:mt-6 flex-1"
 >
-  {#if $me.isLoading || $dashboard.isLoading || !$me.data?.user || !$dashboard.data?.user}
+  {#if $dashboard.isLoading || !$dashboard.data?.user}
     <Loading />
-  {:else if $me.error}
-    <Error label="Not logged in" error={$me.error} />
   {:else if $dashboard.error}
     <Error label="Failed to load dashboard" error={$dashboard.error} />
   {:else}
@@ -130,17 +133,17 @@
       <!-- Profile -->
       <img
         class="w-16 md:w-20 p-2 relative aspect-square object-cover rounded-xl"
-        src={avatar($me.data.user.username)}
-        alt={`Avatar for ${$me.data.user.username}`}
+        src={avatar($dashboard.data.user.username)}
+        alt={`Avatar for ${$dashboard.data.user.username}`}
       />
       <div class="flex flex-col items-start flex-1 h-full px-2 py-3">
         <span class="font-medium text-text text-lg md:text-2xl">
-          {$me.data.user.username}
+          {$dashboard.data.user.username}
         </span>
         <span
           class="font-light text-text/75 text-[0.675rem] leading-tight md:text-sm"
         >
-          {$me.data.user.email}
+          {$dashboard.data.user.email}
         </span>
       </div>
 
@@ -220,22 +223,29 @@
         <span class="font-light text-sm md:text-lg">Engangement</span>
         <div class="flex gap-2 items-end">
           <span class="font-semibold text-xl md:text-3xl">
-            {$dashboard.data.user.engagenments}
+            {$dashboard.data.user.engagements}
           </span>
           <span class="font-light mr-1">news</span>
         </div>
       </div>
       <div class="flex justify-center flex-col flex-[3] md:flex-[3]">
         <span class="font-light text-sm md:text-lg">Time spent</span>
-        <div class="flex gap-2 items-end">
-          <span class="font-semibold text-xl md:text-3xl">
-            {time.hours % 24}
-          </span>
-          <span class="font-light mr-1">hr</span>
-          <span class="font-semibold text-xl md:text-3xl">
-            {time.minutes}
-          </span>
-          <span class="font-light">min</span>
+        <div
+          class="flex gap-2 max-w-fit items-end data-[loading=true]:animate-pulse data-[loading=true]:text-text/50"
+          data-loading={!browser}
+        >
+          {#if browser}
+            <span class="font-semibold text-xl md:text-3xl">
+              {time.hours % 24}
+            </span>
+            <span class="font-light mr-1">hr</span>
+            <span class="font-semibold text-xl md:text-3xl">
+              {time.minutes}
+            </span>
+            <span class="font-light">min</span>
+          {:else}
+            <span class="font-semibold text-xl md:text-3xl">--</span>
+          {/if}
         </div>
       </div>
     </div>

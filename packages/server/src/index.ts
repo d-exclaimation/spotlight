@@ -25,7 +25,7 @@ const server = createHTTPServer({
     const authentication = await auth(req.headers);
     const ico = icon[req.method ?? "UNKNOWN"];
     const userinfo =
-      authentication.kind === "user"
+      authentication.kind === "user" || authentication.kind === "proxy"
         ? `by ${authentication.username}`
         : authentication.kind === "direct"
         ? `using api key`

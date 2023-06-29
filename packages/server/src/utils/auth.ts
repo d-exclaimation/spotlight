@@ -62,7 +62,7 @@ export function setQueryToken(
     name: "proxy-token",
     value,
     httpOnly: true,
-    secure: env.NODE_ENV === "production",
+    secure: true,
     sameSite: "none",
   });
 }
@@ -123,9 +123,31 @@ export function setCookie(
   res: ServerResponse<IncomingMessage>,
   { name, value, ...rest }: CookieOptions
 ) {
-  const cookie = `${name}=${value}; ${Object.entries(rest)
-    .map(([key, value]) => `${key}=${value}`)
-    .join("; ")}`;
+  const configs = [] as string[];
+  if (rest.domain) {
+    configs.push(`Domain=${rest.domain}`);
+  }
+  if (rest.path) {
+    configs.push(`Path=${rest.path}`);
+  }
+  if (rest.expires) {
+    configs.push(`Expires=${rest.expires.toUTCString()}`);
+  }
+  if (rest.maxAge) {
+    configs.push(`Max-Age=${rest.maxAge}`);
+  }
+  if (rest.httpOnly) {
+    configs.push(`HttpOnly`);
+  }
+  if (rest.secure) {
+    configs.push(`Secure`);
+  }
+  if (rest.sameSite) {
+    configs.push(`SameSite=${rest.sameSite}`);
+  }
+  const cookie = `${name}=${value}${
+    configs.length ? `; ${configs.join("; ")}` : ""
+  }`;
 
   res.setHeader("Set-Cookie", cookie);
 }

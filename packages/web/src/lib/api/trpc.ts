@@ -19,6 +19,12 @@ export const trpc = createTRPCProxyClient<App>({
   links: [
     httpBatchLink({
       url: PUBLIC_API_URL,
+      fetch(url, options) {
+        return fetch(url, {
+          ...options,
+          credentials: "include",
+        });
+      },
       headers() {
         const jwt = auth.get();
         return {

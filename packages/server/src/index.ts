@@ -12,7 +12,9 @@ import { auth } from "./utils/auth.js";
 const server = createHTTPServer({
   router: app,
   middleware: cors({
+    credentials: true,
     methods: ["GET", "POST", "OPTIONS"],
+    exposedHeaders: ["set-cookie"],
     origin: [
       "http://localhost:3000",
       "http://localhost:4000",

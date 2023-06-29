@@ -6,8 +6,9 @@ export function setProxyToken<T extends RequestEvent<any, any>>(
 ) {
   event.cookies.set("proxy-token", value, {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: "none",
     secure: true,
+    path: "/",
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365), // 1 year
   });
 }

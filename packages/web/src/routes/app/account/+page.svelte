@@ -10,6 +10,7 @@
   import Popover from "@/lib/components/popover.svelte";
   import Error from "@/lib/components/status/error.svelte";
   import Loading from "@/lib/components/status/loading.svelte";
+  import { tw } from "@/lib/tailwind";
   import { avatar } from "@/lib/utils/image";
   import { auth } from "@/lib/utils/storage";
   import { hoursAndMinutesSince } from "@/lib/utils/time";
@@ -23,6 +24,7 @@
   const description = "View and manage your account and its dashboard";
 
   export let data;
+  let hovering = undefined as string | undefined;
   let open = false;
   let editing = false;
 
@@ -88,7 +90,7 @@
       command: "⇧⌘Q",
       click: () => $logout.mutate(),
     },
-  };
+  } as const;
 
   $: time = hoursAndMinutesSince($beginning);
 </script>
@@ -151,7 +153,7 @@
       <div class="flex items-center justify-end">
         <div class="relative">
           <Button
-            class="relative hover:bg-white/10 active:bg-white/10 p-1 md:p-2 z-10"
+            class="relative hover:bg-text/10 active:bg-text/10 focus-visible:ring p-1 md:p-2 z-10"
             on:click={() => (open = !open)}
           >
             <img
@@ -171,7 +173,9 @@
               <span class="w-full h-[1px] bg-text/20 my-1" />
               {#each options.navigation as opt (opt.label)}
                 <Button
-                  class="flex items-center gap-2 w-full px-2 py-2 text-start rounded text-text hover:bg-neutral-900 active:bg-neutral-900"
+                  class={tw(`flex items-center gap-2 w-full
+                  px-2 py-2 text-start rounded text-text
+                  hover:bg-neutral-900 active:bg-neutral-900`)}
                   on:click={opt.click}
                 >
                   <img src={opt.icon} alt={opt.label} class="w-4" />
@@ -186,7 +190,9 @@
               <span class="w-full h-[1px] bg-text/20 my-1" />
               {#each options.settings as opt (opt.label)}
                 <Button
-                  class="flex items-center gap-2 w-full px-2 py-2 text-start rounded text-text hover:bg-neutral-900 active:bg-neutral-900"
+                  class={tw(`flex items-center gap-2 w-full
+                  px-2 py-2 text-start rounded text-text
+                  hover:bg-neutral-900 active:bg-neutral-900`)}
                   on:click={opt.click}
                 >
                   <img src={opt.icon} alt={opt.label} class="w-4" />
@@ -200,7 +206,9 @@
               {/each}
               <span class="w-full h-[1px] bg-text/20 my-1" />
               <Button
-                class="flex items-center gap-2 w-full px-2 py-2 text-start rounded text-text hover:bg-neutral-900 active:bg-neutral-900"
+                class={tw(`flex items-center gap-2 w-full
+                px-2 py-2 text-start rounded text-text
+                hover:bg-neutral-900 active:bg-neutral-900`)}
                 on:click={options.logout.click}
               >
                 <img src={options.logout.icon} alt="Edit" class="w-4" />

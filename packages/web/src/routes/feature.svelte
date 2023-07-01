@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Button from "@/lib/components/button.svelte";
   import { tw } from "@/lib/tailwind";
 
   interface $$Props {
@@ -26,7 +25,9 @@
   )}
 >
   <div class="flex flex-col w-full md:w-[40%] mt-6 md:mt-0 px-6 gap-3">
-    <div class="w-12 md:w-20 p-2 md:p-4 rounded-xl bg-text/30 backdrop-blur-xl">
+    <div
+      class="w-12 md:w-16 p-2 md:p-3 mb-1 rounded-xl bg-text/30 backdrop-blur-xl"
+    >
       <img class="aspect-square" src={icon} {alt} />
     </div>
     <span class="font text-text text-lg md:text-2xl">
@@ -36,12 +37,6 @@
     <p class="text-text/75 text-sm md:text-lg">
       <slot />
     </p>
-
-    <Button
-      class="mt-4 px-3 md:px-4 py-1 md:py-2 max-w-fit rounded-lg bg-text/30 text-text text-sm md:text-lg"
-    >
-      Learn more
-    </Button>
   </div>
 
   <img

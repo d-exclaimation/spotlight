@@ -25,11 +25,10 @@
 </script>
 
 <nav
-  class={tw(`flex fixed bottom-8 right-3 
-  md:top-8 md:bottom-[unset] md:right-[calc(50vw-19rem)]
-  shadow-lg bg-background/10 z-50 rounded-full overflow-visible
-  gap-4 p-2 md:p-0 backdrop-blur-md flex-col md:flex-row 
-  items-center justify-center ring-[1px] md:ring-0 ring-text/[.15]`)}
+  class={tw(`flex fixed bottom-8 right-3 md:top-7 md:bottom-[unset] 
+  md:right-[calc(50vw-19rem)] bg-text/10 md:bg-transparent z-50 
+  rounded-full overflow-visible gap-4 p-2 md:p-0 backdrop-blur-md flex-col 
+  md:flex-row items-center justify-center ring-[1px] md:ring-0 ring-text/20`)}
 >
   {#each routes as { name, path } (path)}
     <div class="relative flex items-center justify-center group">

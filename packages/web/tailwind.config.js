@@ -22,8 +22,7 @@ export default {
         // accent: "#b2bdf8",
       },
       animation: {
-        overlay: "overlay 300ms cubic-bezier(0.16, 1, 0.3, 1)",
-        content: "content 300ms cubic-bezier(0.16, 1, 0.3, 1)",
+        content: "content 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940)",
         "slide-up":
           "slide-up 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
         "slide-down":
@@ -38,13 +37,9 @@ export default {
         "heavy-bounce": "heavy-bounce 1s infinite",
       },
       keyframes: {
-        overlay: {
-          from: { opacity: 0 },
-          to: { opacity: 1 },
-        },
         content: {
-          from: { opacity: 0, transform: "translate(-50%, -48%) scale(0.96)" },
-          to: { opacity: 1, transform: "translate(-50%, -50%) scale(1)" },
+          from: { opacity: 0, transform: "translateY(2.5rem)" },
+          to: { opacity: 1, transform: "translate(0)" },
         },
         "slide-up": {
           "0%": {

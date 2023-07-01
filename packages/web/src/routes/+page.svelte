@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Button from "@/lib/components/button.svelte";
   import { tw } from "@/lib/tailwind";
   import { onDestroy, onMount } from "svelte";
   import { fly } from "svelte/transition";
@@ -13,7 +12,6 @@
   const title = "Spotlight";
   const description = "Browsing news streamlined";
 
-  let feature: HTMLElement;
   let ref = undefined as number | NodeJS.Timeout | undefined;
   let index = 0;
 
@@ -94,17 +92,12 @@
     </div>
 
     <!-- Coming soon button -->
-    <JoinWaitlist
-      on:learn={() => feature.scrollIntoView({ behavior: "smooth" })}
-    />
+    <JoinWaitlist />
   </div>
 
   <!-- <div  class="h-[30vh]" /> -->
   <div class="flex w-full items-center justify-center">
-    <span
-      bind:this={feature}
-      class="w-[50%] h-[1px] bg-gradient-to-r via-text/30 my-16 md:my-24"
-    />
+    <span class="w-[50%] h-[1px] bg-gradient-to-r via-text/30 my-16 md:my-24" />
   </div>
 
   <!-- Feature 1: Spotlight's Glance -->
@@ -203,15 +196,19 @@
     <span
       class="text-text/75 font-medium text-sm max-w-[90%] md:text-2xl mt-2 md:mt-3 text-center"
     >
-      Join the waitlist now and be the first to know when we launch.
+      Join the waitlist now and get early access to Spotlight.
     </span>
 
-    <Button
-      class="mt-10 px-4 py-2 max-w-fit rounded-lg bg-text/30 text-text"
+    <button
+      class={tw(`relative mt-10 rounded font-medium text-text before:absolute 
+      before:left-0 before:top-0 before:h-full before:w-full before:border-b 
+      text-sm before:border-text before:transition-all before:content-[''] 
+      hover:before:scale-x-100 active:before:scale-x-100 md:mt-16 md:text-lg 
+      md:before:scale-x-0 md:before:border-b-2`)}
       on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
     >
       Sign up
-    </Button>
+    </button>
   </div>
   <div class="h-[10vh]" />
 </div>

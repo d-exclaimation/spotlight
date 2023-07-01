@@ -10,17 +10,26 @@ export async function load(event) {
   if (event.isDataRequest) {
     return { initial: undefined };
   }
-  const page = await caller(event).newest.query({ page: 1 });
 
-  const initial =
-    page.news.length !== 0
-      ? ({
-          pages: [page],
-          pageParams: [1],
-        } satisfies InfiniteData<typeof page>)
-      : undefined;
+  try {
+    const page = await caller(event).newest.query({ page: 1 });
 
-  return {
-    initial,
-  };
+    if (page.news.length === 0) {
+      return {
+        initial: undefined,
+      };
+    }
+
+    const initial = {
+      pages: [page],
+      pageParams: [1],
+    } satisfies InfiniteData<typeof page>;
+
+    return { initial };
+  } catch (e) {
+    console.error(e);
+    return {
+      initial: undefined,
+    };
+  }
 }

@@ -34,7 +34,9 @@
         class="absolute flex flex-col gap-2 w-full items-center h-40 justify-center"
       >
         <span class="font-semibold text-text"> No recent activities </span>
-        <span class="text-text text-sm">
+        <span
+          class="text-text text-xs md:text-sm break-words [text-wrap:balance] text-center"
+        >
           You haven't engage with any news in the last 10 days
         </span>
         <a class="text-text text-sm underline flex items-center" href="/app">

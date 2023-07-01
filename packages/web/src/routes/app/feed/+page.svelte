@@ -48,6 +48,7 @@
 {:else}
   <div
     class="flex flex-col items-center justify-center w-full divide-y divide-white/40"
+    bind:this={view}
   >
     {#each paginated as item, i (item.id)}
       {#if i == 0 || (item.points && item.points >= 10)}
@@ -56,7 +57,7 @@
         >
           <BubbleFeed {item} />
         </div>
-      {:else if paginated.length - i < 5}
+      {:else if paginated.length - i < 3}
         <LastFeed
           root={view}
           {item}

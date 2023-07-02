@@ -9,7 +9,9 @@
     "dev": "FORCE_COLOR=1 dotenv -- turbo run dev",
     "generate": "FORCE_COLOR=1 dotenv -- turbo run generate",
     "generate:custom": "FORCE_COLOR=1 dotenv -- turbo run generate",
-    "db:push": "FORCE_COLOR=1 dotenv -- turbo run db:push"
+    "db:push": "FORCE_COLOR=1 dotenv -- turbo run db:push",
+    "ai:train": "dotenv -- pnpm --filter ai train",
+    "ai:test": "dotenv -- pnpm --filter ai test"
   },
   "devDependencies": {
     "prettier": "^2.7.1",

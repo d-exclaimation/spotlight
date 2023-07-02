@@ -1,0 +1,24 @@
+{
+  "name": "@spotlight/ai",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "types": "src/export.ts",
+  "scripts": {
+    "train": "dotenv -- tsx src/train.ts",
+    "dev": "dotenv -- tsx src/dev.ts",
+    "build": "chmod +x export.sh; ./export.sh"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.1",
+    "tsx": "^3.12.7",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "consola": "^3.1.0",
+    "natural": "^6.5.0",
+    "zod": "^3.21.4"
+  }
+}

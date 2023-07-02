@@ -1,12 +1,11 @@
 #!/bin/bash
 
 # Remove old model from server
-if [ -f ../server/ml/model.json ]; then
-    rm ../server/ml/model.json
+if [ -f ../server/classifier-model.json ]; then
+    rm ../server/classifier-model.json
 fi
 
-# Export model
-cp ./out/brain.json ../server/ml/model.json
+cp ./out/brain.json ../server/classifier-model.json
 
 # Remove old categories from server
 if [ -f ../server/src/utils/category.ts ]; then

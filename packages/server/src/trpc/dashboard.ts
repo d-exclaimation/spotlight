@@ -2,7 +2,7 @@ import { and, desc, eq, not, sql } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "../data/index.js";
 import { preferences, statistics } from "../data/schema.js";
-import { Category, categories } from "../utils/category.js";
+import { Category } from "../utils/category.js";
 import { procedure, router } from "./t.js";
 
 export const app = router({
@@ -27,13 +27,13 @@ export const app = router({
     const topPreferences = await db.query.preferences.findMany({
       where: and(
         eq(preferences.userId, ctx.auth.id),
-        not(eq(preferences.category, categories.uncategorized))
+        not(eq(preferences.category, Category.enum.uncategorized))
       ),
       orderBy: [desc(preferences.engagements)],
       limit: 5,
     });
 
-    const emptyCategories = Object.values(categories)
+    const emptyCategories = Object.values(Category.enum)
       .filter(
         (category) => !topPreferences.some((pref) => pref.category === category)
       )
@@ -77,7 +77,7 @@ export const app = router({
       }
 
       const userId = ctx.auth.id;
-      const category = input.category ?? categories.uncategorized;
+      const category = input.category ?? Category.enum.uncategorized;
 
       return await db.transaction(async (tx) => {
         const [stat] = await tx

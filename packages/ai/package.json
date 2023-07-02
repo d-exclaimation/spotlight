@@ -8,7 +8,7 @@
   "types": "src/export.ts",
   "scripts": {
     "train": "dotenv -- tsx src/train.ts",
-    "dev": "dotenv -- tsx src/dev.ts",
+    "test": "dotenv -- tsx src/dev.ts",
     "build": "chmod +x export.sh; ./export.sh"
   },
   "devDependencies": {

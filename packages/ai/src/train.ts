@@ -1,14 +1,15 @@
 import { writeFile } from "node:fs/promises";
-import { create, preset, save } from "./brain.js";
+import { create, save } from "./brain.js";
 import { Category } from "./category.js";
 import { consola } from "./log.js";
 import { collect } from "./source.js";
 
 const classifier = await create();
 
-consola.start("Training with preset data...");
-preset(classifier);
-consola.success("Training complete!");
+// Run this to train with preset data (only if there's new preset data)
+// consola.start("Training with preset data...");
+// preset(classifier);
+// consola.success("Training complete!");
 
 const additions = new Set<string>();
 

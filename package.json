@@ -12,7 +12,8 @@
     "db:push": "FORCE_COLOR=1 dotenv -- turbo run db:push",
     "ai:train": "dotenv -- pnpm --filter ai train",
     "ai:test": "dotenv -- pnpm --filter ai test",
-    "ai:test:live": "dotenv -- pnpm --filter ai test:live"
+    "ai:test:live": "dotenv -- pnpm --filter ai test:live",
+    "deploy:local": "chmod +x ./local.sh; ./local.sh"
   },
   "devDependencies": {
     "prettier": "^2.7.1",

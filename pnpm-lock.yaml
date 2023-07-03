@@ -38,6 +38,9 @@ importers:
 
   packages/server:
     dependencies:
+      '@spotlight/ai':
+        specifier: workspace:*
+        version: link:../ai
       '@trpc/server':
         specifier: ^10.30.0
         version: 10.30.0

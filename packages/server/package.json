@@ -31,7 +31,8 @@
     "postgres": "^3.3.5",
     "resend": "^0.15.1",
     "ulid": "^2.3.0",
-    "zod": "^3.21.4"
+    "zod": "^3.21.4",
+    "@spotlight/ai": "workspace:*"
   },
   "tsup": {
     "entry": {

@@ -1,6 +1,6 @@
 import type { LogisticRegressionClassifier } from "natural";
 import natural from "natural";
-import { readFile, writeFile } from "node:fs/promises";
+import { writeFile } from "node:fs/promises";
 import { Category } from "./category.js";
 
 export function preset(classifier: LogisticRegressionClassifier) {
@@ -79,10 +79,10 @@ export function preset(classifier: LogisticRegressionClassifier) {
 
 export async function create() {
   try {
-    const raw = await readFile("./out/brain.json", "utf-8");
-    const classifier = natural.LogisticRegressionClassifier.restore(
-      JSON.parse(raw)
-    );
+    const raw = await import("../model/classifier.json", {
+      assert: { type: "json" },
+    });
+    const classifier = natural.LogisticRegressionClassifier.restore(raw as any);
     return classifier;
   } catch (error) {
     return new natural.LogisticRegressionClassifier();
@@ -93,6 +93,6 @@ export async function save(classifier: LogisticRegressionClassifier) {
   const serialized = JSON.stringify(classifier);
   const timestamp = new Date().toISOString();
 
-  await writeFile(`./out/history/brain-${timestamp}.json`, serialized);
-  await writeFile("./out/brain.json", serialized);
+  await writeFile(`./model/history/classifier-${timestamp}.json`, serialized);
+  await writeFile("./model/classifier.json", serialized);
 }

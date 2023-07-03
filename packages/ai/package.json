@@ -3,13 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "module": "dist/index.js",
-  "main": "dist/index.js",
-  "types": "src/export.ts",
+  "files": [
+    "model/classifier.json"
+  ],
   "scripts": {
     "train": "dotenv -- tsx src/train.ts",
-    "test": "dotenv -- tsx src/dev.ts",
-    "build": "chmod +x export.sh; ./export.sh"
+    "test": "dotenv -- tsx src/dev.ts"
   },
   "devDependencies": {
     "@types/node": "^20.3.1",

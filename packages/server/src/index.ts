@@ -1,5 +1,6 @@
 import { createHTTPServer } from "@trpc/server/adapters/standalone";
 import cors from "cors";
+import "./classifier/index.js";
 import { env } from "./config/env.js";
 import { consola, icon, now } from "./config/log.js";
 import "./data/index.js";

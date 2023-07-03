@@ -19,7 +19,7 @@
   href={link(item.url)}
   target="_blank"
   on:click={() => {
-    $mutation.mutate({});
+    $mutation.mutate({ title: item.title });
   }}
 >
   <div class="flex items-start justify-center mr-2 md:mr-4">

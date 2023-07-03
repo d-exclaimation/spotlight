@@ -138,7 +138,7 @@
           href={link(item.url)}
           target="_blank"
           on:click={() => {
-            $mutation.mutate({});
+            $mutation.mutate({ title: item.title });
           }}
         >
           {item.domain || "news.ycombinator.com"}

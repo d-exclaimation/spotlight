@@ -14,18 +14,29 @@
   });
 </script>
 
-<a
-  class="flex flex-row group items-start justify-start w-full p-2 md:p-4 bg-background hover:bg-neutral-800 active:bg-neutral-800"
-  href={link(item.url)}
-  target="_blank"
-  on:click={() => {
-    $mutation.mutate({ title: item.title });
-  }}
+<div
+  class="flex flex-col w-full h-full group items-start justify-start p-4 bg-text/5 backdrop-blur rounded-md"
 >
-  <div class="flex items-start justify-center mr-2 md:mr-4">
+  <a
+    class="flex-1 flex text-text"
+    href={link(item.url)}
+    target="_blank"
+    on:click={() => {
+      $mutation.mutate({ title: item.title });
+    }}
+  >
+    <span
+      class="break-words md:text-lg [text-wrap:balance] max-w-full group-hover:underline"
+    >
+      {item.title}
+    </span>
+  </a>
+  <div
+    class="flex items-center justify-start w-full text-xs md:text-sm gap-2 mt-1"
+  >
     {#if item.type === "ask"}
       <svg
-        class="w-8 aspect-square md:w-10 rounded-full fill-orange-300 saturate-[.75]"
+        class="w-6 aspect-square md:w-8 rounded-full fill-orange-300 saturate-[.75]"
         viewBox="-1 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -35,7 +46,7 @@
       </svg>
     {:else if item.type === "job"}
       <svg
-        class="w-8 aspect-square md:w-10 rounded-full fill-emerald-300 saturate-[.75]"
+        class="w-6 aspect-square md:w-8 rounded-full fill-emerald-300 saturate-[.75]"
         viewBox="-1 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -45,7 +56,7 @@
       </svg>
     {:else if item.title.startsWith("Show HN") || item.title.startsWith("Tell HN")}
       <svg
-        class="w-8 aspect-square md:w-10 rounded-full fill-rose-300 saturate-[.75]"
+        class="w-6 aspect-square md:w-8 rounded-full fill-rose-300 saturate-[.75]"
         viewBox="-1 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -55,7 +66,7 @@
       </svg>
     {:else}
       <svg
-        class="w-8 aspect-square md:w-10 rounded-full fill-primary"
+        class="w-6 aspect-square md:w-8 rounded-full fill-primary"
         viewBox="-1 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -64,44 +75,12 @@
         />
       </svg>
     {/if}
-  </div>
-  <div class="flex-1 flex flex-col items-start justify-start text-text">
-    <span
-      class="break-words text-base font-medium max-w-full group-hover:underline"
-    >
-      {item.title}
+    <span class="font-extralight text-text">
+      {item.time_ago}
     </span>
-    <div
-      class="flex items-center justify-start w-full text-xs md:text-sm gap-2"
-    >
-      <span class="font-extralight">
-        {item.time_ago}
-      </span>
-      <span>·</span>
-      <span class="font-light">
-        {item.user ?? "anonymous"}
-      </span>
-    </div>
-    <div
-      class="flex items-center justify-start text-xs gap-3 md:text-sm py-1 text-text/75"
-    >
-      <div class="flex items-center justify-center">
-        <img
-          class="w-3 aspect-square md:w-4 mr-2"
-          src="/icons/like.svg"
-          alt="like"
-        />
-        {item.points ?? "N/A"}
-      </div>
-
-      <div class="flex items-center justify-center">
-        <img
-          class="w-3 aspect-square md:w-4 mr-2"
-          src="/icons/comment.svg"
-          alt="comment"
-        />
-        {item.comments_count ?? "N/A"}
-      </div>
-    </div>
+    <span>·</span>
+    <span class="font-light text-text">
+      {item.user ?? "anonymous"}
+    </span>
   </div>
-</a>
+</div>

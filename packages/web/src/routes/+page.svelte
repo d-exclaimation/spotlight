@@ -187,6 +187,50 @@
     </div>
   </div>
 
+  <div class="flex w-full items-center justify-center">
+    <span class="w-[50%] h-[1px] bg-gradient-to-r via-text/30 my-16 md:my-24" />
+  </div>
+
+  <!-- Feature 1: Spotlight's Account Dashboard -->
+  <div class="flex flex-col items-center justify-center w-full">
+    <span class="text-text text-xl md:text-3xl">
+      Understand your preferences and activities using
+      <span class="text-rose-400">Dashboard</span>
+    </span>
+
+    <Feature
+      class="bg-gradient-to-r from-rose-600 to-rose-400"
+      icon="/icons/account.svg"
+      alt="Spotlight's Dashboard"
+      title="All your activities in one place"
+      preview="/banner/account.png"
+    >
+      Spotlight's Dashboard is a one stop place to view all your activities and
+      preferences. You can view your reading activities, your favourite topics,
+      and manage all of that data and information.
+    </Feature>
+
+    <div class="flex flex-col md:flex-row w-[90%] text-text mt-4 gap-6">
+      <FeatureInfo
+        class="md:flex-[3]"
+        icon="/icons/secure.svg"
+        alt="secure"
+        title="Secure and Private"
+      >
+        All your data is encrypted, stored securely, and only accessible by you.
+      </FeatureInfo>
+
+      <FeatureInfo
+        class="md:flex-[2]"
+        icon="/icons/friendly.svg"
+        alt="friendly"
+        title="User friendly"
+      >
+        You are in control of your data. You can delete it anytime you want.
+      </FeatureInfo>
+    </div>
+  </div>
+
   <div class="h-[20vh]" />
 
   <div class="flex flex-col items-center justify-center w-full h-[75vh]">

@@ -12,7 +12,7 @@
   const ROUTES = [
     { name: "Glance", path: "/app" },
     { name: "Feeds", path: "/app/feed" },
-    { name: "Account", path: "/app/account" },
+    { name: "Dashboard", path: "/app/account" },
   ];
   const me = createMeQuery();
 

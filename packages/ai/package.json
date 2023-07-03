@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "train": "dotenv -- tsx src/train.ts",
-    "test": "dotenv -- tsx src/dev.ts"
+    "test": "dotenv -- tsx src/dev.ts",
+    "test:live": "dotenv -- tsx src/live.ts"
   },
   "devDependencies": {
     "@types/node": "^20.3.1",

@@ -79,7 +79,7 @@ export function preset(classifier: LogisticRegressionClassifier) {
 
 export async function create() {
   try {
-    const raw = await import("../model/classifier.json", {
+    const { default: raw } = await import("../model/classifier.json", {
       assert: { type: "json" },
     });
     const classifier = natural.LogisticRegressionClassifier.restore(raw as any);

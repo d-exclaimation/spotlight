@@ -34,7 +34,7 @@
   href={link(item.url)}
   target="_blank"
   on:click={() => {
-    $mutation.mutate({});
+    $mutation.mutate({ title: item.title });
   }}
 >
   <span class="w-full break-words text-xl md:text-2xl">

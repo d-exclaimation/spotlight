@@ -1,5 +1,6 @@
 import { and, desc, eq, not, sql } from "drizzle-orm";
 import { z } from "zod";
+import { classifier } from "../classifier/index.js";
 import { db } from "../data/index.js";
 import { preferences, statistics } from "../data/schema.js";
 import { Category } from "../utils/category.js";
@@ -68,7 +69,7 @@ export const app = router({
   trackEngagement: procedure
     .input(
       z.object({
-        category: Category.optional(),
+        title: z.string(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -77,7 +78,8 @@ export const app = router({
       }
 
       const userId = ctx.auth.id;
-      const category = input.category ?? Category.enum.uncategorized;
+      const category =
+        classifier.classify(input.title) ?? Category.enum.uncategorized;
 
       return await db.transaction(async (tx) => {
         const [stat] = await tx

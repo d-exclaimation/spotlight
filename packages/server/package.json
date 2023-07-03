@@ -32,6 +32,7 @@
     "resend": "^0.15.1",
     "ulid": "^2.3.0",
     "zod": "^3.21.4",
+    "natural": "^6.5.0",
     "@spotlight/ai": "workspace:*"
   },
   "tsup": {

@@ -99,6 +99,12 @@
   });
 </script>
 
+<svelte:head>
+  {#each OBSTACLES as href (href)}
+    <link rel="preload" as="image" {href} />
+  {/each}
+</svelte:head>
+
 <svelte:window
   on:keypress={(e) => {
     if (e.key === " ") {

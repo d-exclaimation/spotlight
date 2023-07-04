@@ -1,6 +1,18 @@
 <script lang="ts">
   import Game from "./game.svelte";
+
+  const title = "404";
+  const description = "Page not found";
 </script>
+
+<svelte:head>
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+</svelte:head>
 
 <div
   class="flex flex-col flex-shrink-0 items-start justify-start min-h-[100dvh] min-w-full bg-gradient-to-br from-background via-background to-secondary"

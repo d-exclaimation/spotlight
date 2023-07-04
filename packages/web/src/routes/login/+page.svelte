@@ -8,11 +8,11 @@
   import { isTRPCError } from "@/lib/api/trpc";
   import Button from "@/lib/components/button.svelte";
   import PinInput from "@/lib/components/pin-input.svelte";
-  import Redirect from "@/lib/components/redirect.svelte";
   import Textfield from "@/lib/components/textfield.svelte";
   import { tw } from "@/lib/tailwind";
   import { auth } from "@/lib/utils/storage";
   import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
+  import { onMount } from "svelte";
   import { fly } from "svelte/transition";
   import Navbar from "../navbar.svelte";
 
@@ -64,6 +64,16 @@
         error = err.cause?.message ?? "Invalid login code";
       }
     },
+  });
+
+  onMount(() => {
+    const unsub = me.subscribe((res) => {
+      if (!res.isLoading && res.data?.user) {
+        goto("/app");
+      }
+    });
+
+    return unsub;
   });
 </script>
 
@@ -173,7 +183,3 @@
     </div>
   </div>
 </div>
-
-{#if !$me.isLoading && $me.data && $me.data.user}
-  <Redirect href="/app" />
-{/if}

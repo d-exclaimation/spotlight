@@ -1,8 +1,8 @@
 <script lang="ts">
   import { browser } from "$app/environment";
+  import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { createMeQuery } from "@/lib/api/me";
-  import Redirect from "@/lib/components/redirect.svelte";
   import { tracking } from "@/lib/utils/storage";
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
@@ -17,6 +17,16 @@
   const me = createMeQuery();
 
   $: name = ROUTES.find((r) => r.path === $page.url.pathname)?.name ?? "Glance";
+
+  onMount(() => {
+    const unsub = me.subscribe((res) => {
+      if (!res.isLoading && res.data && !res.data.user) {
+        goto("/");
+      }
+    });
+
+    return unsub;
+  });
 
   onMount(() => {
     if (!browser) return;
@@ -35,8 +45,8 @@
     {#key $page.url.pathname}
       <h1
         class="text-2xl font-bold text-text"
-        in:fly={{ x: -25, duration: 250, delay: 250 }}
-        out:fly={{ x: 25, duration: 250 }}
+        in:fly|local={{ x: -25, duration: 250, delay: 250 }}
+        out:fly|local={{ x: 25, duration: 250 }}
       >
         {name}
       </h1>
@@ -44,13 +54,13 @@
   </div>
   {#key $page.url.pathname}
     <div class="flex flex-col w-full h-full animate-content">
-      <slot />
+      {#if !$me.isLoading && $me.data && !$me.data.user}
+        <span />
+      {:else}
+        <slot />
+      {/if}
     </div>
   {/key}
 </div>
 
 <NavMenu routes={ROUTES} />
-
-{#if !$me.isLoading && $me.data && !$me.data.user}
-  <Redirect href="/" reload />
-{/if}

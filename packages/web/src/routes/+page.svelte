@@ -101,8 +101,8 @@
   </div>
 
   <!-- Feature 1: Spotlight's Glance -->
-  <div class="flex flex-col items-center justify-center w-[90%]">
-    <span class="text-text text-xl md:text-3xl">
+  <div class="flex flex-col items-center justify-center w-full">
+    <span class="text-text text-xl md:text-3xl max-w-[90%]">
       Stay informed at a
       <span class="text-sky-400">Glance</span>
     </span>
@@ -146,8 +146,8 @@
   </div>
 
   <!-- Feature 2: Spotlight's Feeds -->
-  <div class="flex flex-col items-center justify-center w-[90%]">
-    <span class="text-text text-xl md:text-3xl">
+  <div class="flex flex-col items-center justify-center w-full">
+    <span class="text-text text-xl md:text-3xl max-w-[90%]">
       Waste no time with
       <span class="text-green-400">Feeds</span>
     </span>
@@ -192,9 +192,9 @@
   </div>
 
   <!-- Feature 1: Spotlight's Account Dashboard -->
-  <div class="flex flex-col items-center justify-center w-[90%]">
-    <span class="text-text text-xl md:text-3xl">
-      Understand your preferences and activities using
+  <div class="flex flex-col items-center justify-center w-full">
+    <span class="text-text text-xl md:text-3xl text-center max-w-[90%]">
+      Understand your preferences using
       <span class="text-rose-400">Dashboard</span>
     </span>
 

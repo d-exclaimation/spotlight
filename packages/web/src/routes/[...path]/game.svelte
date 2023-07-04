@@ -28,15 +28,14 @@
 
   $: chance = Math.min(0.85, distance / GAME_END) + 0.1;
   $: threshold =
-    chance < 0.25
-      ? 60
-      : chance < 0.5
-      ? 50
-      : chance < 0.75
-      ? 40
-      : chance < 0.9
-      ? 30
-      : 25;
+    chance < 0.25 ? 60 : chance < 0.5 ? 50 : chance < 0.75 ? 40 : 30;
+
+  $: wind = [
+    { x: (35 - ((distance + 24) % 35)).toFixed(1), y: 0 },
+    { x: (35 - ((distance + 8) % 35)).toFixed(1), y: -1 },
+    { x: (35 - ((distance + 16) % 35)).toFixed(1), y: 1 },
+    { x: (35 - (distance % 35)).toFixed(1), y: 1.5 },
+  ];
 
   function moveObstacles() {
     obstacles = obstacles
@@ -110,6 +109,7 @@
   {#each OBSTACLES as href (href)}
     <link rel="preload" as="image" {href} />
   {/each}
+  <link rel="preload" as="image" href="/assets/dead.webp" />
 </svelte:head>
 
 <svelte:window
@@ -130,9 +130,9 @@
 >
   <div class="flex flex-col items-start justify-center w-full px-10">
     <img
-      class="aspect-auto w-20 h-20 flex-grow-0"
+      class="aspect-auto w-20 h-20 flex-grow-0 z-10"
       src={dead && distance > 0
-        ? "/assets/dead.gif"
+        ? "/assets/dead.webp"
         : "/assets/speed-penguin.gif"}
       alt="player"
       style={`transform: translateY(${(-height).toFixed(3)}rem);`}
@@ -140,38 +140,12 @@
     <span
       class="h-[1px] w-full bg-gradient-to-r from-text/30 via-text to-text/30"
     />
-    {#if !dead}
+    {#each wind as { x, y } (y)}
       <span
-        class="h-[1px] w-4 absolute bg-text/30"
-        style={`transform: translateX(${(35 - (distance % 35)).toFixed(
-          3
-        )}rem);`}
+        class="h-[2px] z-0 rounded-full w-10 absolute bg-text/20"
+        style={`transform: translate(${x}rem, ${y}rem);`}
       />
-      <span
-        class="h-[1px] w-3 absolute bg-text/30"
-        style={`
-        transform: translate(${(35 - ((distance - 16) % 35)).toFixed(
-          3
-        )}rem, -1rem);
-        `}
-      />
-      <span
-        class="h-[1px] w-3 absolute bg-text/30"
-        style={`
-        transform: translate(${(35 - ((distance - 8) % 35)).toFixed(
-          3
-        )}rem, 1rem);
-        `}
-      />
-      <span
-        class="h-[1px] w-6 absolute bg-text/30"
-        style={`
-        transform: translate(${(35 - ((distance - 24) % 35)).toFixed(
-          3
-        )}rem, -1.5rem);
-        `}
-      />
-    {/if}
+    {/each}
     {#each obstacles as { x, src }}
       <img
         class="h-12 w-12 absolute"
@@ -186,12 +160,29 @@
   </div>
 
   <span class="absolute top-5 right-5 text-text/50 font-extralight font-mono">
-    {distance}m ({(chance * 100).toFixed(1)}%/{threshold}m)
+    <span
+      class={tw(
+        distance > GAME_END
+          ? "text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-purple-500"
+          : distance > Math.round(GAME_END * (3 / 4))
+          ? "text-green-500"
+          : distance > Math.round(GAME_END * (2 / 4))
+          ? "text-yellow-500"
+          : distance > Math.round(GAME_END * (1 / 4))
+          ? "text-orange-500"
+          : "text-red-500"
+      )}
+    >
+      {distance}m
+    </span>
+    ({(chance * 100).toFixed(1)}%/{threshold}m)
   </span>
 
   {#if dead}
-    <span class="absolute text-text/40 font-light max-w-[90%] text-center">
-      Press <span class="font-bold font-mono">⎵</span> or
+    <span
+      class="absolute text-text/60 bg-background/5 p-3 rounded backdrop-blur-sm font-light max-w-[90%] text-center"
+    >
+      Press <span class="font-black font-mono">⎵</span> or
       <span class="font-semibold">tap</span> to start a new game
     </span>
   {/if}

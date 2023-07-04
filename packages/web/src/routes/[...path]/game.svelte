@@ -1,6 +1,5 @@
 <script lang="ts">
   import { tw } from "@/lib/tailwind";
-  import { onMount } from "svelte";
 
   const OPTIMAL_RATE = 8.333333333333334 * 4;
   const GRAVITY = 0.07;
@@ -20,12 +19,24 @@
 
   let previous = 0;
   let delta = 0;
-  let dead = false;
+  let dead = true;
   let obstacles = [] as { x: number; src: string }[];
   let height = 0;
   let velocity = 0;
   let distance = 0;
   let jump = JUMP_COUNT;
+
+  $: chance = Math.min(0.85, distance / GAME_END) + 0.1;
+  $: threshold =
+    chance < 0.25
+      ? 60
+      : chance < 0.5
+      ? 50
+      : chance < 0.75
+      ? 40
+      : chance < 0.9
+      ? 30
+      : 25;
 
   function moveObstacles() {
     obstacles = obstacles
@@ -72,7 +83,7 @@
     } else {
       velocity = velocity - GRAVITY;
     }
-    if (distance % 60 === 0 && Math.random() > 0.6) {
+    if (distance % threshold === 0 && Math.random() <= chance) {
       obstacles.push({
         x: 0,
         src: OBSTACLES[Math.floor(Math.random() * OBSTACLES.length)],
@@ -93,10 +104,6 @@
       jump--;
     }
   }
-
-  onMount(() => {
-    requestAnimationFrame(nextFrame);
-  });
 </script>
 
 <svelte:head>
@@ -124,39 +131,47 @@
   <div class="flex flex-col items-start justify-center w-full px-10">
     <img
       class="aspect-auto w-20 h-20 flex-grow-0"
-      src={dead ? "/assets/dead.gif" : "/assets/speed-penguin.gif"}
+      src={dead && distance > 0
+        ? "/assets/dead.gif"
+        : "/assets/speed-penguin.gif"}
       alt="player"
       style={`transform: translateY(${(-height).toFixed(3)}rem);`}
     />
     <span
       class="h-[1px] w-full bg-gradient-to-r from-text/30 via-text to-text/30"
     />
-    <span
-      class="h-[1px] w-4 absolute bg-text/30"
-      style={`transform: translateX(${(35 - (distance % 35)).toFixed(3)}rem);`}
-    />
-    <span
-      class="h-[1px] w-3 absolute bg-text/30"
-      style={`
-      transform: translate(${(35 - ((distance - 16) % 35)).toFixed(
-        3
-      )}rem, -1rem);
-      `}
-    />
-    <span
-      class="h-[1px] w-3 absolute bg-text/30"
-      style={`
-      transform: translate(${(35 - ((distance - 8) % 35)).toFixed(3)}rem, 1rem);
-      `}
-    />
-    <span
-      class="h-[1px] w-6 absolute bg-text/30"
-      style={`
-      transform: translate(${(35 - ((distance - 24) % 35)).toFixed(
-        3
-      )}rem, -1.5rem);
-      `}
-    />
+    {#if !dead}
+      <span
+        class="h-[1px] w-4 absolute bg-text/30"
+        style={`transform: translateX(${(35 - (distance % 35)).toFixed(
+          3
+        )}rem);`}
+      />
+      <span
+        class="h-[1px] w-3 absolute bg-text/30"
+        style={`
+        transform: translate(${(35 - ((distance - 16) % 35)).toFixed(
+          3
+        )}rem, -1rem);
+        `}
+      />
+      <span
+        class="h-[1px] w-3 absolute bg-text/30"
+        style={`
+        transform: translate(${(35 - ((distance - 8) % 35)).toFixed(
+          3
+        )}rem, 1rem);
+        `}
+      />
+      <span
+        class="h-[1px] w-6 absolute bg-text/30"
+        style={`
+        transform: translate(${(35 - ((distance - 24) % 35)).toFixed(
+          3
+        )}rem, -1.5rem);
+        `}
+      />
+    {/if}
     {#each obstacles as { x, src }}
       <img
         class="h-12 w-12 absolute"
@@ -171,8 +186,15 @@
   </div>
 
   <span class="absolute top-5 right-5 text-text/50 font-extralight font-mono">
-    {distance}m
+    {distance}m ({(chance * 100).toFixed(1)}%/{threshold}m)
   </span>
+
+  {#if dead}
+    <span class="absolute text-text/40 font-light max-w-[90%] text-center">
+      Press <span class="font-bold font-mono">⎵</span> or
+      <span class="font-semibold">tap</span> to start a new game
+    </span>
+  {/if}
 </div>
 
 <span class="text-text font-light mt-3 max-w-[90%] text-center text-xl">

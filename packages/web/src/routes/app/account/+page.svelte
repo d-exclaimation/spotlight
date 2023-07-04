@@ -24,7 +24,6 @@
   const description = "View and manage your account and its dashboard";
 
   export let data;
-  let hovering = undefined as string | undefined;
   let open = false;
   let editing = false;
 

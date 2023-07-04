@@ -2,9 +2,10 @@
   import { tw } from "@/lib/tailwind";
   import { onMount } from "svelte";
 
-  const GRAVITY = 0.0175;
-  const TERMINAL_VELOCITY = 0.5;
-  const OBSTACLE_SPEED = 0.25;
+  const OPTIMAL_RATE = 8.333333333333334 * 4;
+  const GRAVITY = 0.07;
+  const TERMINAL_VELOCITY = 0.85;
+  const OBSTACLE_SPEED = 0.875;
   const JUMP_COUNT = 2;
   const GAME_END = 2000;
   const OBSTACLES = [
@@ -17,6 +18,8 @@
     "/assets/obs7.gif",
   ];
 
+  let previous = 0;
+  let delta = 0;
   let dead = false;
   let obstacles = [] as { x: number; src: string }[];
   let height = 0;
@@ -46,7 +49,15 @@
     requestAnimationFrame(nextFrame);
   }
 
-  function nextFrame() {
+  function nextFrame(frame: number) {
+    const rate = (frame - previous) / OPTIMAL_RATE;
+
+    if (delta + rate < 1) {
+      delta += rate;
+      return requestAnimationFrame(nextFrame);
+    }
+
+    delta = 0;
     distance += 1;
     height = Math.max(0, height + velocity);
 
@@ -61,13 +72,14 @@
     } else {
       velocity = velocity - GRAVITY;
     }
-    if (distance % 75 === 0 && Math.random() > 0.45) {
+    if (distance % 60 === 0 && Math.random() > 0.6) {
       obstacles.push({
         x: 0,
         src: OBSTACLES[Math.floor(Math.random() * OBSTACLES.length)],
       });
     }
     moveObstacles();
+    previous = frame;
     requestAnimationFrame(nextFrame);
   }
 
@@ -77,13 +89,13 @@
       return;
     }
     if (jump) {
-      velocity = TERMINAL_VELOCITY / (jump > 1 ? 1 : 1.75);
+      velocity = TERMINAL_VELOCITY / (jump > 1 ? 1 : 1.5);
       jump--;
     }
   }
 
   onMount(() => {
-    nextFrame();
+    requestAnimationFrame(nextFrame);
   });
 </script>
 
@@ -106,7 +118,7 @@
   <div class="flex flex-col items-start justify-center w-full px-10">
     <img
       class="aspect-auto w-20 h-20 flex-grow-0"
-      src="/assets/speed-penguin.gif"
+      src={dead ? "/assets/dead.gif" : "/assets/speed-penguin.gif"}
       alt="player"
       style={`transform: translateY(${(-height).toFixed(3)}rem);`}
     />
@@ -161,7 +173,7 @@
   Oops! You've ventured off the map. Let's get you back on track
 </span>
 
-<div class="flex items-center justify-center max-w-[90%] mt-2">
+<div class="flex items-center justify-center w-full mt-2">
   {#if distance > GAME_END}
     <a
       class={tw(`relative rounded text-text/40 font-light before:absolute 

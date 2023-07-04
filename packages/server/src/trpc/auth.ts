@@ -15,7 +15,8 @@ export const app = router({
     if (ctx.auth.kind !== "user") {
       return { user: null };
     }
-    return { user: ctx.auth };
+    const { kind, ...user } = ctx.auth;
+    return { user };
   }),
 
   edit: procedure
@@ -120,6 +121,18 @@ export const app = router({
 
       return { user: code.user, token };
     }),
+
+  refresh: procedure.mutation(async ({ ctx }) => {
+    if (ctx.auth.kind !== "user") {
+      return { token: null };
+    }
+
+    const { kind, ...user } = ctx.auth;
+
+    const token = await sign({ id: ctx.auth.id });
+
+    return { user, token };
+  }),
 
   preregister: procedure
     .input(

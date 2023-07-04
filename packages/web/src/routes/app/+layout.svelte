@@ -2,8 +2,9 @@
   import { browser } from "$app/environment";
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
-  import { createMeQuery } from "@/lib/api/me";
-  import { tracking } from "@/lib/utils/storage";
+  import { createMeQuery, createRefreshMutation } from "@/lib/api/me";
+  import { auth, tracking } from "@/lib/utils/storage";
+  import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
   import NavMenu from "./nav-menu.svelte";
@@ -14,13 +15,27 @@
     { name: "Feeds", path: "/app/feed" },
     { name: "Dashboard", path: "/app/account" },
   ];
+  const client = getQueryClient();
   const me = createMeQuery();
+  const refresh = createRefreshMutation({
+    onSuccess: async ({ token }) => {
+      if (!token) {
+        await client.invalidateQueries(["users", "me"]);
+        return;
+      }
+      auth.set({ token });
+    },
+  });
 
   $: name = ROUTES.find((r) => r.path === $page.url.pathname)?.name ?? "Glance";
 
   onMount(() => {
+    if (!browser) return;
     const unsub = me.subscribe((res) => {
-      if (!res.isLoading && res.data && !res.data.user) {
+      if (res.isLoading || !res.data) return;
+      if (res.data.user) {
+        $refresh.mutate();
+      } else {
         goto("/");
       }
     });

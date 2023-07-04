@@ -18,7 +18,7 @@ export async function sign<T extends JWTPayload>(payload: T) {
     .setIssuedAt()
     .setIssuer(ISSUER)
     .setAudience(AUDIENCE.WEB)
-    .setExpirationTime("21d")
+    .setExpirationTime("7d")
     .sign(env.JWT_SECRET);
 }
 

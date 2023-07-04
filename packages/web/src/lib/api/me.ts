@@ -63,6 +63,26 @@ export function createLogin2Mutation({
 }
 
 /**
+ * Create a mutation store for refreshing the logged in user
+ */
+export function createRefreshMutation({
+  mutationKey,
+  ...rest
+}: MutationsOpts<"refresh"> = {}) {
+  return createMutation({
+    mutationKey: ["refresh", mutationKey],
+    mutationFn: async (input) => {
+      const res = await trpc.refresh.mutate(input);
+      if (res.token) {
+        await internal.login(res.token);
+      }
+      return res;
+    },
+    ...rest,
+  });
+}
+
+/**
  * Create a mutation store for logging out a user
  */
 export function createLogoutMutation({

@@ -1,10 +1,12 @@
 <script lang="ts">
   import { tw } from "@/lib/tailwind";
 
+  const MAP_WIDTH = 26;
+  const OBSTACLE_SIZE = 2.5;
   const OPTIMAL_RATE = 8.333333333333334 * 4;
-  const GRAVITY = 0.07;
+  const GRAVITY = 0.08;
   const TERMINAL_VELOCITY = 0.85;
-  const OBSTACLE_SPEED = 0.875;
+  const OBSTACLE_SPEED = 0.85;
   const JUMP_COUNT = 2;
   const GAME_END = 2000;
   const OBSTACLES = [
@@ -26,26 +28,29 @@
   let distance = 0;
   let jump = JUMP_COUNT;
 
-  $: chance = Math.min(0.85, distance / GAME_END) + 0.1;
+  $: chance = Math.min(0.55, distance / GAME_END) + 0.1;
   $: threshold =
     chance < 0.25 ? 60 : chance < 0.5 ? 50 : chance < 0.75 ? 40 : 30;
 
   $: wind = [
-    { x: (35 - ((distance + 24) % 35)).toFixed(1), y: 0 },
-    { x: (35 - ((distance + 8) % 35)).toFixed(1), y: -1 },
-    { x: (35 - ((distance + 16) % 35)).toFixed(1), y: 1 },
-    { x: (35 - (distance % 35)).toFixed(1), y: 1.5 },
+    { x: (MAP_WIDTH - ((distance + 18) % MAP_WIDTH)).toFixed(1), y: 0 },
+    { x: (MAP_WIDTH - ((distance + 6) % MAP_WIDTH)).toFixed(1), y: -1 },
+    { x: (MAP_WIDTH - ((distance + 12) % MAP_WIDTH)).toFixed(1), y: 1 },
   ];
 
   function moveObstacles() {
     obstacles = obstacles
       .map((o) => ({ ...o, x: o.x + OBSTACLE_SPEED }))
-      .filter((o) => o.x < 39);
+      .filter((o) => o.x < MAP_WIDTH + OBSTACLE_SIZE);
   }
 
   function hitting() {
     return obstacles.some((o) => {
-      return o.x > 32.5 && o.x < 37.5 && height < 2.75;
+      return (
+        o.x > MAP_WIDTH - OBSTACLE_SIZE &&
+        o.x < MAP_WIDTH + OBSTACLE_SIZE &&
+        height < OBSTACLE_SIZE
+      );
     });
   }
 
@@ -122,23 +127,39 @@
 
 <svelte:body on:click={action} />
 
-<div class="flex sm:hidden items-center justify-center text-text/60">
-  Turn your phone sideways to play!
-</div>
 <div
-  class="relative hidden sm:flex items-center justify-center w-[40rem] max-w-[90vw] min-h-[10rem]"
+  class="relative flex items-center justify-center w-[26rem] max-w-[100vw] overflow-x-hidden overflow-y-visible min-h-[12rem]"
 >
-  <div class="flex flex-col items-start justify-center w-full px-10">
-    <img
-      class="aspect-auto w-20 h-20 flex-grow-0 z-10"
-      src={dead && distance > 0
-        ? "/assets/dead.webp"
-        : "/assets/speed-penguin.gif"}
-      alt="player"
+  <div class="flex flex-col items-start justify-center w-full h-full mt-8">
+    <div
+      class="relative w-12 h-12 z-10 flex-grow-0 flex items-center justify-center"
       style={`transform: translateY(${(-height).toFixed(3)}rem);`}
-    />
+    >
+      <span
+        class={tw(
+          "absolute w-4/5 h-4/5 translate-x-1 translate-y-1 blur",
+          distance > GAME_END
+            ? "bg-gradient-to-r from-fuchsia-500/50 to-purple-500/50"
+            : distance > Math.round(GAME_END * (3 / 4))
+            ? "bg-green-500/50"
+            : distance > Math.round(GAME_END * (2 / 4))
+            ? "bg-yellow-500/40"
+            : distance > Math.round(GAME_END * (1 / 4))
+            ? "bg-orange-500/30"
+            : "bg-red-500/20",
+          dead ? "opacity-0" : "opacity-100"
+        )}
+      />
+      <img
+        class="aspect-auto w-12 h-12 relative z-10"
+        src={dead && distance > 0
+          ? "/assets/dead.webp"
+          : "/assets/speed-penguin.gif"}
+        alt="player"
+      />
+    </div>
     <span
-      class="h-[1px] w-full bg-gradient-to-r from-text/30 via-text to-text/30"
+      class="h-[1px] mt-1 w-full bg-gradient-to-r from-text/30 via-text to-text/30"
     />
     {#each wind as { x, y } (y)}
       <span
@@ -148,18 +169,18 @@
     {/each}
     {#each obstacles as { x, src }}
       <img
-        class="h-12 w-12 absolute"
+        class="h-10 w-10 absolute"
         {src}
         alt="obstacle"
         style={`
-        transform: translate(${35 - x}rem, 0.5rem);
-        -webkit-transform: translate(${35 - x}rem, 0.5rem);
+        transform: translate(${MAP_WIDTH - x}rem, 0.25rem);
+        -webkit-transform: translate(${MAP_WIDTH - x}rem, 0.25rem);
         `}
       />
     {/each}
   </div>
 
-  <span class="absolute top-5 right-5 text-text/50 font-extralight font-mono">
+  <span class="absolute top-5 right-2 text-text/50 font-extralight font-mono">
     <span
       class={tw(
         distance > GAME_END
@@ -179,17 +200,18 @@
   </span>
 
   {#if dead}
-    <span
-      class="absolute text-text/60 bg-background/5 p-3 rounded backdrop-blur-sm font-light max-w-[90%] text-center"
-    >
+    <span class="absolute text-text/60 font-light max-w-[90%] text-center">
       Press <span class="font-black font-mono">⎵</span> or
       <span class="font-semibold">tap</span> to start a new game
     </span>
   {/if}
 </div>
 
-<span class="text-text font-light mt-3 max-w-[90%] text-center text-xl">
-  Oops! You've ventured off the map. Let's get you back on track
+<span class="text-text font-light mt-3 max-w-[90%] text-center text-3xl">
+  Oops! You've ventured off the map.
+</span>
+<span class="text-text/75 font-light mt-1 max-w-[90%] text-center text-xl">
+  Let's get you back on track
 </span>
 
 <div class="flex items-center justify-center w-full mt-2">

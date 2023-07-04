@@ -24,7 +24,9 @@
     </a>
   </nav>
 
-  <div class="flex flex-col items-center justify-center w-full mt-[20dvh]">
+  <div
+    class="flex flex-col items-center justify-center w-full mt-[10dvh] md:mt-[15dvh]"
+  >
     <Game />
   </div>
 </div>

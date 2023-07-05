@@ -1,12 +1,20 @@
 <script lang="ts">
-  import Game from "../404/game.svelte";
+  import Game from "./game.svelte";
 
-  const title = "404";
+  const title = "Escape the 404";
   const description = "Oops! You've ventured off the map.";
 </script>
 
 <svelte:head>
   <title>{title}</title>
+  <meta
+    name="twitter:image"
+    content="https://spotlight.d-exclaimation.me/banner/escape.png"
+  />
+  <meta
+    property="og:image"
+    content="https://spotlight.d-exclaimation.me/banner/escape.png"
+  />
   <meta name="description" content={description} />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />

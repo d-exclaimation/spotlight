@@ -128,28 +128,20 @@
 <svelte:body on:click={action} />
 
 <div
-  class="relative flex items-center justify-center w-[26rem] max-w-[100vw] overflow-x-hidden overflow-y-visible min-h-[12rem]"
+  class="relative flex items-center justify-center w-[26rem] max-w-[100vw] overflow-x-hidden overflow-y-visible min-h-[16rem] md:scale-150"
 >
   <div class="flex flex-col items-start justify-center w-full h-full mt-8">
     <div
       class="relative w-12 h-12 z-10 flex-grow-0 flex items-center justify-center"
       style={`transform: translateY(${(-height).toFixed(3)}rem);`}
     >
-      <span
-        class={tw(
-          "absolute w-4/5 h-4/5 translate-x-1 translate-y-1 blur",
-          distance > GAME_END
-            ? "bg-gradient-to-r from-fuchsia-500/50 to-purple-500/50"
-            : distance > Math.round(GAME_END * (3 / 4))
-            ? "bg-green-500/50"
-            : distance > Math.round(GAME_END * (2 / 4))
-            ? "bg-yellow-500/40"
-            : distance > Math.round(GAME_END * (1 / 4))
-            ? "bg-orange-500/30"
-            : "bg-red-500/20",
-          dead ? "opacity-0" : "opacity-100"
-        )}
-      />
+      {#if distance > Math.round(GAME_END * (3 / 4)) && !dead}
+        <img
+          class="absolute w-[110%] h-[110%] -translate-x-5"
+          src="/assets/aura.gif"
+          alt="fire"
+        />
+      {/if}
       <img
         class="aspect-auto w-12 h-12 relative z-10"
         src={dead && distance > 0
@@ -159,7 +151,7 @@
       />
     </div>
     <span
-      class="h-[1px] mt-1 w-full bg-gradient-to-r from-text/30 via-text to-text/30"
+      class="h-[1px] mt-[0.1rem] w-full bg-gradient-to-r from-text/30 via-text to-text/30"
     />
     {#each wind as { x, y } (y)}
       <span
@@ -173,30 +165,28 @@
         {src}
         alt="obstacle"
         style={`
-        transform: translate(${MAP_WIDTH - x}rem, 0.25rem);
-        -webkit-transform: translate(${MAP_WIDTH - x}rem, 0.25rem);
+        transform: translateX(${MAP_WIDTH - x}rem);
+        -webkit-transform: translateX (${MAP_WIDTH - x}rem);
         `}
       />
     {/each}
   </div>
 
-  <span class="absolute top-5 right-2 text-text/50 font-extralight font-mono">
-    <span
-      class={tw(
-        distance > GAME_END
-          ? "text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-purple-500"
-          : distance > Math.round(GAME_END * (3 / 4))
-          ? "text-green-500"
-          : distance > Math.round(GAME_END * (2 / 4))
-          ? "text-yellow-500"
-          : distance > Math.round(GAME_END * (1 / 4))
-          ? "text-orange-500"
-          : "text-red-500"
-      )}
-    >
-      {distance}m
-    </span>
-    ({(chance * 100).toFixed(1)}%/{threshold}m)
+  <span
+    class={tw(
+      "absolute top-10 right-2 font-extralight leading-none font-mono",
+      distance > GAME_END
+        ? "text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-purple-500"
+        : distance > Math.round(GAME_END * (3 / 4))
+        ? "text-green-500"
+        : distance > Math.round(GAME_END * (2 / 4))
+        ? "text-yellow-500"
+        : distance > Math.round(GAME_END * (1 / 4))
+        ? "text-orange-500"
+        : "text-red-500"
+    )}
+  >
+    {distance}m
   </span>
 
   {#if dead}
@@ -217,7 +207,7 @@
 <div class="flex items-center justify-center w-full mt-2">
   {#if distance > GAME_END}
     <a
-      class={tw(`relative rounded text-text/40 font-light before:absolute 
+      class={tw(`relative rounded text-text/50 font-light before:absolute 
       before:left-0 before:top-0 before:h-full before:w-full before:border-b 
       before:border-text/40 before:transition-all before:content-[''] 
       hover:before:scale-x-100 active:before:scale-x-100 
@@ -227,7 +217,7 @@
       Back to the home page
     </a>
   {:else}
-    <span class="text-text/40 font-light max-w-[90%] text-center">
+    <span class="text-text/50 font-light max-w-[90%] text-center">
       Reach 2000m to get back to the home page
     </span>
   {/if}

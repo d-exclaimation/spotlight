@@ -16,8 +16,3 @@ export const { default: model } = await import(
 export const classifier = natural.LogisticRegressionClassifier.restore(
   model as any
 );
-
-/**
- * Train the classifier (this is a no-op if the model is already trained)
- */
-classifier.train();

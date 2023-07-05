@@ -4,10 +4,6 @@ import { collect } from "./source.js";
 
 const classifier = await create();
 
-consola.start("Training with existing data...");
-classifier.train();
-consola.success("Training complete!");
-
 const debug = await consola.prompt("Debug mode?", {
   type: "confirm",
   initial: false,

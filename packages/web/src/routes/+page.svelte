@@ -240,7 +240,8 @@
     <span
       class="text-text/75 font-medium text-sm max-w-[90%] md:text-2xl mt-2 md:mt-3 text-center"
     >
-      Join the waitlist now and get early access to Spotlight.
+      Get started with Spotlight today and start reading the news you want to
+      read.
     </span>
 
     <button
@@ -251,7 +252,7 @@
       md:before:scale-x-0 md:before:border-b-2`)}
       on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
     >
-      Sign up
+      Get started
     </button>
   </div>
   <div class="h-[10vh]" />

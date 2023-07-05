@@ -47,10 +47,10 @@
             class={tw(
               "absolute inset-0 z-[60] rounded-full",
               path === "/app"
-                ? "bg-sky-300"
+                ? "bg-blue-300"
                 : path === "/app/feed"
                 ? "bg-green-300"
-                : "bg-primary"
+                : "bg-rose-300"
             )}
           />
         {/if}

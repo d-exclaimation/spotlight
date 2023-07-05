@@ -63,6 +63,40 @@ export function createLogin2Mutation({
 }
 
 /**
+ * Create a mutation store for signing up
+ */
+export function createSignupMutation({
+  mutationKey,
+  ...rest
+}: MutationsOpts<"signup"> = {}) {
+  return createMutation({
+    mutationKey: ["signup", "first", mutationKey],
+    mutationFn: trpc.signup.mutate,
+    ...rest,
+  });
+}
+
+/**
+ * Create a mutation store for signing up (step 2)
+ */
+export function createSignup2Mutation({
+  mutationKey,
+  ...rest
+}: MutationsOpts<"signup2"> = {}) {
+  return createMutation({
+    mutationKey: ["signup", "second", mutationKey],
+    mutationFn: async (input) => {
+      const res = await trpc.signup2.mutate(input);
+      if (res.token) {
+        await internal.login(res.token);
+      }
+      return res;
+    },
+    ...rest,
+  });
+}
+
+/**
  * Create a mutation store for refreshing the logged in user
  */
 export function createRefreshMutation({

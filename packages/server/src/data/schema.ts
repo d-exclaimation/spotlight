@@ -18,8 +18,9 @@ export const waitlist = pgTable(
   "wailist",
   {
     id: uuid("id").defaultRandom().primaryKey(),
+    username: text("username").notNull(),
     email: text("email").notNull(),
-    note: text("note").default(""),
+    code: char("code", { length: 8 }).notNull(),
     createdAt: timestamp("created_at", { withTimezone: false })
       .notNull()
       .defaultNow(),

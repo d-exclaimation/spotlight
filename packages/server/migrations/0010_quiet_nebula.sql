@@ -1,0 +1,1 @@
+ALTER TABLE "wailist" DROP COLUMN IF EXISTS "note";

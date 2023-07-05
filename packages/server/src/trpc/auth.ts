@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { ulid } from "ulid";
 import { z } from "zod";
 import { sign } from "../config/jwt.js";
@@ -101,7 +101,7 @@ export const app = router({
         code: z.string().length(8),
       })
     )
-    .mutation(async ({ input, ctx }) => {
+    .mutation(async ({ input }) => {
       const code = await db.query.codes.findFirst({
         where: eq(codes.code, input.code),
         with: { user: true },
@@ -134,13 +134,93 @@ export const app = router({
     return { user, token };
   }),
 
+  signup: procedure
+    .input(
+      z.object({
+        username: z.string().min(3).max(32),
+        email: z.string().email(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const existing = await db.query.users.findFirst({
+        where: eq(users.email, input.email),
+      });
+
+      const waiting = await db.query.waitlist.findFirst({
+        where: eq(waitlist.email, input.email),
+      });
+
+      if (existing || waiting) {
+        return { success: false };
+      }
+
+      const [res] = await db
+        .insert(waitlist)
+        .values({
+          username: input.username,
+          email: input.email,
+          code: ulid().slice(0, 8),
+          createdAt: new Date(),
+        })
+        .returning();
+
+      await mail({
+        to: input.email,
+        subject: "Welcome to Spotlight!",
+        html: markup.welcome(res.email, res.code),
+      });
+
+      consola.info(`[${now()}]  🚏 Sent welcome code to ${input.email}`);
+
+      return { success: true };
+    }),
+
+  signup2: procedure
+    .input(
+      z.object({
+        email: z.string().email(),
+        code: z.string().length(8),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const waiting = await db.query.waitlist.findFirst({
+        where: and(
+          eq(waitlist.email, input.email),
+          eq(waitlist.code, input.code)
+        ),
+      });
+
+      if (!waiting) {
+        return { token: null };
+      }
+
+      const user = await db.transaction(async (tx) => {
+        const [user] = await tx
+          .insert(users)
+          .values({
+            email: waiting.email,
+            username: waiting.username,
+            createdAt: new Date(),
+          })
+          .returning();
+
+        await tx.delete(waitlist).where(eq(waitlist.id, waiting.id)).execute();
+
+        return user;
+      });
+
+      const token = await sign({ id: user.id });
+
+      return { token };
+    }),
+
   preregister: procedure
     .input(
       z.object({
         email: z.string().email(),
       })
     )
-    .mutation(async ({ input, ctx }) => {
+    .mutation(async ({ input }) => {
       const existing = await db.query.users.findFirst({
         where: eq(users.email, input.email),
       });
@@ -156,7 +236,9 @@ export const app = router({
       const rows = await db
         .insert(waitlist)
         .values({
+          username: input.email.split("@")[0],
           email: input.email,
+          code: ulid().slice(0, 6),
           createdAt: new Date(),
         })
         .returning();

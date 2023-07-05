@@ -2,7 +2,7 @@
   import Game from "./game.svelte";
 
   const title = "404";
-  const description = "Page not found";
+  const description = "Oops! You've ventured off the map.";
 </script>
 
 <svelte:head>

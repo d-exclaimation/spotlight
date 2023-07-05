@@ -135,11 +135,12 @@
       class="relative w-12 h-12 z-10 flex-grow-0 flex items-center justify-center"
       style={`transform: translateY(${(-height).toFixed(3)}rem);`}
     >
-      {#if distance > Math.round(GAME_END * (3 / 4)) && !dead}
+      {#if distance > Math.round(GAME_END * (0 / 4)) && !dead}
         <img
           class="absolute w-[110%] h-[110%] -translate-x-5"
           src="/assets/aura.gif"
           alt="fire"
+          style={`rotate: ${Math.round(-velocity * 50)}deg;`}
         />
       {/if}
       <img

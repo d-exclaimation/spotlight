@@ -137,7 +137,7 @@
     >
       {#if distance > Math.round(GAME_END * (0 / 4)) && !dead}
         <img
-          class="absolute w-[110%] h-[110%] -translate-x-5"
+          class="absolute w-[12 0%] h-full -translate-x-3"
           src="/assets/aura.gif"
           alt="fire"
           style={`rotate: ${Math.round(-velocity * 50)}deg;`}

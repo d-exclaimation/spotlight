@@ -24,6 +24,7 @@ export const waitlist = pgTable(
     createdAt: timestamp("created_at", { withTimezone: false })
       .notNull()
       .defaultNow(),
+    retries: integer("retries").notNull().default(0),
   },
   (table) => ({
     emailIdx: uniqueIndex("email_idx").on(table.email),

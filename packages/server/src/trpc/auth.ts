@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { ulid } from "ulid";
 import { z } from "zod";
 import { sign } from "../config/jwt.js";
@@ -150,8 +150,28 @@ export const app = router({
         where: eq(waitlist.email, input.email),
       });
 
-      if (existing || waiting) {
+      if (existing) {
         return { success: false };
+      }
+
+      if (waiting && waiting.retries >= 3) {
+        return { success: false };
+      }
+
+      if (waiting) {
+        await db
+          .update(waitlist)
+          .set({ retries: sql`${waiting.retries} + 1` })
+          .where(eq(waitlist.email, input.email))
+          .execute();
+
+        await mail({
+          to: input.email,
+          subject: "Welcome to Spotlight!",
+          html: markup.welcome(waiting.email, waiting.code),
+        });
+
+        return { success: true };
       }
 
       const [res] = await db
@@ -194,20 +214,19 @@ export const app = router({
         return { token: null };
       }
 
-      const user = await db.transaction(async (tx) => {
-        const [user] = await tx
-          .insert(users)
-          .values({
-            email: waiting.email,
-            username: waiting.username,
-            createdAt: new Date(),
-          })
-          .returning();
+      await db.delete(waitlist).where(eq(waitlist.id, waiting.id)).execute();
+      if (hoursSince(waiting.createdAt) >= 2) {
+        return { token: null };
+      }
 
-        await tx.delete(waitlist).where(eq(waitlist.id, waiting.id)).execute();
-
-        return user;
-      });
+      const [user] = await db
+        .insert(users)
+        .values({
+          email: waiting.email,
+          username: waiting.username,
+          createdAt: new Date(),
+        })
+        .returning();
 
       const token = await sign({ id: user.id });
 

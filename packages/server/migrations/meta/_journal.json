@@ -85,6 +85,13 @@
       "when": 1688556723127,
       "tag": "0011_dashing_hobgoblin",
       "breakpoints": false
+    },
+    {
+      "idx": 12,
+      "version": "5",
+      "when": 1688567169001,
+      "tag": "0012_aromatic_marten_broadcloak",
+      "breakpoints": false
     }
   ]
 }

@@ -168,6 +168,13 @@
   });
 </script>
 
+
+<svelte:head>
+  <link rel="preload" as="image" href="/banner/glance.png" />
+  <link rel="preload" as="image" href="/banner/feeds.png" />
+  <link rel="preload" as="image" href="/banner/account.png" />
+</svelte:head>
+
 <svelte:body
   on:keydown={(e) => {
     if (e.key === "ArrowLeft") prev();

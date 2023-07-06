@@ -148,6 +148,11 @@
     index = Math.min(index + 1, STAGES.length - 1);
   }
 
+  function skip() {
+    if (ref) clearTimeout(ref);
+    index = STAGES.length - 1;
+  }
+
   onMount(() => {
     if (!browser) return;
     const unsub = me.subscribe((res) => {
@@ -162,6 +167,17 @@
     if (ref) clearTimeout(ref);
   });
 </script>
+
+<svelte:body
+  on:keydown={(e) => {
+    if (e.key === "ArrowLeft") prev();
+    if (e.key === "ArrowRight") next();
+    if (e.key === "ArrowUp") next();
+    if (e.key === "ArrowDown") prev();
+    if (e.key === " ") auto();
+    if (e.key === "Escape") skip();
+  }}
+/>
 
 <div
   class="flex flex-col flex-shrink-0 items-start justify-start min-h-[100dvh] min-w-full bg-gradient-to-br from-background via-background to-secondary"
@@ -180,7 +196,7 @@
       href="/app"
       data-sveltekit-preload-code
     >
-      Skip Intro
+      Go to App
     </a>
   </nav>
 
@@ -345,17 +361,16 @@
       >
         Auto
       </button>
-      <a
+      <button
         class={tw(`relative rounded text-sm text-text before:absolute 
         before:left-0 before:top-0 before:h-full before:w-full before:border-b  
         before:border-text before:transition-all before:content-[''] 
         hover:before:scale-x-100 active:before:scale-x-100 md:text-base 
         md:before:scale-x-0 md:before:border-b-2 font-medium md:font-normal`)}
-        href="/app"
-        data-sveltekit-preload-code
+        on:click={skip}
       >
         Skip
-      </a>
+      </button>
       <button
         class="hover:bg-primary/30 active:bg-primary/30 rounded-full py-1.5 md:py-2 px-3 text-sm text-white font-medium"
         on:click={next}

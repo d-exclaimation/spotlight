@@ -78,6 +78,11 @@
         click: openEdit,
       },
       {
+        icon: "/icons/video.svg",
+        label: "Play Intro",
+        click: () => goto("/welcome"),
+      },
+      {
         icon: "/icons/reset-clear.svg",
         label: "Clear data",
         click: clearData,

@@ -47,7 +47,7 @@ Special thanks to these amazing projects which help power Spotlight:
 
 <br/>
 
-Have fun,<br/>
+Have fun reading,<br/>
 Friends at Spotlight
   
 <img width="8%" src="packages/web/static/spotlight.png"> 

@@ -26,7 +26,7 @@
 ## Status
  
 - [x] Alpha: We are testing Spotlight with a closed set of customers
-- [x] Early access: Anyone can sign up to a waitlist over at spotlight.d-exclaimatin.me. But most features are currently being built
+- [x] Early access: Anyone can sign up to a waitlist and get early access, but most features are still being built
 - [x] Public Beta: Available for everyone with stable feature set, but we are still working out kinks
 - [ ] Public: General Availability 
 

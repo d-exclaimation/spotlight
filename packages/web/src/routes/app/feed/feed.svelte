@@ -34,7 +34,7 @@
   <div
     class="flex items-center justify-start w-full text-xs md:text-sm gap-2 mt-1"
   >
-    {#if item.type === "ask"}
+    {#if item.type === "ask" || item.type === "poll"}
       <svg
         class="w-6 aspect-square md:w-8 rounded-full fill-orange-300 saturate-[.75]"
         viewBox="-1 0 19 19"

@@ -41,7 +41,7 @@
       : "text-base md:text-xl";
 
   $: filter =
-    item.type === "ask"
+    item.type === "ask" || item.type === "poll"
       ? "after:bg-orange-300/20"
       : item.type === "job"
       ? "after:bg-emerald-300/20"
@@ -50,7 +50,7 @@
       : "after:bg-indigo-300/20";
 
   $: bg =
-    item.type === "ask"
+    item.type === "ask" || item.type === "poll"
       ? "bg-[url('/cover/ask.webp')]"
       : item.type === "job"
       ? "bg-[url('/cover/jobs.webp')]"

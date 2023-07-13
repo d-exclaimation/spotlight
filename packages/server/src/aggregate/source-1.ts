@@ -12,7 +12,12 @@ export const NewsItem = z.object({
   user: z.string().nullish(),
   time_ago: z.string(),
   comments_count: z.number().int(),
-  type: z.union([z.literal("link"), z.literal("ask"), z.literal("job")]),
+  type: z.union([
+    z.literal("link"),
+    z.literal("ask"),
+    z.literal("job"),
+    z.literal("poll"),
+  ]),
   url: z.string(),
   domain: z.string().optional(),
 });

@@ -15,7 +15,7 @@
   });
 
   $: bg =
-    item.type === "ask"
+    item.type === "ask" || item.type === "poll"
       ? "bg-orange-200"
       : item.type === "job"
       ? "bg-emerald-200"
@@ -44,7 +44,7 @@
   </span>
 
   <div class="flex w-full items-center justify-start mt-2 gap-2 text-sm">
-    {#if item.type === "ask"}
+    {#if item.type === "ask" || item.type === "poll"}
       <svg
         class="w-6 aspect-square md:w-8 rounded-full"
         viewBox="-1 0 19 19"

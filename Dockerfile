@@ -47,3 +47,5 @@ WORKDIR /app
 COPY --from=builder /app/ .
 
 CMD ["node", "packages/server/dist/index.js"]
+
+# -----------------------------------------

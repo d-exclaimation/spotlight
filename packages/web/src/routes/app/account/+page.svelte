@@ -157,7 +157,7 @@
       <div class="flex items-center justify-end">
         <div class="relative">
           <Button
-            class="relative hover:bg-text/10 active:bg-text/10 focus-visible:ring p-1 md:p-2 z-10"
+            class="relative flex flex-row gap-2 hover:bg-text/10 active:bg-text/10 focus-visible:ring p-1 md:p-2 z-10"
             on:click={() => (open = !open)}
           >
             <img
@@ -230,40 +230,48 @@
     </div>
 
     <!-- Quick stats -->
-    <div class="flex w-full p-2 md:p-3 items-center justify-around">
-      <div class="flex justify-center flex-col flex-[2]">
-        <span class="font-light text-sm md:text-lg">Engangement</span>
-        <div class="flex gap-2 items-end">
-          <span class="font-semibold text-xl md:text-3xl">
-            {$dashboard.data.user.engagements}
-          </span>
-          <span class="font-light mr-1">news</span>
+    <div
+      class="flex w-full flex-col md:flex-row h-max items-start justify-start"
+    >
+      <div
+        class="flex md:flex-col w-full md:w-[30%] md:h-full p-2 md:p-3 items-center md:items-start justify-around"
+      >
+        <div class="flex justify-center md:justify-start flex-col flex-[2]">
+          <span class="font-light text-sm md:text-lg">Engangement</span>
+          <div class="flex gap-2 items-end">
+            <span class="font-semibold text-xl md:text-3xl">
+              {$dashboard.data.user.engagements}
+            </span>
+            <span class="font-light mr-1">news</span>
+          </div>
         </div>
-      </div>
-      <div class="flex justify-center flex-col flex-[3] md:flex-[3]">
-        <span class="font-light text-sm md:text-lg">Time spent</span>
         <div
-          class="flex gap-2 max-w-fit items-end data-[loading=true]:animate-pulse data-[loading=true]:text-text/50"
-          data-loading={!browser}
+          class="flex justify-center md:justify-start flex-col flex-[3] md:flex-[2]"
         >
-          {#if browser}
-            <span class="font-semibold text-xl md:text-3xl">
-              {time.hours % 24}
-            </span>
-            <span class="font-light mr-1">hr</span>
-            <span class="font-semibold text-xl md:text-3xl">
-              {time.minutes}
-            </span>
-            <span class="font-light">min</span>
-          {:else}
-            <span class="font-semibold text-xl md:text-3xl">--</span>
-          {/if}
+          <span class="font-light text-sm md:text-lg">Time spent</span>
+          <div
+            class="flex gap-2 max-w-fit items-end data-[loading=true]:animate-pulse data-[loading=true]:text-text/50"
+            data-loading={!browser}
+          >
+            {#if browser}
+              <span class="font-semibold text-xl md:text-3xl">
+                {time.hours % 24}
+              </span>
+              <span class="font-light mr-1">hr</span>
+              <span class="font-semibold text-xl md:text-3xl">
+                {time.minutes}
+              </span>
+              <span class="font-light">min</span>
+            {:else}
+              <span class="font-semibold text-xl md:text-3xl">--</span>
+            {/if}
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Activities -->
-    <ActivitiesChart activities={$dashboard.data.user.activities} />
+      <!-- Activities -->
+      <ActivitiesChart activities={$dashboard.data.user.activities} />
+    </div>
 
     <!-- Categories -->
     <TopCategories topCategories={$dashboard.data.user.topCategories} />

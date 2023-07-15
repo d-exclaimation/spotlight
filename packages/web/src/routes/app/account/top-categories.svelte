@@ -111,7 +111,7 @@
       >
         {#each topCategories as { category, engagements } (category)}
           <div
-            class="flex flex-col md:flex-row items-start justify-between px-3 p-2 gap-2 bg-text/5 rounded-md"
+            class="flex flex-col md:flex-row items-start justify-between px-3 py-2 md:py-3 gap-2 bg-text/5 rounded-md"
           >
             <span class="font-normal text-lg md:text-xl">{category}</span>
             <span class="font-light">

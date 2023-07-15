@@ -11,7 +11,7 @@
     ) ?? 1;
 </script>
 
-<div class="flex flex-col w-full my-2 md:my-3 p-2 md:p-3 gap-2">
+<div class="flex flex-col w-full my-2 md:my-0 p-2 md:p-3 gap-2">
   <span class="font-semibold">Activities</span>
   <div class="flex w-full relative">
     {#if activities.length > 0}

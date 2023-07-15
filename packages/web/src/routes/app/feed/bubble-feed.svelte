@@ -28,7 +28,7 @@
   class={tw(
     `flex flex-col items-center justify-center
     rounded-lg text-background w-full p-4 md:p-6 my-2 
-    hover:brightness-105 active:brightness-105`,
+    hover:brightness-105 active:brightness-105 col-span-2`,
     bg
   )}
   href={link(item.url)}

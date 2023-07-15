@@ -6,6 +6,7 @@
   import { hoursSince } from "@/lib/utils/time";
   import NewsBite from "./news-bite.svelte";
   import { glance } from "./stores";
+  import Timeline from "./timeline.svelte";
 
   export let data;
 
@@ -23,6 +24,8 @@
   );
 
   $: item = items.at($glance.current);
+
+  $: upcomings = items.slice($glance.current + 1, $glance.current + 7);
 </script>
 
 <svelte:head>
@@ -40,7 +43,9 @@
   <meta property="og:description" content={description} />
 </svelte:head>
 
-<div class="flex flex-col items-center justify-start w-full md:mt-6 flex-1">
+<div
+  class="relative flex flex-col md:flex-row items-center justify-center md:justify-between w-full shrink-0 md:mt-6 flex-1"
+>
   {#if $query.isLoading}
     <Loading />
   {:else if $query.error}
@@ -53,7 +58,7 @@
         {item}
         bind:direction
         on:next={() => {
-          if (items.length - $glance.current <= 10) {
+          if (items.length - $glance.current <= 6) {
             $query.fetchNextPage();
           }
           glance.update(({ current, on }) => {
@@ -77,5 +82,18 @@
         }}
       />
     {/key}
+    <Timeline
+      {upcomings}
+      bind:direction
+      on:jump={({ detail: { gap } }) => {
+        glance.update(({ current, on }) => {
+          const stale = hoursSince(on) > 3;
+          return {
+            current: !stale ? gap + current + 1 : gap,
+            on: new Date(),
+          };
+        });
+      }}
+    />
   {/if}
 </div>

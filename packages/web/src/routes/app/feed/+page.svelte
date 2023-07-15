@@ -47,7 +47,7 @@
   </div>
 {:else}
   <div
-    class="flex flex-col items-center justify-start w-full gap-2 md:mt-3"
+    class="flex flex-col items-center justify-start md:grid md:grid-cols-3 grid-flow-row-dense w-full gap-2 md:mt-3"
     bind:this={view}
   >
     {#each paginated as item, i (item.id)}

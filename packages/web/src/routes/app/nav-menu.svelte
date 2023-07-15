@@ -1,11 +1,15 @@
 <script lang="ts">
   import { page } from "$app/stores";
+  import { createMeQuery } from "@/lib/api/me";
   import { tw } from "@/lib/tailwind";
+  import { avatar } from "@/lib/utils/image";
   import { quintOut } from "svelte/easing";
   import { crossfade } from "svelte/transition";
 
   const BUBBLE = "navbar-bubble";
   export let routes: { name: string; path: string }[];
+
+  const me = createMeQuery();
 
   const [send, receive] = crossfade({
     fallback: (node) => {
@@ -25,18 +29,18 @@
 </script>
 
 <nav
-  class={tw(`flex fixed bottom-8 right-3 md:top-7 md:bottom-[unset] 
-  md:right-[calc(50vw-19rem)] bg-text/10 md:bg-transparent z-50 
-  rounded-full overflow-visible gap-4 p-2 md:p-0 backdrop-blur-md flex-col 
+  class={tw(`flex fixed bottom-8 right-3 md:top-6 md:bottom-[unset] 
+  md:right-[calc(50vw-20rem)] lg:right-[calc(50vw-22.5rem)] bg-text/10 z-50 
+  rounded-full overflow-visible gap-4 p-2 md:p-1 backdrop-blur-md flex-col 
   md:flex-row items-center justify-center ring-[1px] md:ring-0 ring-text/20`)}
 >
   {#each routes as { name, path } (path)}
-    <div class="relative flex items-center justify-center group">
+    <div class="relative flex items-center justify-center">
       <a
         class={tw(`hover:bg-primary/30 active:bg-primary/30 
         relative rounded-full p-1.5 md:p-2 text-sm font-medium
         transition focus-visible:outline-2 outline-sky-400 
-        [-webkit-tap-highlight-color:transparent]`)}
+        [-webkit-tap-highlight-color:transparent] peer`)}
         href={path}
         data-sveltekit-preload-code
       >
@@ -100,10 +104,18 @@
         class={tw(`hidden md:inline absolute top-full mt-3 text-text 
         opacity-0 -translate-y-4 bg-primary/30 rounded-full 
         text-xs px-2 transition-all grpup-hover:duration-500 
-        group-hover:opacity-100 group-hover:translate-y-0`)}
+        peer-hover:opacity-100 peer-hover:translate-y-0`)}
       >
         {name}
       </span>
     </div>
   {/each}
 </nav>
+
+{#if $me.data?.user}
+  <img
+    class="hidden z-50 md:block fixed md:top-7 md:right-[calc(50vw-23rem)] lg:right-[calc(50vw-26rem)] w-10 aspect-square object-cover rounded-xl"
+    src={avatar($me.data.user.username)}
+    alt={`Avatar for ${$me.data.user.username}`}
+  />
+{/if}

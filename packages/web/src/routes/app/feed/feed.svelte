@@ -15,7 +15,7 @@
 </script>
 
 <div
-  class="flex flex-col w-full h-full group items-start justify-start p-4 bg-text/5 backdrop-blur rounded-md"
+  class="flex flex-col w-full h-full group items-start justify-start p-4 bg-text/5 backdrop-blur rounded-md col-span-1"
 >
   <a
     class="flex-1 flex text-text"
@@ -26,7 +26,7 @@
     }}
   >
     <span
-      class="break-words md:text-lg [text-wrap:balance] max-w-full group-hover:underline"
+      class="break-words md:text-lg [text-wrap:balance] max-w-full group-hover:text-text/80"
     >
       {item.title}
     </span>

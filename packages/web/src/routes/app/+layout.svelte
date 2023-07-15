@@ -52,7 +52,7 @@
 </script>
 
 <div
-  class="flex flex-col items-start justify-start h-[100vh] overflow-y-scroll w-full px-5 md:px-6 max-w-2xl bg-background"
+  class="flex flex-col items-start justify-start h-[100dvh] overflow-y-scroll w-full px-5 md:px-0 md:max-w-3xl lg:max-w-4xl bg-background"
 >
   <div
     class="flex items-center justify-between pt-8 pb-4 p-2 z-30 sticky top-0 bg-background/75 backdrop-blur border-b border-black/50 w-full"

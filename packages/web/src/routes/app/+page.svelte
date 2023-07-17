@@ -86,6 +86,9 @@
       {upcomings}
       bind:direction
       on:jump={({ detail: { gap } }) => {
+        if (items.length - $glance.current <= 6 - gap) {
+          $query.fetchNextPage();
+        }
         glance.update(({ current, on }) => {
           const stale = hoursSince(on) > 3;
           return {

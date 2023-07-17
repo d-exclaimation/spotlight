@@ -58,7 +58,7 @@
         {item}
         bind:direction
         on:next={() => {
-          if (items.length - $glance.current <= 6) {
+          if (items.length - $glance.current <= 12) {
             $query.fetchNextPage();
           }
           glance.update(({ current, on }) => {
@@ -86,7 +86,7 @@
       {upcomings}
       bind:direction
       on:jump={({ detail: { gap } }) => {
-        if (items.length - ($glance.current + gap) <= 6) {
+        if (items.length - $glance.current <= 12 + gap) {
           $query.fetchNextPage();
         }
         glance.update(({ current, on }) => {

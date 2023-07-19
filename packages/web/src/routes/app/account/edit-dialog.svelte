@@ -6,6 +6,7 @@
   import Textfield from "@/lib/components/textfield.svelte";
   import { avatar } from "@/lib/utils/image";
   import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
+  import toast from "svelte-french-toast";
 
   export let editing: boolean;
   export let me: Me;
@@ -15,17 +16,20 @@
     onSuccess: async (res) => {
       if (!res.user) {
         error = "Cannot edit a user that does not exist";
+        toast.error("Profile update failed");
         return;
       }
       error = "";
       editing = false;
       username = res.user.username;
+      toast.success("Profile updated");
       await client.invalidateQueries(["users", "me"]);
     },
     onError: (err) => {
       if (isTRPCError(err)) {
         error =
           err.cause?.message ?? "Name must be between 3 and 20 characters";
+        toast.error("Profile update failed");
       }
     },
   });

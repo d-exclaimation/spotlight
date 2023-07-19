@@ -13,6 +13,7 @@
   import { auth } from "@/lib/utils/storage";
   import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
   import { onMount } from "svelte";
+  import toast from "svelte-french-toast";
   import { fly } from "svelte/transition";
   import Navbar from "../navbar.svelte";
 
@@ -33,14 +34,17 @@
     onSuccess: (res) => {
       if (!res.user) {
         error = "Account not found";
+        toast.error("Login failed");
         return;
       }
       error = "";
       submitted = true;
+      toast.success("Check your email for a magic link");
     },
     onError: (err) => {
       if (isTRPCError(err)) {
         error = err.cause?.message ?? "Invalid email address";
+        toast.error("Login failed");
       }
     },
   });
@@ -49,6 +53,7 @@
     onSuccess: async (res) => {
       if (!res.token) {
         error = "Invalid login code";
+        toast.error("Login failed");
         return;
       }
       auth.set({ token: res.token });
@@ -58,10 +63,12 @@
       code = "";
       error = "";
       submitted = false;
+      toast.success("Welcome back!");
     },
     onError: (err) => {
       if (isTRPCError(err)) {
         error = err.cause?.message ?? "Invalid login code";
+        toast.error("Login failed");
       }
     },
   });

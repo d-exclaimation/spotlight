@@ -7,6 +7,7 @@
   import { auth } from "@/lib/utils/storage";
   import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
   import { onMount } from "svelte";
+  import toast from "svelte-french-toast";
   import { fade } from "svelte/transition";
   import Navbar from "../navbar.svelte";
 
@@ -23,7 +24,11 @@
     if (!code || code.length !== 8) {
       return;
     }
-    const res = await $login2.mutateAsync({ code });
+    const res = await toast.promise($login2.mutateAsync({ code }), {
+      loading: "Logging in...",
+      success: "Logged in",
+      error: "Login failed",
+    });
     if (res.token) {
       auth.set({ token: res.token });
       await client.invalidateQueries(["users", "me"]);

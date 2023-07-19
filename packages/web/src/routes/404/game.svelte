@@ -1,5 +1,6 @@
 <script lang="ts">
   import { tw } from "@/lib/tailwind";
+  import toast from "svelte-french-toast";
 
   const MAP_WIDTH = 26;
   const OBSTACLE_SIZE = 2.5;
@@ -19,6 +20,7 @@
     "/assets/obs7.gif",
   ];
 
+  let won = false;
   let previous = 0;
   let delta = 0;
   let dead = true;
@@ -28,7 +30,7 @@
   let distance = 0;
   let jump = JUMP_COUNT;
 
-  $: chance = Math.min(0.55, distance / GAME_END) + 0.1;
+  $: chance = Math.min(0.65, distance + 0.1 / GAME_END) + 0.1;
   $: threshold =
     chance < 0.25 ? 60 : chance < 0.5 ? 50 : chance < 0.75 ? 40 : 30;
 
@@ -37,6 +39,10 @@
     { x: (MAP_WIDTH - ((distance + 6) % MAP_WIDTH)).toFixed(1), y: -1 },
     { x: (MAP_WIDTH - ((distance + 12) % MAP_WIDTH)).toFixed(1), y: 1 },
   ];
+
+  $: if (won) {
+    toast.success("Going back home unlocked!");
+  }
 
   function moveObstacles() {
     obstacles = obstacles
@@ -79,6 +85,10 @@
     if (hitting()) {
       dead = true;
       return;
+    }
+
+    if (!won && distance > GAME_END) {
+      won = true;
     }
 
     if (height === 0) {
@@ -206,7 +216,7 @@
 </span>
 
 <div class="flex items-center justify-center w-full mt-2">
-  {#if distance > GAME_END}
+  {#if won}
     <a
       class={tw(`relative rounded text-text/50 font-light before:absolute 
       before:left-0 before:top-0 before:h-full before:w-full before:border-b 

@@ -60,6 +60,11 @@ export type InfiniteQueryOpts<T extends keyof typeof trpc> = Omit<
 >;
 
 /**
+ * Get the user data
+ */
+export type Me = NonNullable<AppOutput["me"]["user"]>;
+
+/**
  * Get the dashboard data
  */
 export type Dashboard = NonNullable<AppOutput["dashboard"]["user"]>;

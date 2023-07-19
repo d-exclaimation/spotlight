@@ -168,7 +168,6 @@
   });
 </script>
 
-
 <svelte:head>
   <link rel="preload" as="image" href="/banner/glance.png" />
   <link rel="preload" as="image" href="/banner/feeds.png" />

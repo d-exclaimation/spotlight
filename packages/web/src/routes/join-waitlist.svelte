@@ -13,6 +13,7 @@
   import { tw } from "@/lib/tailwind";
   import { auth } from "@/lib/utils/storage";
   import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
+  import toast from "svelte-french-toast";
   import { fly } from "svelte/transition";
 
   let show = false;
@@ -28,14 +29,17 @@
     onSuccess: (res) => {
       if (!res.success) {
         error = "Email already in use";
+        toast.error("Sign up failed");
         return;
       }
       error = "";
       submitted = true;
+      toast.success("Check your email for a signup link");
     },
     onError: (err) => {
       if (isTRPCError(err)) {
         error = err.cause?.message ?? "Invalid email address";
+        toast.error("Sign up failed");
       }
     },
   });
@@ -43,6 +47,7 @@
     onSuccess: async (res) => {
       if (!res.token) {
         error = "Invalid login code";
+        toast.error("Sign up failed");
         return;
       }
       auth.set({ token: res.token });
@@ -53,10 +58,12 @@
       code = "";
       error = "";
       submitted = false;
+      toast.success("Welcome to Spotlight!, redirecting you now");
     },
     onError: (err) => {
       if (isTRPCError(err)) {
         error = err.cause?.message ?? "Invalid login code";
+        toast.error("Sign up failed");
       }
     },
   });

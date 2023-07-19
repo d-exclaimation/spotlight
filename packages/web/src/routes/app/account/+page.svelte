@@ -15,6 +15,7 @@
   import { auth } from "@/lib/utils/storage";
   import { hoursAndMinutesSince } from "@/lib/utils/time";
   import { useQueryClient as getQueryClient } from "@tanstack/svelte-query";
+  import toast from "svelte-french-toast";
   import { beginning } from "../stores";
   import ActivitiesChart from "./activities-chart.svelte";
   import EditDialog from "./edit-dialog.svelte";
@@ -41,6 +42,7 @@
   const logout = createLogoutMutation({
     onSuccess: async () => {
       auth.clear();
+      toast.success("Logged out");
       await client.invalidateQueries(["users", "me"]);
       await goto("/");
     },
@@ -53,7 +55,11 @@
 
   async function clearData() {
     beginning.set(new Date());
-    await $clear.mutateAsync();
+    await toast.promise($clear.mutateAsync(), {
+      loading: "Clearing data...",
+      success: "Data cleared",
+      error: "Failed to clear data",
+    });
   }
 
   const options = {

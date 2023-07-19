@@ -22,14 +22,25 @@
       : item.title.startsWith("Show HN") || item.title.startsWith("Tell HN")
       ? "bg-rose-200"
       : "bg-primary";
+
+  $: points = item.points ?? 0;
+  $: size =
+    points > 40
+      ? "row-span-2 col-span-2"
+      : points > 20
+      ? "row-span-1 col-span-2"
+      : "row-span-2 col-span-1";
+
+  $: text = points > 40 ? "text-3xl md:text-4xl" : "text-2xl md:text-3xl";
 </script>
 
 <a
   class={tw(
-    `flex flex-col items-center justify-center
-    rounded-lg text-background w-full p-4 md:p-6 my-2 
-    hover:brightness-105 active:brightness-105 col-span-2`,
-    bg
+    `flex flex-col items-center justify-around
+    rounded-lg text-background w-full p-4 md:p-6 my-2 h-full
+    hover:brightness-105 active:brightness-105`,
+    bg,
+    size
   )}
   href={link(item.url)}
   target="_blank"
@@ -37,9 +48,7 @@
     $mutation.mutate({ title: item.title });
   }}
 >
-  <span
-    class="w-full flex-1 flex items-center break-words text-2xl md:text-3xl"
-  >
+  <span class={tw("w-full h-full flex-1 items-center break-words", text)}>
     {item.title}
   </span>
 

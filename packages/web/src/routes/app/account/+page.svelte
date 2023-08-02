@@ -243,7 +243,7 @@
         class="flex md:flex-col w-full md:w-[30%] md:h-full p-2 md:p-3 items-center md:items-start justify-around"
       >
         <div class="flex justify-center md:justify-start flex-col flex-[2]">
-          <span class="font-light text-sm md:text-lg">Engangement</span>
+          <span class="font-light text-sm md:text-lg">Engagement</span>
           <div class="flex gap-2 items-end">
             <span class="font-semibold text-xl md:text-3xl">
               {$dashboard.data.user.engagements}

@@ -29,6 +29,7 @@
 
   $: name = ROUTES.find((r) => r.path === $page.url.pathname)?.name ?? "Glance";
 
+  // Check if the user is logged in
   onMount(() => {
     if (!browser) return;
     const unsub = me.subscribe((res) => {
@@ -43,6 +44,7 @@
     return unsub;
   });
 
+  // Track the user's activity
   onMount(() => {
     if (!browser) return;
     const newStart = tracking.get() ?? new Date();
@@ -52,7 +54,7 @@
 </script>
 
 <div
-  class="flex flex-col items-start justify-start h-[100dvh] overflow-y-scroll w-full px-5 md:px-0 md:max-w-3xl lg:max-w-4xl bg-background"
+  class="flex flex-col items-start justify-start min-h-[100dvh] overflow-y-auto w-full px-5 md:px-0 md:max-w-3xl lg:max-w-4xl bg-background"
 >
   <div
     class="flex items-center justify-between pt-8 pb-4 p-2 z-30 sticky top-0 bg-background/75 backdrop-blur border-b border-black/50 w-full"
@@ -68,7 +70,7 @@
     {/key}
   </div>
   {#key $page.url.pathname}
-    <div class="flex flex-col w-full h-full animate-content">
+    <div class="flex flex-col w-full flex-1 h-full animate-content">
       {#if !$me.isLoading && $me.data && !$me.data.user}
         <span />
       {:else}

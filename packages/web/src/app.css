@@ -45,3 +45,16 @@
   border-radius: 14px;
   border: 3px solid var(--primary);
 }
+
+body::-webkit-scrollbar {
+  width: 0px;
+}
+
+* {
+  scrollbar-gutter: stable;
+}
+
+/* Debugging purposes */
+/* * {
+  outline: 2px solid rgba(255, 0, 0, 0.4);
+} */

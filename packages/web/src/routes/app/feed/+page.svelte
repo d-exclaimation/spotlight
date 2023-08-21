@@ -35,7 +35,11 @@
 </svelte:head>
 
 {#if $query.isLoading || $query.isInitialLoading}
-  <Loading />
+  <div
+    class="relative flex flex-col md:flex-row items-center justify-center md:justify-between w-full shrink-0 md:mt-6 flex-1"
+  >
+    <Loading />
+  </div>
 {:else if $query.error}
   <Error label="No news" error={$query.error} />
 {:else if paginated.length === 0}

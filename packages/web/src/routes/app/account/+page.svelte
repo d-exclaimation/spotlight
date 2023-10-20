@@ -134,7 +134,7 @@
 </svelte:head>
 
 <div
-  class="flex flex-col items-center justify-start w-full text-text md:mt-6 flex-1"
+  class="flex flex-col items-center justify-center w-full text-text md:mt-6 flex-1"
 >
   {#if $dashboard.isLoading || !$dashboard.data?.user}
     <Loading />
